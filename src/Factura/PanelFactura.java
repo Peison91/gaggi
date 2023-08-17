@@ -12,6 +12,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class PanelFactura extends JPanel {
@@ -25,7 +27,7 @@ public class PanelFactura extends JPanel {
     JComboBox lista;
 
     public PanelFactura() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
+        DBConection conecc = new DBConection("localhost", "root", "root");
         conecc.conectar();
         btnCliente = new JButton("Seleccione Cliente");
         btnCliente.setBounds(550, 20, 200, 30);
@@ -121,6 +123,40 @@ public class PanelFactura extends JPanel {
         btnBorrar.setBounds(600,850,100,25);
         btnActualizar = new JButton("Actualizar");
         btnActualizar.setBounds(710,850,100,25);
+        btnActualizar.addActionListener(new ActionListener() {
+            FacturasDB facturasDB = new FacturasDB(conecc);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int fila = tabla.getSelectedRow();
+                if (fila == -1) {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar un registro");
+                } else {
+                    Facturas facturas = new Facturas();
+                    facturas.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
+                    facturas.setCliente_id(Integer.parseInt(tabla.getValueAt(fila, 1).toString()));
+                    facturas.setNumero(tabla.getValueAt(fila, 2).toString());
+                    java.util.Date miFecha = new java.util.Date();
+                    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                    String dato = tabla.getValueAt(fila, 3).toString().substring(0, 10);
+                    try {
+                        miFecha = formato.parse(dato);
+                    } catch (ParseException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    facturas.setFecha_hora(miFecha);
+                    facturas.setMonto(Double.parseDouble(tabla.getValueAt(fila, 4).toString()));
+                    facturas.setArchivo(tabla.getValueAt(fila, 5).toString());
+                    int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
+                    if (i == 0) {
+                        try {
+                            facturasDB.actualizarFacturas(facturas);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
         add(btnCliente);
         add(txtCliente);
         add(buscarCliente);
