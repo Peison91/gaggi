@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="gaggi:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/gaggi_jar</output-path>
+    <root id="archive" name="gaggi.jar">
+      <element id="module-output" name="gaggi" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/gaggi.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Sistema-venta-java-v1-main/Sistema-venta-java-v1-main/librerias/mysql-connector-java-8.0.19.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
