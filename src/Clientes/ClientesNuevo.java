@@ -1,4 +1,5 @@
 package Clientes;
+import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;
 import com.gaggi.model.Clientes;
@@ -16,8 +17,7 @@ public class ClientesNuevo extends JPanel {
     TablaClientes tablaClientes = new TablaClientes();
 
     public ClientesNuevo() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
+        Conexion.conectar();
         setBackground(new Color(214,214,214));
         JLabel titulo = new JLabel("Nuevo Cliente");
         titulo.setBounds(100, 1, 200, 40);
@@ -68,7 +68,7 @@ public class ClientesNuevo extends JPanel {
         btnGuardar = new JButton("Guardar", new ImageIcon("src/imagenes/GuardarTodo.png"));
         btnGuardar.setBounds(750, 33, 120, 50);
         btnGuardar.addActionListener(e -> {
-            ClientesDB clientesDB = new ClientesDB(conecc);
+            ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
             String nombre1 = txtNombre.getText();
             String cuit1 = txtCuit.getText();
             String direccion1 = txtDireccion.getText();

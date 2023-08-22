@@ -1,4 +1,5 @@
 package Proveedores;
+import Utiles.Conexion;
 import com.gaggi.database.DBConection;
 import com.gaggi.database.ProveedoresDB;
 import com.gaggi.model.Proveedores;
@@ -22,8 +23,6 @@ public class ProveedoresEditar extends JPanel {
 
 
     public ProveedoresEditar() throws Exception{
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
         JComboBox<String> filtro = new JComboBox<>();
         filtro.addItem("ID");
         filtro.addItem("Nombre");
@@ -66,7 +65,7 @@ public class ProveedoresEditar extends JPanel {
                 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
-                        ProveedoresDB proveedoresDB = new ProveedoresDB(conecc);
+                        ProveedoresDB proveedoresDB = new ProveedoresDB(Conexion.conectar());
                         proveedoresDB.actualizarProveedores(proveedores);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
@@ -85,7 +84,7 @@ public class ProveedoresEditar extends JPanel {
                 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Importante", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
-                        ProveedoresDB proveedoresDB = new ProveedoresDB(conecc);
+                        ProveedoresDB proveedoresDB = new ProveedoresDB(Conexion.conectar());
                         proveedoresDB.borrarProveedor(id);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
@@ -128,9 +127,7 @@ public class ProveedoresEditar extends JPanel {
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
     }
     private String[][] obtenerMatriz() throws Exception{
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
-        ProveedoresDB proveedoresDB = new ProveedoresDB(conecc);
+        ProveedoresDB proveedoresDB = new ProveedoresDB(Conexion.conectar());
         List<Proveedores> lstProveedores = proveedoresDB.todosProveedores();
         String[][] matrizInfo = new String[lstProveedores.size()][6];
         for(int i=0; i < lstProveedores.size(); i++){

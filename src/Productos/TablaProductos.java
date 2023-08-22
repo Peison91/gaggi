@@ -1,4 +1,5 @@
 package Productos;
+import Utiles.Conexion;
 import com.gaggi.database.DBConection;
 import com.gaggi.database.ProductosDB;
 import com.gaggi.model.Productos;
@@ -31,9 +32,7 @@ public class TablaProductos extends JPanel {
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
     }
     private String[][] obtenerMatriz() throws Exception{
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
-        ProductosDB productosDB = new ProductosDB(conecc);
+        ProductosDB productosDB = new ProductosDB(Conexion.conectar());
         List<Productos> lstProductos = productosDB.todosProductos();
         String[][] matrizInfo = new String[lstProductos.size()][7];
         for(int i=0; i < lstProductos.size(); i++){

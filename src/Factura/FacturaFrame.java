@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FacturaFrame extends JFrame {
+
     public FacturaFrame() throws Exception {
+
         setTitle("Facturas");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();

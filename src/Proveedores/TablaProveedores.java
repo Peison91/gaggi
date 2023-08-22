@@ -1,4 +1,5 @@
 package Proveedores;
+import Utiles.Conexion;
 import com.gaggi.database.DBConection;
 import com.gaggi.database.ProveedoresDB;
 import com.gaggi.model.Proveedores;
@@ -31,9 +32,7 @@ public class TablaProveedores extends JPanel {
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
     }
     private String[][] obtenerMatriz() throws Exception{
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
-        ProveedoresDB proveedoresDB = new ProveedoresDB(conecc);
+        ProveedoresDB proveedoresDB = new ProveedoresDB(Conexion.conectar());
         List<Proveedores> lstProveedores = proveedoresDB.todosProveedores();
         String[][] matrizInfo = new String[lstProveedores.size()][6];
         for(int i=0; i < lstProveedores.size(); i++){

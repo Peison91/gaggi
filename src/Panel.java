@@ -17,7 +17,7 @@ public class Panel extends JPanel {
     private ProductosEditarFrame productosEditarFrame;
     private ProveedoresNuevoFrame proveedoresNuevoFrame;
     private ProveedoresEditarFrame proveedoresEditarFrame;
-    public Panel() {
+     Panel() {
         setLayout((new FlowLayout(FlowLayout.LEFT)));
         setBackground(new Color(214,214,214));
         JMenuBar barra = new JMenuBar();

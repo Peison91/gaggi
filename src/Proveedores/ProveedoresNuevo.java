@@ -1,5 +1,6 @@
 package Proveedores;
 
+import Utiles.Conexion;
 import com.gaggi.database.DBConection;
 import com.gaggi.database.ProveedoresDB;
 import com.gaggi.model.Proveedores;
@@ -17,8 +18,6 @@ public class ProveedoresNuevo extends JPanel {
     TablaProveedores tablaProveedores = new TablaProveedores();
 
     public ProveedoresNuevo() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
         setBackground(new Color(214,214,214));
         JLabel titulo = new JLabel("Nuevo Proveedor");
         titulo.setBounds(100, 1, 200, 40);
@@ -67,7 +66,7 @@ public class ProveedoresNuevo extends JPanel {
         btnGuardar = new JButton("Guardar", new ImageIcon("src/imagenes/GuardarTodo.png"));
         btnGuardar.setBounds(750, 33, 120, 50);
         btnGuardar.addActionListener(e -> {
-            ProveedoresDB proveedoresDB = new ProveedoresDB(conecc);
+            ProveedoresDB proveedoresDB = new ProveedoresDB(Conexion.conectar());
             String nombre1 = txtNombre.getText();
             String cuit1 = txtCuit.getText();
             String direccion1 = txtDireccion.getText();

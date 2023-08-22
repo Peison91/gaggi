@@ -5,7 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FrameTablaClientes extends JFrame {
+
     public FrameTablaClientes() throws Exception {
+
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         Dimension tamanoPantalla = miPantalla.getScreenSize();
         int alturaPantalla = tamanoPantalla.height;

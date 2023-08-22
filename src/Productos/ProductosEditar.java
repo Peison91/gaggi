@@ -1,4 +1,5 @@
 package Productos;
+import Utiles.Conexion;
 import com.gaggi.database.DBConection;
 import com.gaggi.database.ProductosDB;
 import com.gaggi.model.Productos;
@@ -22,8 +23,6 @@ public class ProductosEditar extends JPanel{
 
 
     public ProductosEditar() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
         JComboBox<String> filtro = new JComboBox<>();
         filtro.addItem("ID");
         filtro.addItem("Descripción");
@@ -86,7 +85,7 @@ public class ProductosEditar extends JPanel{
                 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
-                        ProductosDB productosDB = new ProductosDB(conecc);
+                        ProductosDB productosDB = new ProductosDB(Conexion.conectar());
                         productosDB.actualizarProducto(producto);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
@@ -106,7 +105,7 @@ public class ProductosEditar extends JPanel{
                 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Importante", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
-                        ProductosDB productosDB = new ProductosDB(conecc);
+                        ProductosDB productosDB = new ProductosDB(Conexion.conectar());
                         productosDB.borrarProducto(id);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
@@ -149,9 +148,7 @@ public class ProductosEditar extends JPanel{
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
     }
     private String[][] obtenerMatriz() throws Exception{
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
-        ProductosDB productosDB = new ProductosDB(conecc);
+        ProductosDB productosDB = new ProductosDB(Conexion.conectar());
         List<Productos> lstProductos = productosDB.todosProductos();
         String[][] matrizInfo = new String[lstProductos.size()][7];
         for(int i=0; i < lstProductos.size(); i++){

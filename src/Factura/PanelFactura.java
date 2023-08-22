@@ -1,11 +1,13 @@
 package Factura;
 
+import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;
 import com.gaggi.database.FacturasDB;
 import com.gaggi.model.Clientes;
 import com.gaggi.model.Facturas;
 import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -18,7 +20,8 @@ import java.util.List;
 
 public class PanelFactura extends JPanel {
     JLabel lblId, lblNumero, lblFechaHora, lblMonto, lblArchivo, lblFactura, buscarCliente;
-    JTextField txtNumero, txtMonto, txtArchivo, txtBuscar, txtCliente;
+    JTextField txtNumero, txtMonto, txtArchivo, txtBuscar;
+    static JTextField txtCliente;
     JButton btnCliente, btnGuardar, btnBorrar, btnActualizar;
     JDateChooser calendario;
     JScrollPane scroll;
@@ -26,9 +29,8 @@ public class PanelFactura extends JPanel {
     DefaultTableModel modelo;
     JComboBox lista;
 
+
     public PanelFactura() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "root");
-        conecc.conectar();
         btnCliente = new JButton("Seleccione Cliente");
         btnCliente.setBounds(550, 20, 200, 30);
         btnCliente.addActionListener(e -> {
@@ -49,6 +51,7 @@ public class PanelFactura extends JPanel {
         buscarCliente.setBounds(15, 20, 250, 30);
         txtCliente = new JTextField(15);
         txtCliente.setBounds(140, 20, 350, 30);
+
 
         lblNumero = new JLabel("Nro. Factura:");
         lblNumero.setBounds(15, 55, 100, 30);
@@ -94,21 +97,21 @@ public class PanelFactura extends JPanel {
         });
         scroll = new JScrollPane();
         scroll.setBounds(15, 270, 800, 400);
-        construirTabla(0,null);
+        construirTabla(0, null);
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(550,350,100,25);
+        btnGuardar.setBounds(300, 160, 200, 30);
         btnGuardar.addActionListener(e -> {
-            FacturasDB facturasDB = new FacturasDB(conecc);
-            int idCliente = Integer.parseInt(lblId.getText());
+            FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
+            int idCliente = Integer.parseInt(txtCliente.getText());
             String numero = txtNumero.getText();
             Double monto = Double.parseDouble(txtMonto.getText());
             String archivo = txtArchivo.getText();
 
-            Facturas facturas = new Facturas(0,idCliente,numero, calendario.getDate(),monto,archivo);
+            Facturas facturas = new Facturas(0, idCliente, numero, calendario.getDate(), monto, archivo);
             try {
                 facturasDB.insertarFacturas(facturas);
                 JOptionPane.showMessageDialog(null, "Guardado correctamente");
-                construirTabla(0,null);
+                construirTabla(0, null);
                 limpiarTxt(txtNumero);
                 limpiarTxt(txtMonto);
                 limpiarTxt(txtArchivo);
@@ -120,11 +123,13 @@ public class PanelFactura extends JPanel {
             }
         });
         btnBorrar = new JButton("Eliminar");
-        btnBorrar.setBounds(600,850,100,25);
+        btnBorrar.setBounds(600, 850, 100, 25);
         btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(710,850,100,25);
+        btnActualizar.setBounds(710, 850, 100, 25);
         btnActualizar.addActionListener(new ActionListener() {
-            FacturasDB facturasDB = new FacturasDB(conecc);
+            FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
+
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 int fila = tabla.getSelectedRow();
@@ -179,6 +184,7 @@ public class PanelFactura extends JPanel {
         scroll.setViewportView(tabla);
         setLayout(null);
     }
+
     public void construirTabla(int opBuscar, String valor) throws Exception {
         String[] titulo1 = {"Id", "Nombre", "Número", "Fecha-Hora", "Monto", "Archivo"};
         String informacion[][] = obtenerMatriz();
@@ -201,10 +207,9 @@ public class PanelFactura extends JPanel {
         // tabla.getColumn("EMAIL").setHeaderValue("TELEFONO");
         //tabla.getColumn("TELEFONO").setHeaderValue("EMAIL");
     }
+
     public String[][] obtenerMatriz() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
-        FacturasDB facturasDB = new FacturasDB(conecc);
+        FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
         List<Facturas> lstFacturas = facturasDB.todasFacturas();
         String matrizIfno[][] = new String[lstFacturas.size()][6];
         for (int i = 0; i < lstFacturas.size(); i++) {
@@ -217,7 +222,13 @@ public class PanelFactura extends JPanel {
         }
         return matrizIfno;
     }
-    public void limpiarTxt(JTextField txt){
+
+    public void limpiarTxt(JTextField txt) {
         txt.setText(" ");
     }
+
+
 }
+
+
+

@@ -1,4 +1,5 @@
 package Productos;
+import Utiles.Conexion;
 import com.gaggi.database.DBConection;
 import com.gaggi.database.ProductosDB;
 import com.gaggi.model.Productos;
@@ -17,8 +18,7 @@ class ProductosNuevo extends JPanel {
     TablaProductos tablaProductos = new TablaProductos();
 
     public ProductosNuevo() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
+
         setBackground(new Color(214,214,214));
         JLabel nuevoProducto = new JLabel("Nuevo Producto");
         nuevoProducto.setBounds(100, 1, 200, 40);
@@ -77,7 +77,7 @@ class ProductosNuevo extends JPanel {
         add(btnGuardar);
         setLayout(null);
         btnGuardar.addActionListener(e -> {
-            ProductosDB productosDB = new ProductosDB(conecc);
+            ProductosDB productosDB = new ProductosDB(Conexion.conectar());
             String descr = txtDescr.getText();
             String cod = txtCodProd.getText();
             String abrev = txtAbrevProd.getText();

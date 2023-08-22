@@ -1,30 +1,32 @@
 package Factura;
+
+import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;
 import com.gaggi.model.Clientes;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
-public class PanelTablaClientes extends JPanel{
+
+public class PanelTablaClientes extends JPanel {
     JScrollPane scroll = new JScrollPane();
     JTable tabla = new JTable();
     DefaultTableModel modelo = new DefaultTableModel();
     JTextField buscarCliente;
     JButton seleccionarCliente;
 
-    public PanelTablaClientes() throws Exception {
 
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
+    public PanelTablaClientes() throws Exception {
         JComboBox<String> filtro = new JComboBox<>();
         filtro.addItem("ID");
         filtro.addItem("Nombre");
         filtro.addItem("CUIT");
         seleccionarCliente = new JButton("Seleccionar");
-        seleccionarCliente.setBounds(520,20,120,30);
+        seleccionarCliente.setBounds(520, 20, 120, 30);
         seleccionarCliente.addActionListener(e -> {
             int filaSeleccionada = tabla.getSelectedRow();
             if (filaSeleccionada != -1) {
@@ -35,13 +37,17 @@ public class PanelTablaClientes extends JPanel{
                         "\nNombre: " + nombreClienteSeleccionado +
                         "\nCUIT: " + cuitClienteSeleccionado;
                 JOptionPane.showMessageDialog(null, mensaje, "Cliente Seleccionado", JOptionPane.INFORMATION_MESSAGE);
+                String datoId = tabla.getValueAt(filaSeleccionada,0).toString();
+                String dato = tabla.getValueAt(filaSeleccionada,1).toString();
+                PanelFactura.txtCliente.setText(datoId);
+
             } else {
                 JOptionPane.showMessageDialog(null, "Selecciona un cliente de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-        filtro.setBounds(20,20,100,30);
+        filtro.setBounds(20, 20, 100, 30);
         buscarCliente = new JTextField(15);
-        buscarCliente.setBounds(150,20,350,30);
+        buscarCliente.setBounds(150, 20, 350, 30);
         buscarCliente.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -54,8 +60,8 @@ public class PanelTablaClientes extends JPanel{
                 }
             }
         });
-        ConstruirTabla(0,null);
-        scroll.setBounds(20,100,600,200);
+        ConstruirTabla(0, null);
+        scroll.setBounds(20, 100, 600, 200);
         add(buscarCliente);
 
         add(filtro);
@@ -66,15 +72,15 @@ public class PanelTablaClientes extends JPanel{
     }
 
     public void ConstruirTabla(int opBuscar, String valor) throws Exception {
-        String[] titulo = {"ID","Nombre", "CUIT", "Dirección", "Email", "Teléfono"};
+        String[] titulo = {"ID", "Nombre", "CUIT", "Dirección", "Email", "Teléfono"};
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
         TableRowSorter tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
-        if(valor == null){
+        if (valor == null) {
             tr.setRowFilter(RowFilter.regexFilter("", 0));
-        }else{
+        } else {
             tr.setRowFilter(RowFilter.regexFilter(valor, opBuscar));
         }
         JTableHeader titulo1 = tabla.getTableHeader();
@@ -98,9 +104,7 @@ public class PanelTablaClientes extends JPanel{
     }
 
     private String[][] obtenerMatriz() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
-        ClientesDB clientesDB = new ClientesDB(conecc);
+        ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
         List<Clientes> lstClientes = clientesDB.todosClientes();
         String[][] matrizInfo = new String[lstClientes.size()][6];
         for (int i = 0; i < lstClientes.size(); i++) {

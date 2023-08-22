@@ -1,4 +1,5 @@
 package Clientes;
+import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;
 import com.gaggi.model.Clientes;
@@ -16,9 +17,9 @@ public class ClientesEditar extends JPanel {
     JTextField buscarCliente;
     JButton btnModificarCliente;
     JButton btnEliminarCliente;
+
     public ClientesEditar() throws Exception {
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
-        conecc.conectar();
+        Conexion.conectar();
         JComboBox<String> filtro = new JComboBox<>();
         filtro.addItem("ID");
         filtro.addItem("Nombre");
@@ -60,7 +61,7 @@ public class ClientesEditar extends JPanel {
                 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
-                        ClientesDB clientesDB = new ClientesDB(conecc);
+                        ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
                         clientesDB.actualizarCliente(clientes);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
@@ -79,7 +80,7 @@ public class ClientesEditar extends JPanel {
                 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Importante", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
-                        ClientesDB clientesDB = new ClientesDB(conecc);
+                        ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
                         clientesDB.borrarCliente(id);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
@@ -135,7 +136,7 @@ public class ClientesEditar extends JPanel {
     }
 
     private String[][] obtenerMatriz() throws Exception{
-        DBConection conecc = new DBConection("localhost", "root", "selfa");
+        DBConection conecc = new DBConection("localhost", "root", "root");
         conecc.conectar();
         ClientesDB clientesDB = new ClientesDB(conecc);
         List<Clientes> lstClientes = clientesDB.todosClientes();
