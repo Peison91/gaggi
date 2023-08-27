@@ -129,7 +129,6 @@ public class PanelFactura extends JPanel {
         btnActualizar.addActionListener(new ActionListener() {
             FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
 
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 int fila = tabla.getSelectedRow();

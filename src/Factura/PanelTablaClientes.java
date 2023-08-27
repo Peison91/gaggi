@@ -1,10 +1,8 @@
 package Factura;
-
 import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;
 import com.gaggi.model.Clientes;
-
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -18,8 +16,6 @@ public class PanelTablaClientes extends JPanel {
     DefaultTableModel modelo = new DefaultTableModel();
     JTextField buscarCliente;
     JButton seleccionarCliente;
-
-
     public PanelTablaClientes() throws Exception {
         JComboBox<String> filtro = new JComboBox<>();
         filtro.addItem("ID");
@@ -38,8 +34,9 @@ public class PanelTablaClientes extends JPanel {
                         "\nCUIT: " + cuitClienteSeleccionado;
                 JOptionPane.showMessageDialog(null, mensaje, "Cliente Seleccionado", JOptionPane.INFORMATION_MESSAGE);
                 String datoId = tabla.getValueAt(filaSeleccionada,0).toString();
-                String dato = tabla.getValueAt(filaSeleccionada,1).toString();
-                PanelFactura.txtCliente.setText(datoId);
+                String datoNombre = tabla.getValueAt(filaSeleccionada,1).toString();
+                String datoCUIT = tabla.getValueAt(filaSeleccionada,2).toString();
+                PanelFactura.txtCliente.setText(datoId + " - " + datoNombre + " - " + datoCUIT);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Selecciona un cliente de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -88,14 +85,12 @@ public class PanelTablaClientes extends JPanel {
         tabla.getTableHeader().setResizingAllowed(false);
         titulo1.setBackground(new Color(236, 126, 29));
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
-        // Ajustar dimensiones de las columnas
         ajustarAnchoColumnas();
     }
 
     private void ajustarAnchoColumnas() {
         TableColumnModel columnModel = tabla.getColumnModel();
         int columnCount = columnModel.getColumnCount();
-        // Anchos preferidos para las columnas (puedes ajustarlos según tus necesidades)
         int[] columnWidths = {50, 200, 100, 250, 200, 100};
         for (int i = 0; i < columnCount; i++) {
             TableColumn column = columnModel.getColumn(i);
