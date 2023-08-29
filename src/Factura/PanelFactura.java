@@ -22,6 +22,7 @@ public class PanelFactura extends JPanel {
     JLabel lblId, lblNumero, lblFechaHora, lblMonto, lblArchivo, lblFactura, buscarCliente;
     JTextField txtNumero, txtMonto, txtArchivo, txtBuscar;
     static JTextField txtCliente;
+    static int clienteID;
     JButton btnCliente, btnGuardar, btnBorrar, btnActualizar;
     JDateChooser calendario;
     JScrollPane scroll;
@@ -102,11 +103,10 @@ public class PanelFactura extends JPanel {
         btnGuardar.setBounds(300, 160, 200, 30);
         btnGuardar.addActionListener(e -> {
             FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
-            int idCliente = Integer.parseInt(txtCliente.getText());
+            int idCliente = clienteID;
             String numero = txtNumero.getText();
             Double monto = Double.parseDouble(txtMonto.getText());
             String archivo = txtArchivo.getText();
-
             Facturas facturas = new Facturas(0, idCliente, numero, calendario.getDate(), monto, archivo);
             try {
                 facturasDB.insertarFacturas(facturas);
@@ -128,6 +128,7 @@ public class PanelFactura extends JPanel {
         btnActualizar.setBounds(710, 850, 100, 25);
         btnActualizar.addActionListener(new ActionListener() {
             FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
+
 
             @Override
             public void actionPerformed(ActionEvent e) {

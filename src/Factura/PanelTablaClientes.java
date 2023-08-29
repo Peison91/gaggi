@@ -37,6 +37,10 @@ public class PanelTablaClientes extends JPanel {
                 String datoNombre = tabla.getValueAt(filaSeleccionada,1).toString();
                 String datoCUIT = tabla.getValueAt(filaSeleccionada,2).toString();
                 PanelFactura.txtCliente.setText(datoId + " - " + datoNombre + " - " + datoCUIT);
+                PanelFactura.clienteID = Integer.parseInt(datoId);
+
+
+
 
             } else {
                 JOptionPane.showMessageDialog(null, "Selecciona un cliente de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
