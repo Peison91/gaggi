@@ -84,8 +84,7 @@ public class ClientesEditar extends JPanel {
                         clientesDB.borrarCliente(id);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
-                    }
-                    JOptionPane.showMessageDialog(null, "Cliente eliminado");
+                    }                    JOptionPane.showMessageDialog(null, "Cliente eliminado");
                 }
             }
             try {

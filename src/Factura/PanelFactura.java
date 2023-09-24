@@ -100,23 +100,13 @@ public class PanelFactura extends JPanel {
         scroll.setBounds(15, 270, 800, 400);
         construirTabla(0, null);
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(400, 160, 150, 30);
+        btnGuardar.setBounds(300, 160, 200, 30);
         btnGuardar.addActionListener(e -> {
             FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
             int idCliente = clienteID;
             String numero = txtNumero.getText();
-            String montoStr = txtMonto.getText();
+            Double monto = Double.parseDouble(txtMonto.getText());
             String archivo = txtArchivo.getText();
-            if (numero.isEmpty() || montoStr.describeConstable().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos");
-                return;
-            }
-            if (!montoStr.matches("\\d+(\\.\\d{1,2})?")) {
-                JOptionPane.showMessageDialog(null, "Formato de monto incorrecto. Debe tener hasta dos decimales.");
-                return;
-            }
-            double monto = Double.parseDouble(montoStr);
-
             Facturas facturas = new Facturas(0, idCliente, numero, calendario.getDate(), monto, archivo);
             try {
                 facturasDB.insertarFacturas(facturas);
@@ -133,9 +123,9 @@ public class PanelFactura extends JPanel {
             }
         });
         btnBorrar = new JButton("Eliminar");
-        btnBorrar.setBounds(570, 220, 150, 30);
+        btnBorrar.setBounds(600, 850, 100, 25);
         btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(400, 220, 150, 30);
+        btnActualizar.setBounds(710, 850, 100, 25);
         btnActualizar.addActionListener(new ActionListener() {
             FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
 
