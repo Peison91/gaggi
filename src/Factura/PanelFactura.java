@@ -14,6 +14,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,7 +25,7 @@ public class PanelFactura extends JPanel {
     JTextField txtNumero, txtMonto, txtArchivo, txtBuscar;
     static JTextField txtCliente;
     static int clienteID;
-    JButton btnCliente, btnGuardar, btnBorrar, btnActualizar;
+    JButton btnCliente, btnGuardar, btnBorrar, btnActualizar,btnAbrirPdf;
     JDateChooser calendario;
     JScrollPane scroll;
     JTable tabla = new JTable();
@@ -126,39 +128,72 @@ public class PanelFactura extends JPanel {
         btnBorrar.setBounds(600, 850, 100, 25);
         btnActualizar = new JButton("Actualizar");
         btnActualizar.setBounds(710, 850, 100, 25);
-        btnActualizar.addActionListener(new ActionListener() {
-            FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
-
-
+        btnBorrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int fila = tabla.getSelectedRow();
                 if (fila == -1) {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar un registro");
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una factura", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    Facturas facturas = new Facturas();
-                    facturas.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
-                    facturas.setCliente_id(Integer.parseInt(tabla.getValueAt(fila, 1).toString()));
-                    facturas.setNumero(tabla.getValueAt(fila, 2).toString());
-                    java.util.Date miFecha = new java.util.Date();
-                    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-                    String dato = tabla.getValueAt(fila, 3).toString().substring(0, 10);
-                    try {
-                        miFecha = formato.parse(dato);
-                    } catch (ParseException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    facturas.setFecha_hora(miFecha);
-                    facturas.setMonto(Double.parseDouble(tabla.getValueAt(fila, 4).toString()));
-                    facturas.setArchivo(tabla.getValueAt(fila, 5).toString());
-                    int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
+                    int id = Integer.parseInt((String) tabla.getValueAt(fila, 0));
+                    UIManager.put("OptionPane.yesButtonText", "Si");
+                    UIManager.put("OptionPane.noButtonText", "No");
+                    int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Importante", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
                         try {
-                            facturasDB.actualizarFacturas(facturas);
+                            FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
+                            facturasDB.borrarFactura(id);
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
+                        String nombreFacutra = (String) tabla.getValueAt(fila, 5);
+
+                        String rutaPDF = "C:\\Users\\maxi_\\OneDrive\\Escritorio\\Codigo limpio\\" + nombreFacutra;
+
+                        File archivo = new File(rutaPDF);
+
+                        if (archivo.exists()) {
+                            if (archivo.delete()) {
+                                JOptionPane.showMessageDialog(null, "Factura eliminado");
+                            } else {
+                                System.out.println("No se pudo eliminar el archivo.");
+                            }
+                        } else {
+                            System.out.println("El archivo no existe.");
+                        }
                     }
+                }
+                try {
+                    construirTabla(0, null);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        btnAbrirPdf = new JButton("Abrir PDF");
+        btnAbrirPdf.setBounds(600, 160, 200, 30);
+        btnAbrirPdf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int filaSeleccionada = tabla.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    String nombreFacutra = (String) tabla.getValueAt(filaSeleccionada, 5);
+                    // Ruta al archivo PDF
+                    String rutaPDF = "C:\\Users\\maxi_\\OneDrive\\Escritorio\\Codigo limpio\\" + nombreFacutra;
+                    File archivoPDF = new File(rutaPDF);
+                    // ver si el pdf existe
+                    if (archivoPDF.exists()) {
+                        try {
+                            Desktop.getDesktop().open(archivoPDF);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La factura seleccionada no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecciona un cliente de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -181,6 +216,7 @@ public class PanelFactura extends JPanel {
         add(btnGuardar);
         add(btnBorrar);
         add(btnActualizar);
+        add(btnAbrirPdf);
         scroll.setViewportView(tabla);
         setLayout(null);
     }
