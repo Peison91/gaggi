@@ -1,3 +1,5 @@
+package Opciones;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,6 +13,8 @@ public class Opciones extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
         setVisible(true);
+        PanelOpciones panelOpciones = new PanelOpciones();
+        add(panelOpciones);
     }
 
 

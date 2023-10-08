@@ -1,5 +1,6 @@
 package Factura;
 
+import Opciones.PanelOpciones;
 import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;
@@ -154,7 +155,7 @@ public class PanelFactura extends JPanel {
 
                         if (archivo.exists()) {
                             if (archivo.delete()) {
-                                JOptionPane.showMessageDialog(null, "Factura eliminado");
+                                JOptionPane.showMessageDialog(null, "Factura eliminada");
                             } else {
                                 System.out.println("No se pudo eliminar el archivo.");
                             }
@@ -178,8 +179,9 @@ public class PanelFactura extends JPanel {
                 int filaSeleccionada = tabla.getSelectedRow();
                 if (filaSeleccionada != -1) {
                     String nombreFacutra = (String) tabla.getValueAt(filaSeleccionada, 5);
-                    // Ruta al archivo PDF
-                    String rutaPDF = "C:\\Users\\maxi_\\OneDrive\\Escritorio\\Codigo limpio\\" + nombreFacutra;
+                    PanelOpciones opciones = new PanelOpciones();
+                    String rutaCarpeta = opciones.getRutaCarpeta();
+                    String rutaPDF = (rutaCarpeta + nombreFacutra);
                     File archivoPDF = new File(rutaPDF);
                     // ver si el pdf existe
                     if (archivoPDF.exists()) {

@@ -1,6 +1,7 @@
 import Clientes.ClientesEditarFrame;
 import Clientes.ClientesNuevoFrame;
 import Factura.FacturaFrame;
+import Opciones.Opciones;
 import Productos.ProductosEditarFrame;
 import Productos.ProductosNuevosFrame;
 import Proveedores.ProveedoresEditarFrame;

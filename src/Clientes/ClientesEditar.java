@@ -135,7 +135,7 @@ public class ClientesEditar extends JPanel {
     }
 
     private String[][] obtenerMatriz() throws Exception{
-        DBConection conecc = new DBConection("localhost", "root", "root");
+        DBConection conecc = new DBConection("localhost", "root", "selfa");
         conecc.conectar();
         ClientesDB clientesDB = new ClientesDB(conecc);
         List<Clientes> lstClientes = clientesDB.todosClientes();
