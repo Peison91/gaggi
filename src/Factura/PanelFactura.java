@@ -36,7 +36,7 @@ public class PanelFactura extends JPanel {
 
     public PanelFactura() throws Exception {
         btnCliente = new JButton("Seleccione Cliente");
-        btnCliente.setBounds(550, 20, 200, 30);
+        btnCliente.setBounds(600, 20, 210, 30);
         btnCliente.addActionListener(e -> {
             try {
                 FrameTablaClientes tablaClientes = new FrameTablaClientes();
@@ -103,7 +103,7 @@ public class PanelFactura extends JPanel {
         scroll.setBounds(15, 270, 800, 400);
         construirTabla(0, null);
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(300, 160, 200, 30);
+        btnGuardar.setBounds(300, 160, 100, 30);
         btnGuardar.addActionListener(e -> {
             FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
             int idCliente = clienteID;
@@ -126,9 +126,45 @@ public class PanelFactura extends JPanel {
             }
         });
         btnBorrar = new JButton("Eliminar");
-        btnBorrar.setBounds(600, 850, 100, 25);
+        btnBorrar.setBounds(600, 220, 100, 30);
         btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(710, 850, 100, 25);
+        btnActualizar.setBounds(710, 220, 100, 30);
+        btnActualizar.addActionListener(new ActionListener() {
+            FacturasDB facturasDB = new FacturasDB(Conexion.conecc);
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int fila = tabla.getSelectedRow();
+                if (fila == -1) {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar un registro");
+                } else {
+                    Facturas facturas = new Facturas();
+                    facturas.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
+                    facturas.setCliente_id(Integer.parseInt(tabla.getValueAt(fila, 1).toString()));
+                    facturas.setNumero(tabla.getValueAt(fila, 2).toString());
+                    java.util.Date miFecha = new java.util.Date();
+                    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                    String dato = tabla.getValueAt(fila, 3).toString().substring(0, 10);
+                    try {
+                        miFecha = formato.parse(dato);
+                    } catch (ParseException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    facturas.setFecha_hora(miFecha);
+                    facturas.setMonto(Double.parseDouble(tabla.getValueAt(fila, 4).toString()));
+                    facturas.setArchivo(tabla.getValueAt(fila, 5).toString());
+                    int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
+                    if (i == 0) {
+                        try {
+                            facturasDB.actualizarFacturas(facturas);
+                            JOptionPane.showMessageDialog(null, "Modificado correctamente");
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
         btnBorrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,7 +208,7 @@ public class PanelFactura extends JPanel {
             }
         });
         btnAbrirPdf = new JButton("Abrir PDF");
-        btnAbrirPdf.setBounds(600, 160, 200, 30);
+        btnAbrirPdf.setBounds(600, 160, 210, 30);
         btnAbrirPdf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
