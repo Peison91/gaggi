@@ -3,6 +3,7 @@ import Clientes.ClientesNuevoFrame;
 import Factura.FacturaFrame;
 import Opciones.Opciones;
 import Productos.ProductosEditarFrame;
+import Productos.ProductosImportarFrame;
 import Productos.ProductosNuevosFrame;
 import Proveedores.ProveedoresEditarFrame;
 import Proveedores.ProveedoresNuevoFrame;
@@ -16,6 +17,7 @@ public class Panel extends JPanel {
     private ClientesEditarFrame clientesEditarFrame;
     private ProductosNuevosFrame productosFrame;
     private ProductosEditarFrame productosEditarFrame;
+    private ProductosImportarFrame productosImportarFrame;
     private ProveedoresNuevoFrame proveedoresNuevoFrame;
     private ProveedoresEditarFrame proveedoresEditarFrame;
      Panel() {
@@ -67,6 +69,16 @@ public class Panel extends JPanel {
                     throw new RuntimeException(ex);
                 }
             productosEditarFrame.setVisible(true);
+        });
+        JMenuItem importarProductos = new JMenuItem("Importar por archivo");
+        importarProductos.setPreferredSize(new Dimension(150,20));
+        importarProductos.addActionListener(e ->{
+            try {
+                productosImportarFrame = new ProductosImportarFrame();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            productosImportarFrame.setVisible(true);
         });
         JMenuItem nuevoCliente = new JMenuItem("Nuevo");
         nuevoCliente.setPreferredSize(new Dimension(150,20));
@@ -122,6 +134,7 @@ public class Panel extends JPanel {
         barra.add(ventas);
         productos.add(nuevoProducto);
         productos.add(editarProducto);
+        productos.add(importarProductos);
         clientes.add(nuevoCliente);
         clientes.add(editarCliente);
         proveedor.add(nuevoProveedor);
