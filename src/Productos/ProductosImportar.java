@@ -7,7 +7,6 @@ import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import javax.swing.*;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -44,13 +43,6 @@ public class ProductosImportar extends JPanel {
         }
     }
     private void procesarArchivoSeleccionado() throws IOException {
-
-        File f = new File("C:\\Users\\PABLO\\Downloads\\precios.xlsx");
-        InputStream inp = new FileInputStream(f);
-        Workbook wb = WorkbookFactory.create(inp);
-        Sheet sheet = (Sheet) wb.getSheet(String.valueOf(0));
-
-
         Conexion.conectar();
         if (archivoElegido != null) {
             FileInputStream file = new FileInputStream(archivoElegido);
@@ -58,7 +50,5 @@ public class ProductosImportar extends JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un archivo antes de procesar.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
-
 }
