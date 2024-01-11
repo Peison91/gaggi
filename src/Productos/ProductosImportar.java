@@ -6,6 +6,7 @@ import com.gaggi.database.ProductosDB;
 import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.swing.*;
 import java.io.*;
@@ -47,6 +48,8 @@ public class ProductosImportar extends JPanel {
         if (archivoElegido != null) {
             FileInputStream file = new FileInputStream(archivoElegido);
             XSSFWorkbook excel = new XSSFWorkbook(file);
+            XSSFSheet hoja = excel.getSheetAt(0);
+
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un archivo antes de procesar.", "Error", JOptionPane.ERROR_MESSAGE);
         }
