@@ -214,11 +214,9 @@ public class PanelFactura extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int filaSeleccionada = tabla.getSelectedRow();
                 if (filaSeleccionada != -1) {
-                    String nombreFacutra = (String) tabla.getValueAt(filaSeleccionada, 5);
-                    PanelOpciones opciones = new PanelOpciones();
-                    String rutaCarpeta = opciones.getRutaCarpeta();
-                    String rutaPDF = (rutaCarpeta + nombreFacutra);
-                    File archivoPDF = new File(rutaPDF);
+                    String nombreFactura = (String) tabla.getValueAt(filaSeleccionada, 5);
+                    String rutaCarpeta = System.getProperty("user.dir");
+                    File archivoPDF = new File(rutaCarpeta, nombreFactura);
                     // ver si el pdf existe
                     if (archivoPDF.exists()) {
                         try {

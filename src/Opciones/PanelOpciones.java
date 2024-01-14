@@ -1,25 +1,39 @@
-package Opciones;
+/*package Opciones;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.prefs.Preferences;
 
 public class PanelOpciones extends JPanel {
-    
-    public PanelOpciones() {
-        // Configura el diseño del panel.
-        setLayout(new FlowLayout());
+    private static final List<PanelOpciones> panelesRegistrados = new ArrayList<>();
+    private static final String PREF_LOOK_AND_FEEL = "lookAndFeel";
 
-        // Crea un JComboBox con opciones de Look and Feel.
+    public PanelOpciones() {
+        setLayout(new FlowLayout());
+        JLabel etiqueta = new JLabel("Seleccione apariencia de la interfaz: ");
         String[] opcionesLookAndFeel = {"Metal", "Nimbus", "Windows", "Motif", "GTK"};
         JComboBox<String> lookAndFeelComboBox = new JComboBox<>(opcionesLookAndFeel);
         lookAndFeelComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cambiarLookAndFeel((String) lookAndFeelComboBox.getSelectedItem());
+                String selectedLookAndFeel = (String) lookAndFeelComboBox.getSelectedItem();
+                cambiarLookAndFeel(selectedLookAndFeel);
+                guardarPreferencia(selectedLookAndFeel);
             }
         });
+        add(etiqueta);
         add(lookAndFeelComboBox);
+
+        // Registra este panel en la lista global.
+        panelesRegistrados.add(this);
+
+        // Configura el Look and Feel inicial.
+        String lookAndFeelInicial = obtenerPreferencia();
+        cambiarLookAndFeel(lookAndFeelInicial);
     }
 
     private void cambiarLookAndFeel(String selectedLookAndFeel) {
@@ -27,8 +41,8 @@ public class PanelOpciones extends JPanel {
             // Cambia el Look and Feel según la selección del usuario.
             UIManager.setLookAndFeel(getLookAndFeelClassName(selectedLookAndFeel));
 
-            // Actualiza el UI de la aplicación.
-            SwingUtilities.updateComponentTreeUI(this);
+            // Actualiza el UI de la aplicación para todos los paneles registrados.
+            actualizarLookAndFeelEnTodosLosPaneles();
 
             // Repinta la ventana para aplicar los cambios.
             SwingUtilities.invokeLater(new Runnable() {
@@ -43,6 +57,22 @@ public class PanelOpciones extends JPanel {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void actualizarLookAndFeelEnTodosLosPaneles() {
+        for (PanelOpciones panel : panelesRegistrados) {
+            SwingUtilities.updateComponentTreeUI(panel);
+        }
+    }
+
+    private void guardarPreferencia(String lookAndFeel) {
+        Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
+        prefs.put(PREF_LOOK_AND_FEEL, lookAndFeel);
+    }
+
+    private String obtenerPreferencia() {
+        Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
+        return prefs.get(PREF_LOOK_AND_FEEL, UIManager.getCrossPlatformLookAndFeelClassName());
     }
 
     private String getLookAndFeelClassName(String lookAndFeelName) {
@@ -61,10 +91,4 @@ public class PanelOpciones extends JPanel {
                 return UIManager.getCrossPlatformLookAndFeelClassName();
         }
     }
-
-    public String getRutaCarpeta() {
-
-        return null;
-    }
-}
-
+}*/
