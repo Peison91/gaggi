@@ -1,6 +1,5 @@
 package Factura;
 
-import Opciones.PanelOpciones;
 import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;

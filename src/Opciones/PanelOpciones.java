@@ -1,4 +1,4 @@
-/*package Opciones;
+package Opciones;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 public class PanelOpciones extends JPanel {
+    /*
     private static final List<PanelOpciones> panelesRegistrados = new ArrayList<>();
     private static final String PREF_LOOK_AND_FEEL = "lookAndFeel";
 
@@ -91,4 +92,5 @@ public class PanelOpciones extends JPanel {
                 return UIManager.getCrossPlatformLookAndFeelClassName();
         }
     }
-}*/
+    */
+}

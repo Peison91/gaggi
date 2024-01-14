@@ -55,33 +55,36 @@ public class GestionaExcel {
             */
 
             ArrayList<Productos> lista = new ArrayList<>();
+
             while(filas.hasNext()) {
                 filaActual = filas.next();
                 columnas = filaActual.cellIterator();
-                int codigoProducto = -1;
+                int codigoProducto = 0;
                 String descProducto = null;
-                double precioProducto = -1.0;
+                double precioProducto = 0.0;
+                boolean codigoEntero = false;
 
                 while (columnas.hasNext()) {
                     columnaActual = columnas.next();
-                    if (columnaActual.getCellType() == CellType.NUMERIC) {
-                        int columnIndex = columnaActual.getColumnIndex();
-                        switch (columnIndex) {
-                            case 0: // Código de producto
+                    if (columnaActual.getCellType() == CellType.NUMERIC){
+                        codigoEntero = true;
+                        int indiceColumna = columnaActual.getColumnIndex();
+                        switch (indiceColumna){
+                            case 0: // columna A
                                 codigoProducto = (int) columnaActual.getNumericCellValue();
                                 break;
-                            case 1: // Descripción de producto
+                            case 1: // columna B
                                 descProducto = columnaActual.getStringCellValue();
                                 break;
-                            case 3: // Precio de producto
+                            case 3: // columna D
                                 precioProducto = columnaActual.getNumericCellValue();
                                 break;
                         }
                     }
-                    if (codigoProducto != -1 && descProducto != null && precioProducto != -1.0) {
-                        Productos producto = new Productos(codigoProducto, descProducto, precioProducto);
-                        lista.add(producto);
-                    }
+                }
+                if(codigoEntero){
+                    Productos producto = new Productos(codigoProducto, descProducto, precioProducto);
+                    lista.add(producto);
                 }
             }
             for (Productos producto : lista) {
