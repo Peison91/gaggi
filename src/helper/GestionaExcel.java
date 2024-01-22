@@ -1,8 +1,6 @@
 package helper;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -10,9 +8,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 
 public class GestionaExcel {
@@ -30,63 +27,42 @@ public class GestionaExcel {
 
             Row filaActual;
             Cell columnaActual;
-            /*
-            while(filas.hasNext()){
-                filaActual = filas.next();
-                columnas = filaActual.cellIterator();
-
-                while(columnas.hasNext()){
-                    columnaActual = columnas.next();
-                    if (columnaActual.getCellType() == CellType.STRING){
-                        String valor = columnaActual.getStringCellValue();
-                        System.out.println(valor);
-                    }
-                    if (columnaActual.getCellType() == CellType.NUMERIC){
-                        double valor = columnaActual.getNumericCellValue();
-                        System.out.println(valor);
-                    }
-                    if (columnaActual.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(columnaActual)){
-                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                        Date fecha = columnaActual.getDateCellValue();
-                        System.out.println(formato.format(fecha));
-                    }
-                }
-            }
-            */
 
             ArrayList<Productos> lista = new ArrayList<>();
 
-            while(filas.hasNext()) {
+            while (filas.hasNext()) {
+
                 filaActual = filas.next();
                 columnas = filaActual.cellIterator();
                 int codigoProducto = 0;
                 String descProducto = null;
                 double precioProducto = 0.0;
-                boolean codigoEntero = false;
+                boolean auxiliar = false;
 
                 while (columnas.hasNext()) {
                     columnaActual = columnas.next();
-                    if (columnaActual.getCellType() == CellType.NUMERIC){
-                        codigoEntero = true;
-                        int indiceColumna = columnaActual.getColumnIndex();
-                        switch (indiceColumna){
-                            case 0: // columna A
-                                codigoProducto = (int) columnaActual.getNumericCellValue();
-                                break;
+                    int indiceColumna = columnaActual.getColumnIndex();
+                    if (indiceColumna == 0 && convertirEntero(columnaActual)) {
+                        codigoProducto = Integer.parseInt(columnaActual.toString());
+                        auxiliar = true;
+                    }
+                    if (auxiliar){
+                        switch (indiceColumna) {
                             case 1: // columna B
                                 descProducto = columnaActual.getStringCellValue();
                                 break;
                             case 3: // columna D
-                                precioProducto = columnaActual.getNumericCellValue();
+                                precioProducto = Double.parseDouble(convertirPrecio(columnaActual.getStringCellValue()));
                                 break;
                         }
                     }
                 }
-                if(codigoEntero){
+                if (codigoProducto != 0) {
                     Productos producto = new Productos(codigoProducto, descProducto, precioProducto);
                     lista.add(producto);
                 }
             }
+
             for (Productos producto : lista) {
                 System.out.println(producto);
             }
@@ -97,6 +73,44 @@ public class GestionaExcel {
             e.printStackTrace();
         }
     }
+    private boolean convertirEntero(Cell columnaCodigo){
+        try{
+            Integer.parseInt(columnaCodigo.toString());
+            return true;
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
+    }
+    private String formatoPrecio(String precio){
+        DecimalFormat formato = new DecimalFormat("#.##");
+        return formato.format(precio);
+    }
+    private String convertirPrecio(String precio){
+        StringBuilder miNumero = new StringBuilder();
+        char c;
+        char d = 0;
+        for(int i=0; precio.length()>i; i++ ) {
+            c = precio.charAt(i);
+            if (c == '.') {
+                d = 0;
+            }
+            if(c == ',')
+            {
+                d = '.';
+            }
+            if(c=='.' || c==',')
+            {
+                miNumero.append(d);
+            }
+            else {
+                miNumero.append(c);
+            }
+
+        }
+        return miNumero.toString();
+    }
+
     class Productos {
         private int codigoProducto;
         private String descProducto;
