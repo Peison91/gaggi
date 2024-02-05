@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GestionaExcel {
-    public void EjecutarProceso(){
+    public void EjecutarProceso() {
         String directorioActual = System.getProperty("user.dir");
-        File archivo = new File(directorioActual,"precios.xlsx");
+        File archivo = new File(directorioActual, "precios.xlsx");
 
         try {
             InputStream input = new FileInputStream(archivo);
@@ -46,13 +46,13 @@ public class GestionaExcel {
                         codigoProducto = Integer.parseInt(columnaActual.toString());
                         auxiliar = true;
                     }
-                    if (auxiliar){
+                    if (auxiliar) {
                         switch (indiceColumna) {
                             case 1: // columna B
                                 descProducto = columnaActual.getStringCellValue();
                                 break;
                             case 3: // columna D
-                                precioProducto = Double.parseDouble(convertirPrecio(columnaActual.getStringCellValue()));
+                                precioProducto = convertirPrecio(columnaActual.getStringCellValue());
                                 break;
                         }
                     }
@@ -63,30 +63,65 @@ public class GestionaExcel {
                 }
             }
 
-            for (Productos producto : lista) {
-                System.out.println(producto);
+            for(Productos producto : lista){
+                System.out.println("Codigo Producto :" + producto.getCodigoProducto() + " Desc: " + producto.getDescProducto() + " Precio: " + producto.getPrecioProducto());
             }
             input.close();
             libro.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
-    private boolean convertirEntero(Cell columnaCodigo){
-        try{
+
+
+
+    private boolean convertirEntero(Cell columnaCodigo) {
+        try {
             Integer.parseInt(columnaCodigo.toString());
             return true;
-        }
-        catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
     }
-    private String formatoPrecio(String precio){
+
+    private String formatoPrecio(String precio) {
         DecimalFormat formato = new DecimalFormat("#.##");
         return formato.format(precio);
     }
-    private String convertirPrecio(String precio){
+
+    private Double convertirPrecio(String precio) {
+        StringBuilder formateada = new StringBuilder();
+        char c;
+
+        for (int i = 0; i < precio.length(); i++) {
+            c = precio.charAt(i);
+
+            if (Character.isDigit(c)) {
+                formateada.append(c);
+            } else if (c == '.' || c == ',') {
+                formateada.append('.');
+            }
+        }
+
+        String resultadoFinal = formateada.toString();
+
+        if (!resultadoFinal.isEmpty()) {
+            // Reemplazar puntos adicionales con un solo punto
+            resultadoFinal = resultadoFinal.replaceAll("\\.(?=.*\\.)", "");
+
+            try {
+                return Double.parseDouble(resultadoFinal);
+            } catch (NumberFormatException e) {
+                System.err.println("Error al convertir precio: " + e.getMessage());
+            }
+        }
+
+        return 0.0;
+    }
+
+    /*private String convertirPrecio(String precio){
         StringBuilder miNumero = new StringBuilder();
         char c;
         char d = 0;
@@ -109,6 +144,48 @@ public class GestionaExcel {
 
         }
         return miNumero.toString();
+    }*/
+
+    private Double convertirPrecioss (String precio) {
+        // Método que convierte una cadena de precio a un valor Double
+
+        StringBuilder formateada = new StringBuilder();
+        char c;
+
+        for (int i = 0; i < precio.length(); i++) {
+            c = precio.charAt(i);
+
+            if (Character.isDigit(c)) {
+                formateada.append(c);
+            } else if (c == '.' || c == ',') {
+                formateada.append('.');
+            }
+        }
+        // Recorre cada carácter en la cadena de precio y forma una nueva cadena
+        // remplazando las comas y puntos por un solo punto
+
+        String resultadoFinal = formateada.toString();
+        // Convierte el StringBuilder a una cadena para facilitar su manipulación
+
+        if (!resultadoFinal.isEmpty()) {
+            // Verifica que la cadena final no esté vacía
+
+            // Reemplazar puntos adicionales con un solo punto usando expresión regular
+            resultadoFinal = resultadoFinal.replaceAll("\\.(?=.*\\.)", "");
+            // La expresión regular "\\.(?=.*\\.)" busca puntos que tengan al menos otro punto después,
+            // y los reemplaza por una cadena vacía, eliminándolos.
+
+            try {
+                return Double.parseDouble(resultadoFinal);
+                // Intenta convertir la cadena resultante a un valor Double
+            } catch (NumberFormatException e) {
+                System.err.println("Error al convertir precio: " + e.getMessage());
+                // Captura cualquier excepción que pueda ocurrir durante la conversión
+            }
+        }
+
+        return 0.0;
+        // Si no se puede convertir, devuelve 0.0
     }
 
     class Productos {
@@ -121,7 +198,32 @@ public class GestionaExcel {
             this.descProducto = descProducto;
             this.precioProducto = precioProducto;
         }
+
+        public int getCodigoProducto() {
+            return codigoProducto;
+        }
+
+        public void setCodigoProducto(int codigoProducto) {
+            this.codigoProducto = codigoProducto;
+        }
+
+        public String getDescProducto() {
+            return descProducto;
+        }
+
+        public void setDescProducto(String descProducto) {
+            this.descProducto = descProducto;
+        }
+
+        public double getPrecioProducto() {
+            return precioProducto;
+        }
+
+        public void setPrecioProducto(double precioProducto) {
+            this.precioProducto = precioProducto;
+        }
     }
+
     public static void main(String[] args) {
         GestionaExcel g1 = new GestionaExcel();
         g1.EjecutarProceso();
