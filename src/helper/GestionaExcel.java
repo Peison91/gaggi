@@ -1,5 +1,9 @@
 package helper;
 
+import Utiles.Conexion;
+import com.gaggi.database.DBConection;
+import com.gaggi.database.ProductosDB;
+import com.gaggi.model.Productos;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -8,14 +12,20 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GestionaExcel {
-    public void EjecutarProceso() {
+
+
+
+
+    public void EjecutarProceso() throws Exception {
         String directorioActual = System.getProperty("user.dir");
         File archivo = new File(directorioActual, "precios.xlsx");
+        ArrayList<Productos> lista = new ArrayList<>();
 
         try {
             InputStream input = new FileInputStream(archivo);
@@ -28,7 +38,7 @@ public class GestionaExcel {
             Row filaActual;
             Cell columnaActual;
 
-            ArrayList<Productos> lista = new ArrayList<>();
+
 
             while (filas.hasNext()) {
 
@@ -70,6 +80,17 @@ public class GestionaExcel {
             libro.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        ProductosDB productosDB = new ProductosDB(Conexion.conectar());
+
+
+        for(Productos producto : lista){
+            String codigoProduc = String.valueOf(producto.getCodigoProducto());
+
+            //Buscar forma de poder cargar stock_minimo y stock como null
+            com.gaggi.model.Productos produc = new com.gaggi.model.Productos(0,producto.getDescProducto(),codigoProduc,null,
+                    producto.getPrecioProducto(),0,0);
+            productosDB.insertarProducto(produc);
         }
 
 
@@ -224,7 +245,7 @@ public class GestionaExcel {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         GestionaExcel g1 = new GestionaExcel();
         g1.EjecutarProceso();
     }
