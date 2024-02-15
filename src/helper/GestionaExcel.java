@@ -13,13 +13,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class GestionaExcel {
 
 
+    private Connection conn;
 
 
     public void EjecutarProceso() throws Exception {
@@ -37,7 +41,6 @@ public class GestionaExcel {
 
             Row filaActual;
             Cell columnaActual;
-
 
 
             while (filas.hasNext()) {
@@ -73,7 +76,7 @@ public class GestionaExcel {
                 }
             }
 
-            for(Productos producto : lista){
+            for (Productos producto : lista) {
                 System.out.println("Codigo Producto :" + producto.getCodigoProducto() + " Desc: " + producto.getDescProducto() + " Precio: " + producto.getPrecioProducto());
             }
             input.close();
@@ -81,21 +84,39 @@ public class GestionaExcel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         ProductosDB productosDB = new ProductosDB(Conexion.conectar());
 
 
-        for(Productos producto : lista){
+        for (Productos producto : lista) {
             String codigoProduc = String.valueOf(producto.getCodigoProducto());
 
-            //Buscar forma de poder cargar stock_minimo y stock como null
-            com.gaggi.model.Productos produc = new com.gaggi.model.Productos(0,producto.getDescProducto(),codigoProduc,null,
-                    producto.getPrecioProducto(),0,0);
-            productosDB.insertarProducto(produc);
+            com.gaggi.model.Productos produc = consultaProductoCodigo((Connection) Conexion.conecc,codigoProduc);
+            // ESTO ES LO ULTIMO QUE SE AGREGO.
+            if(produc == null){
+                com.gaggi.model.Productos productoInsertar = new com.gaggi.model.Productos(0, producto.getDescProducto()
+                        , codigoProduc
+                        , null,
+                        producto.getPrecioProducto(),
+                        0,
+                        0);
+
+                productosDB.insertarProducto(productoInsertar);
+
+            }else if(produc != null && producto.getPrecioProducto() != produc.getPrecio()){
+
+                produc.setPrecio(producto.precioProducto);
+                productosDB.actualizarProducto(produc);
+            }
+
+
+
+
+
         }
 
 
     }
-
 
 
     private boolean convertirEntero(Cell columnaCodigo) {
@@ -142,32 +163,7 @@ public class GestionaExcel {
         return 0.0;
     }
 
-    /*private String convertirPrecio(String precio){
-        StringBuilder miNumero = new StringBuilder();
-        char c;
-        char d = 0;
-        for(int i=0; precio.length()>i; i++ ) {
-            c = precio.charAt(i);
-            if (c == '.') {
-                d = 0;
-            }
-            if(c == ',')
-            {
-                d = '.';
-            }
-            if(c=='.' || c==',')
-            {
-                miNumero.append(d);
-            }
-            else {
-                miNumero.append(c);
-            }
-
-        }
-        return miNumero.toString();
-    }*/
-
-    private Double convertirPrecioss (String precio) {
+    private Double convertirPrecioss(String precio) {
         // Método que convierte una cadena de precio a un valor Double
 
         StringBuilder formateada = new StringBuilder();
@@ -182,32 +178,52 @@ public class GestionaExcel {
                 formateada.append('.');
             }
         }
-        // Recorre cada carácter en la cadena de precio y forma una nueva cadena
-        // remplazando las comas y puntos por un solo punto
+
 
         String resultadoFinal = formateada.toString();
-        // Convierte el StringBuilder a una cadena para facilitar su manipulación
+
 
         if (!resultadoFinal.isEmpty()) {
-            // Verifica que la cadena final no esté vacía
 
-            // Reemplazar puntos adicionales con un solo punto usando expresión regular
             resultadoFinal = resultadoFinal.replaceAll("\\.(?=.*\\.)", "");
-            // La expresión regular "\\.(?=.*\\.)" busca puntos que tengan al menos otro punto después,
-            // y los reemplaza por una cadena vacía, eliminándolos.
+
 
             try {
                 return Double.parseDouble(resultadoFinal);
-                // Intenta convertir la cadena resultante a un valor Double
+
             } catch (NumberFormatException e) {
                 System.err.println("Error al convertir precio: " + e.getMessage());
-                // Captura cualquier excepción que pueda ocurrir durante la conversión
+
             }
         }
 
         return 0.0;
-        // Si no se puede convertir, devuelve 0.0
+
     }
+// METODO PARA TRAER PRODUCTOS POR CODIGO. REVISAR TEMA DE CONEXION
+    public com.gaggi.model.Productos consultaProductoCodigo(Connection conn, String codigo) throws Exception {
+        try {
+            String sql = "SELECT * FROM productos where codigo=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, codigo);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return new com.gaggi.model.Productos(result.getInt("id"),
+                        result.getString("descripcion"), result.getString("codigo"),
+                        result.getString("abreviatura"), result.getDouble("precio"),
+                        result.getInt("stock_minimo"), result.getInt("stock"));
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+
+
 
     class Productos {
         private int codigoProducto;
@@ -243,7 +259,9 @@ public class GestionaExcel {
         public void setPrecioProducto(double precioProducto) {
             this.precioProducto = precioProducto;
         }
+
     }
+
 
     public static void main(String[] args) throws Exception {
         GestionaExcel g1 = new GestionaExcel();
