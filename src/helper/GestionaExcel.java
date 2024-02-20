@@ -23,7 +23,8 @@ import java.util.List;
 public class GestionaExcel {
 
 
-    private Connection conn;
+
+
 
 
     public void EjecutarProceso() throws Exception {
@@ -91,7 +92,7 @@ public class GestionaExcel {
         for (Productos producto : lista) {
             String codigoProduc = String.valueOf(producto.getCodigoProducto());
 
-            com.gaggi.model.Productos produc = consultaProductoCodigo((Connection) Conexion.conecc,codigoProduc);
+            com.gaggi.model.Productos produc = productosDB.consultaProductoCodigo(codigoProduc);
             // ESTO ES LO ULTIMO QUE SE AGREGO.
             if(produc == null){
                 com.gaggi.model.Productos productoInsertar = new com.gaggi.model.Productos(0, producto.getDescProducto()
@@ -107,6 +108,9 @@ public class GestionaExcel {
 
                 produc.setPrecio(producto.precioProducto);
                 productosDB.actualizarProducto(produc);
+                System.out.println("Se modificaron precios");
+            }else{
+                System.out.println("Todos los produtcos ya estan cargados");
             }
 
 
@@ -200,27 +204,9 @@ public class GestionaExcel {
         return 0.0;
 
     }
-// METODO PARA TRAER PRODUCTOS POR CODIGO. REVISAR TEMA DE CONEXION
-    public com.gaggi.model.Productos consultaProductoCodigo(Connection conn, String codigo) throws Exception {
-        try {
-            String sql = "SELECT * FROM productos where codigo=?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, codigo);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                return new com.gaggi.model.Productos(result.getInt("id"),
-                        result.getString("descripcion"), result.getString("codigo"),
-                        result.getString("abreviatura"), result.getDouble("precio"),
-                        result.getInt("stock_minimo"), result.getInt("stock"));
-            } else {
-                return null;
-            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
+
+
 
 
 

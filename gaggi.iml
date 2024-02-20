@@ -31,15 +31,6 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/gaggi.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/jcalendar-1.4.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -92,5 +83,15 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="auxiliary" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/mod/gaggi/out/artifacts/gaggi_jar/gaggi.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="gaggi" level="project" />
   </component>
 </module>
