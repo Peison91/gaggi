@@ -3,6 +3,7 @@ package Productos;
 import Utiles.Conexion;
 import com.gaggi.database.DBConection;
 import com.gaggi.database.ProductosDB;
+import helper.GestionaExcel;
 import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.*;
@@ -17,6 +18,7 @@ public class ProductosImportar extends JPanel {
     JButton importarArchivo;
     JButton procesarArchivo;
     private File archivoElegido;
+    GestionaExcel gestionaExcel = new GestionaExcel();
     public ProductosImportar() {
         importarArchivo = new JButton("Importar archivo", new ImageIcon("src/imagenes/import.png"));
         importarArchivo.setBounds(100,40,200,40);
@@ -25,8 +27,13 @@ public class ProductosImportar extends JPanel {
         procesarArchivo.setBounds(100,100,200,40);
         procesarArchivo.addActionListener(e-> {
             try {
-                procesarArchivoSeleccionado();
+                gestionaExcel.EjecutarProceso(archivoElegido.toString());
+                JOptionPane.showMessageDialog(this, "Exito al cargar archivo", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al cargar archivo", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                throw new RuntimeException(ex);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al cargar archivo", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
                 throw new RuntimeException(ex);
             }
         });
@@ -43,15 +50,5 @@ public class ProductosImportar extends JPanel {
             JOptionPane.showMessageDialog(this, "Archivo seleccionado", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    private void procesarArchivoSeleccionado() throws IOException {
-        Conexion.conectar();
-        if (archivoElegido != null) {
-            FileInputStream file = new FileInputStream(archivoElegido);
-            XSSFWorkbook excel = new XSSFWorkbook(file);
-            XSSFSheet hoja = excel.getSheetAt(0);
 
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un archivo antes de procesar.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 }

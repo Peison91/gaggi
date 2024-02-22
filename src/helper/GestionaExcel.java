@@ -1,35 +1,22 @@
 package helper;
 
 import Utiles.Conexion;
-import com.gaggi.database.DBConection;
 import com.gaggi.database.ProductosDB;
-import com.gaggi.model.Productos;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class GestionaExcel {
 
-
-
-
-
-
-    public void EjecutarProceso() throws Exception {
-        String directorioActual = System.getProperty("user.dir");
-        File archivo = new File(directorioActual, "precios.xlsx");
+    public void EjecutarProceso(String excel) throws Exception {
+        File archivo = new File(excel);
         ArrayList<Productos> lista = new ArrayList<>();
 
         try {
@@ -77,9 +64,6 @@ public class GestionaExcel {
                 }
             }
 
-            for (Productos producto : lista) {
-                System.out.println("Codigo Producto :" + producto.getCodigoProducto() + " Desc: " + producto.getDescProducto() + " Precio: " + producto.getPrecioProducto());
-            }
             input.close();
             libro.close();
         } catch (Exception e) {
@@ -93,7 +77,7 @@ public class GestionaExcel {
             String codigoProduc = String.valueOf(producto.getCodigoProducto());
 
             com.gaggi.model.Productos produc = productosDB.consultaProductoCodigo(codigoProduc);
-            // ESTO ES LO ULTIMO QUE SE AGREGO.
+
             if(produc == null){
                 com.gaggi.model.Productos productoInsertar = new com.gaggi.model.Productos(0, producto.getDescProducto()
                         , codigoProduc
@@ -108,14 +92,8 @@ public class GestionaExcel {
 
                 produc.setPrecio(producto.precioProducto);
                 productosDB.actualizarProducto(produc);
-                System.out.println("Se modificaron precios");
-            }else{
-                System.out.println("Todos los produtcos ya estan cargados");
+
             }
-
-
-
-
 
         }
 
@@ -167,50 +145,6 @@ public class GestionaExcel {
         return 0.0;
     }
 
-    private Double convertirPrecioss(String precio) {
-        // Método que convierte una cadena de precio a un valor Double
-
-        StringBuilder formateada = new StringBuilder();
-        char c;
-
-        for (int i = 0; i < precio.length(); i++) {
-            c = precio.charAt(i);
-
-            if (Character.isDigit(c)) {
-                formateada.append(c);
-            } else if (c == '.' || c == ',') {
-                formateada.append('.');
-            }
-        }
-
-
-        String resultadoFinal = formateada.toString();
-
-
-        if (!resultadoFinal.isEmpty()) {
-
-            resultadoFinal = resultadoFinal.replaceAll("\\.(?=.*\\.)", "");
-
-
-            try {
-                return Double.parseDouble(resultadoFinal);
-
-            } catch (NumberFormatException e) {
-                System.err.println("Error al convertir precio: " + e.getMessage());
-
-            }
-        }
-
-        return 0.0;
-
-    }
-
-
-
-
-
-
-
     class Productos {
         private int codigoProducto;
         private String descProducto;
@@ -248,9 +182,4 @@ public class GestionaExcel {
 
     }
 
-
-    public static void main(String[] args) throws Exception {
-        GestionaExcel g1 = new GestionaExcel();
-        g1.EjecutarProceso();
-    }
 }
