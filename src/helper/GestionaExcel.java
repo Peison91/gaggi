@@ -14,10 +14,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GestionaExcel {
-
+    int  cantidadProducIngresados = 0;
+    int cantidadProducModificados = 0;
     public void EjecutarProceso(String excel) throws Exception {
         File archivo = new File(excel);
         ArrayList<Productos> lista = new ArrayList<>();
+
+
 
         try {
             InputStream input = new FileInputStream(archivo);
@@ -76,6 +79,7 @@ public class GestionaExcel {
         for (Productos producto : lista) {
             String codigoProduc = String.valueOf(producto.getCodigoProducto());
 
+
             com.gaggi.model.Productos produc = productosDB.consultaProductoCodigo(codigoProduc);
 
             if(produc == null){
@@ -87,17 +91,26 @@ public class GestionaExcel {
                         0);
 
                 productosDB.insertarProducto(productoInsertar);
+                cantidadProducIngresados++;
 
             }else if(produc != null && producto.getPrecioProducto() != produc.getPrecio()){
 
                 produc.setPrecio(producto.precioProducto);
                 productosDB.actualizarProducto(produc);
-
+                cantidadProducModificados++;
             }
 
         }
 
+    }
 
+
+    public int getCantidadProducIngresados() {
+        return cantidadProducIngresados;
+    }
+
+    public int getCantidadProducModificados() {
+        return cantidadProducModificados;
     }
 
 

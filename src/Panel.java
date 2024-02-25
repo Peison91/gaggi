@@ -60,7 +60,7 @@ public class Panel extends JPanel {
             }
             productosFrame.setVisible(true);
         });
-        JMenuItem editarProducto = new JMenuItem("Editar");
+        JMenuItem editarProducto = new JMenuItem("Mi Stock");
         editarProducto.setPreferredSize(new Dimension(150,20));
         editarProducto.addActionListener(e -> {
             try {

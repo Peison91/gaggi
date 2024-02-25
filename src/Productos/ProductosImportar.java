@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,7 +29,8 @@ public class ProductosImportar extends JPanel {
         procesarArchivo.addActionListener(e-> {
             try {
                 gestionaExcel.EjecutarProceso(archivoElegido.toString());
-                JOptionPane.showMessageDialog(this, "Exito al cargar archivo", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                String mensajeCargaModif = "Se ingresaron : " + gestionaExcel.getCantidadProducIngresados() + "\nSe modificaron : " + gestionaExcel.getCantidadProducModificados();
+                JOptionPane.showMessageDialog(this, "Éxito al cargar archivo" + "\n" + mensajeCargaModif , "Confirmación", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Error al cargar archivo", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
                 throw new RuntimeException(ex);
@@ -44,6 +46,10 @@ public class ProductosImportar extends JPanel {
     }
     private void importarArchivo() {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.removeChoosableFileFilter(fileChooser.getAcceptAllFileFilter());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos Excel 2007 o superiores", "xlsx");
+        fileChooser.setFileFilter(filter);
+
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             archivoElegido = fileChooser.getSelectedFile();
