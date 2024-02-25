@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.regex.Pattern;
+
 import Utiles.Utiles;
 
 public class ProductosEditar extends JPanel{
@@ -136,11 +138,12 @@ public class ProductosEditar extends JPanel{
         tabla.setModel(modelo);
         TableRowSorter tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
-        if(valor == null){
-            tr.setRowFilter(RowFilter.regexFilter(buscarProducto.getText(), 0));
-        }else{
-            tr.setRowFilter(RowFilter.regexFilter(buscarProducto.getText(), opBuscar));
+        if (valor != null && !valor.isEmpty()) {
+            String valorBuscar = valor.toLowerCase();
+
+            tr.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(valorBuscar), opBuscar));
         }
+
         JTableHeader titulo1 = tabla.getTableHeader();
         tabla.getTableHeader().setReorderingAllowed(false);
         tabla.getTableHeader().setResizingAllowed(false);

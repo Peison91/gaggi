@@ -28,7 +28,8 @@ public class ProductosImportar extends JPanel {
         procesarArchivo.addActionListener(e-> {
             try {
                 gestionaExcel.EjecutarProceso(archivoElegido.toString());
-                JOptionPane.showMessageDialog(this, "Exito al cargar archivo", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                String mensajeCargaModif = "Se ingresaron : " + gestionaExcel.getCantidadProducIngresados() + "\nSe modficaron : " + gestionaExcel.getCantidadProducModificados();
+                JOptionPane.showMessageDialog(this, "Exito al cargar archivo" + "\n" + mensajeCargaModif , "Confirmación", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Error al cargar archivo", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
                 throw new RuntimeException(ex);
