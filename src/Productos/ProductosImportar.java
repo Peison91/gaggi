@@ -45,6 +45,10 @@ public class ProductosImportar extends JPanel {
     }
     private void importarArchivo() {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.removeChoosableFileFilter(fileChooser.getAcceptAllFileFilter());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos Excel 2007 o superiores", "xlsx");
+        fileChooser.setFileFilter(filter);
+
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             archivoElegido = fileChooser.getSelectedFile();
