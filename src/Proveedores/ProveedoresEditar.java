@@ -4,9 +4,7 @@ import com.gaggi.database.ProveedoresDB;
 import com.gaggi.model.Proveedores;
 import javax.swing.UIManager;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -43,9 +41,9 @@ public class ProveedoresEditar extends JPanel {
             }
         });
         btnModificarProveedor = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarProveedor.setBounds(550, 20, 130, 50);
+        btnModificarProveedor.setBounds(550, 20, 130, 30);
         btnEliminarProveedor = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarProveedor.setBounds(738, 20, 130,50);
+        btnEliminarProveedor.setBounds(738, 20, 130,30);
         btnModificarProveedor.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
@@ -98,7 +96,7 @@ public class ProveedoresEditar extends JPanel {
             }
         });
         ConstruirTabla(0,null);
-        scroll.setBounds(20,100,850,350);
+        scroll.setBounds(20,80,850,350);
         add(buscarProveedor);
         add(filtro);
         add(btnModificarProveedor);
@@ -112,6 +110,7 @@ public class ProveedoresEditar extends JPanel {
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
+        ajustarAnchoColumnas();
         TableRowSorter tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
         if(valor == null){
@@ -138,5 +137,14 @@ public class ProveedoresEditar extends JPanel {
             matrizInfo[i][5] = lstProveedores.get(i).getCbu() + "";
         }
         return matrizInfo;
+    }
+    private void ajustarAnchoColumnas() {
+        TableColumnModel columnModel = tabla.getColumnModel();
+        int columnCount = columnModel.getColumnCount();
+        int[] columnWidths = {80, 280, 125, 125, 125, 125};
+        for (int i = 0; i < columnCount; i++) {
+            TableColumn column = columnModel.getColumn(i);
+            column.setPreferredWidth(columnWidths[i]);
+        }
     }
 }

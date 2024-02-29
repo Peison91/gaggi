@@ -108,6 +108,7 @@ public class ClientesEditar extends JPanel {
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
+        ajustarAnchoColumnas();
         TableRowSorter tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
         if(valor == null){
@@ -120,8 +121,6 @@ public class ClientesEditar extends JPanel {
         tabla.getTableHeader().setResizingAllowed(false);
         titulo1.setBackground(new Color(236, 126, 29));
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
-        // Ajustar dimensiones de las columnas
-        ajustarAnchoColumnas();
     }
 
     private void ajustarAnchoColumnas() {

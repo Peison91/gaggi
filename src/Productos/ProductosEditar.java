@@ -3,9 +3,7 @@ import Utiles.Conexion;
 import com.gaggi.database.ProductosDB;
 import com.gaggi.model.Productos;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -46,9 +44,9 @@ public class ProductosEditar extends JPanel{
             }
         });
         btnModificarProd = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarProd.setBounds(550, 20, 130, 50);
+        btnModificarProd.setBounds(550, 20, 130, 30);
         btnEliminarProd = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarProd.setBounds(738, 20, 130,50);
+        btnEliminarProd.setBounds(738, 20, 130,30);
         btnModificarProd.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
@@ -121,7 +119,7 @@ public class ProductosEditar extends JPanel{
             }
         });
         ConstruirTabla(0,null);
-        scroll.setBounds(20,100,850,350);
+        scroll.setBounds(20,80,850,350);
         add(buscarProducto);
         add(filtro);
         add(btnModificarProd);
@@ -135,6 +133,7 @@ public class ProductosEditar extends JPanel{
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
+        ajustarAnchoColumnas();
         TableRowSorter tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
         if (valor != null && !valor.isEmpty()) {
@@ -142,7 +141,6 @@ public class ProductosEditar extends JPanel{
 
             tr.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(valorBuscar), opBuscar));
         }
-
         JTableHeader titulo1 = tabla.getTableHeader();
         tabla.getTableHeader().setReorderingAllowed(false);
         tabla.getTableHeader().setResizingAllowed(false);
@@ -163,5 +161,14 @@ public class ProductosEditar extends JPanel{
             matrizInfo[i][6] = lstProductos.get(i).getStock() + "";
         }
         return matrizInfo;
+    }
+    private void ajustarAnchoColumnas() {
+        TableColumnModel columnModel = tabla.getColumnModel();
+        int columnCount = columnModel.getColumnCount();
+        int[] columnWidths = {80, 300, 80, 200, 100, 100, 100};
+        for (int i = 0; i < columnCount; i++) {
+            TableColumn column = columnModel.getColumn(i);
+            column.setPreferredWidth(columnWidths[i]);
+        }
     }
 }
