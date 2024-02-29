@@ -41,10 +41,7 @@ public class TablaClientes extends JPanel {
     private void ajustarAnchoColumnas() {
         TableColumnModel columnModel = tabla.getColumnModel();
         int columnCount = columnModel.getColumnCount();
-
-        // Anchos preferidos para las columnas (puedes ajustarlos según tus necesidades)
         int[] columnWidths = {50, 200, 100, 250, 200, 100};
-
         for (int i = 0; i < columnCount; i++) {
             TableColumn column = columnModel.getColumn(i);
             column.setPreferredWidth(columnWidths[i]);

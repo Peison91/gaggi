@@ -6,6 +6,8 @@ import com.gaggi.model.Proveedores;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class TablaProveedores extends JPanel {
         JTableHeader titulo1 = tabla.getTableHeader();
         titulo1.setBackground(new Color(236, 126, 29));
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
+        ajustarAnchoColumnas();
     }
     private String[][] obtenerMatriz() throws Exception{
         ProveedoresDB proveedoresDB = new ProveedoresDB(Conexion.conectar());
@@ -44,5 +47,14 @@ public class TablaProveedores extends JPanel {
             matrizInfo[i][5] = lstProveedores.get(i).getCbu() + "";
         }
         return matrizInfo;
+    }
+    private void ajustarAnchoColumnas() {
+        TableColumnModel columnModel = tabla.getColumnModel();
+        int columnCount = columnModel.getColumnCount();
+        int[] columnWidths = {80, 280, 125, 125, 125, 125};
+        for (int i = 0; i < columnCount; i++) {
+            TableColumn column = columnModel.getColumn(i);
+            column.setPreferredWidth(columnWidths[i]);
+        }
     }
 }

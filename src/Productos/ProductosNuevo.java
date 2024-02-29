@@ -18,7 +18,6 @@ class ProductosNuevo extends JPanel {
     TablaProductos tablaProductos = new TablaProductos();
 
     public ProductosNuevo() throws Exception {
-
         setBackground(new Color(214,214,214));
         JLabel nuevoProducto = new JLabel("Nuevo Producto");
         nuevoProducto.setBounds(100, 1, 200, 40);

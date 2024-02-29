@@ -9,9 +9,7 @@ import com.gaggi.model.Facturas;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -253,6 +251,7 @@ public class PanelFactura extends JPanel {
         add(btnActualizar);
         add(btnAbrirPdf);
         scroll.setViewportView(tabla);
+        ajustarAnchoColumnas();
         setLayout(null);
     }
 
@@ -271,12 +270,11 @@ public class PanelFactura extends JPanel {
             tr.setRowFilter(RowFilter.regexFilter(txtBuscar.getText(), opBuscar));
         }
         JTableHeader titulo = tabla.getTableHeader();
-        titulo.setBackground(new Color(211, 108, 45));
+        titulo.setBackground(new Color(236, 126, 29));
         titulo.setFont(new Font("Calibri", Font.BOLD, 14));
-        tabla.getTableHeader().setReorderingAllowed(false);
-        tabla.getTableHeader().setResizingAllowed(false);
-        // tabla.getColumn("EMAIL").setHeaderValue("TELEFONO");
-        //tabla.getColumn("TELEFONO").setHeaderValue("EMAIL");
+        //tabla.getTableHeader().setReorderingAllowed(false);
+        //tabla.getTableHeader().setResizingAllowed(false);
+
     }
 
     public String[][] obtenerMatriz() throws Exception {
@@ -293,7 +291,15 @@ public class PanelFactura extends JPanel {
         }
         return matrizIfno;
     }
-
+    private void ajustarAnchoColumnas() {
+        TableColumnModel columnModel = tabla.getColumnModel();
+        int columnCount = columnModel.getColumnCount();
+        int[] columnWidths = {80, 280, 100, 190, 100, 100};
+        for (int i = 0; i < columnCount; i++) {
+            TableColumn column = columnModel.getColumn(i);
+            column.setPreferredWidth(columnWidths[i]);
+        }
+    }
     public void limpiarTxt(JTextField txt) {
         txt.setText(" ");
     }

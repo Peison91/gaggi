@@ -12,12 +12,11 @@ public class ClientesEditarFrame extends JFrame {
         double alturaPantalla = tamanoPantalla.height;
         double anchoPantalla = tamanoPantalla.width;
         setSize((int) (anchoPantalla/1.51), (int) (alturaPantalla/1.5));
-        setLocation((int) (anchoPantalla/7.45), (int) (alturaPantalla/7.45));
+        setLocationRelativeTo(null);
         Image icono = miPantalla.getImage("src/imagenes/gaggiicon.png");
         setIconImage(icono);
         ClientesEditar clientesEditar = new ClientesEditar();
         add(clientesEditar);
         setVisible(true);
-
     }
 }

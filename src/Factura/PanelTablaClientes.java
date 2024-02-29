@@ -60,7 +60,6 @@ public class PanelTablaClientes extends JPanel {
         ConstruirTabla(0, null);
         scroll.setBounds(20, 100, 600, 200);
         add(buscarCliente);
-
         add(filtro);
         scroll.setViewportView(tabla);
         add(scroll);

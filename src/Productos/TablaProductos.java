@@ -6,6 +6,8 @@ import com.gaggi.model.Productos;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class TablaProductos extends JPanel {
         JTableHeader titulo1 = tabla.getTableHeader();
         titulo1.setBackground(new Color(236, 126, 29));
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
+        ajustarAnchoColumnas();
     }
     private String[][] obtenerMatriz() throws Exception{
         ProductosDB productosDB = new ProductosDB(Conexion.conectar());
@@ -45,5 +48,14 @@ public class TablaProductos extends JPanel {
             matrizInfo[i][6] = lstProductos.get(i).getStock() + "";
         }
         return matrizInfo;
+    }
+    private void ajustarAnchoColumnas() {
+        TableColumnModel columnModel = tabla.getColumnModel();
+        int columnCount = columnModel.getColumnCount();
+        int[] columnWidths = {80, 300, 80, 200, 100, 100, 100};
+        for (int i = 0; i < columnCount; i++) {
+            TableColumn column = columnModel.getColumn(i);
+            column.setPreferredWidth(columnWidths[i]);
+        }
     }
 }

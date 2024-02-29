@@ -19,6 +19,7 @@ public class ClientesEditar extends JPanel {
 
     public ClientesEditar() throws Exception {
         Conexion.conectar();
+
         JComboBox<String> filtro = new JComboBox<>();
         filtro.addItem("ID");
         filtro.addItem("Nombre");
@@ -40,9 +41,9 @@ public class ClientesEditar extends JPanel {
             }
         });
         btnModificarCliente = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarCliente.setBounds(550, 20, 130, 50);
+        btnModificarCliente.setBounds(550, 20, 130, 30);
         btnEliminarCliente = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarCliente.setBounds(738, 20, 130,50);
+        btnEliminarCliente.setBounds(738, 20, 130,30);
         btnModificarCliente.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
@@ -93,7 +94,7 @@ public class ClientesEditar extends JPanel {
             }
         });
         ConstruirTabla(0,null);
-        scroll.setBounds(20,100,850,350);
+        scroll.setBounds(20,80,850,350);
         add(buscarCliente);
         add(filtro);
         add(btnModificarCliente);
