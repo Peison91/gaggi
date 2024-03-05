@@ -1,7 +1,7 @@
 package helper;
 
 import Utiles.Conexion;
-import com.gaggi.database.ProductosDB;
+import database.ProductosDB;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;

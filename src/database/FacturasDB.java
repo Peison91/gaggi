@@ -1,6 +1,5 @@
 package com.gaggi.database;
 
-import com.gaggi.model.Clientes;
 import com.gaggi.model.Facturas;
 
 import java.sql.*;

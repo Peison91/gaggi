@@ -1,10 +1,7 @@
 package Factura;
 
 import Utiles.Conexion;
-import com.gaggi.database.ClientesDB;
-import com.gaggi.database.DBConection;
 import com.gaggi.database.FacturasDB;
-import com.gaggi.model.Clientes;
 import com.gaggi.model.Facturas;
 import com.toedter.calendar.JDateChooser;
 

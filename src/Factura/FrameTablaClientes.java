@@ -1,6 +1,5 @@
 package Factura;
 
-import com.gaggi.model.Clientes;
 import javax.swing.*;
 import java.awt.*;
 

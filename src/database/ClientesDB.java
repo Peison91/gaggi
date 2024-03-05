@@ -1,6 +1,5 @@
 package com.gaggi.database;
-import com.gaggi.model.*;
-import com.gaggi.model.Clientes;
+import model.Clientes;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class ClientesDB {
                 Statement statement = conn.createStatement();
                 ResultSet result = statement.executeQuery(sql);
 
-                List<com.gaggi.model.Clientes> lstClientes = new ArrayList<Clientes>();
+                List<Clientes> lstClientes = new ArrayList<Clientes>();
 
                 while (result.next()) {
                     lstClientes.add(new Clientes(result.getInt("id"), result.getString("nombre"),

@@ -1,6 +1,6 @@
 package Productos;
 import Utiles.Conexion;
-import com.gaggi.database.ProductosDB;
+import database.ProductosDB;
 import com.gaggi.model.Productos;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -9,8 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import Utiles.Utiles;
 
 public class ProductosEditar extends JPanel{
     JScrollPane scroll = new JScrollPane();

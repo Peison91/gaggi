@@ -1,19 +1,10 @@
 package Productos;
 
-import Utiles.Conexion;
-import com.gaggi.database.DBConection;
-import com.gaggi.database.ProductosDB;
 import helper.GestionaExcel;
-import org.apache.poi.sl.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class ProductosImportar extends JPanel {
     JButton importarArchivo;

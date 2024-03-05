@@ -1,6 +1,6 @@
 package Productos;
 import Utiles.Conexion;
-import com.gaggi.database.ProductosDB;
+import database.ProductosDB;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;

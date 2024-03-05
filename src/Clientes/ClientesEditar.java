@@ -2,7 +2,7 @@ package Clientes;
 import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;
-import com.gaggi.model.Clientes;
+import model.Clientes;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;

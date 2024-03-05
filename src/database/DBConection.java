@@ -31,7 +31,7 @@ public class DBConection   {
         }
     }
 
-    protected Connection getConnection(){
+    public Connection getConnection(){
         return conn;
     }
 }
