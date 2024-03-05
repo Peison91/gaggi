@@ -1,22 +1,21 @@
 package Clientes;
+
 import Utiles.Conexion;
-import com.gaggi.database.ClientesDB;
+import database.ClientesDB;
 import model.Clientes;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class ClientesNuevo extends JPanel {
-    JTextField txtNombre;
-    JTextField txtCuit;
-    JTextField txtDireccion;
-    JTextField txtEmail;
-    JTextField txtTelefono;
-    JButton btnGuardar;
-    TablaClientes tablaClientes = new TablaClientes();
-
-    public ClientesNuevo() throws Exception {
-        Conexion.conectar();
+public class VentanaClienteNuevoPanel extends JPanel {
+    private JTextField txtNombre;
+    private JTextField txtCuit;
+    private JTextField txtDireccion;
+    private JTextField txtEmail;
+    private JTextField txtTelefono;
+    private JButton btnGuardar;
+    public VentanaClienteNuevoPanel(){
         setBackground(new Color(214,214,214));
         JLabel titulo = new JLabel("Nuevo Cliente");
         titulo.setBounds(100, 1, 200, 40);
@@ -40,7 +39,7 @@ public class ClientesNuevo extends JPanel {
         txtNombre = new JTextField(15);
         txtNombre.setBounds(100, 33, 600, 30);
         txtNombre.addActionListener(e ->{
-            e.setSource((char)KeyEvent.VK_CLEAR);
+            e.setSource((char) KeyEvent.VK_CLEAR);
             txtCuit.requestFocus();
         });
         txtCuit = new JTextField(15);
@@ -65,7 +64,7 @@ public class ClientesNuevo extends JPanel {
         txtTelefono.setBounds(100, 193, 600, 30);
 
         btnGuardar = new JButton("Guardar", new ImageIcon("src/imagenes/GuardarTodo.png"));
-        btnGuardar.setBounds(750, 33, 120, 50);
+        btnGuardar.setBounds(350, 250, 120, 50);
         btnGuardar.addActionListener(e -> {
             ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
             String nombre1 = txtNombre.getText();
@@ -82,23 +81,22 @@ public class ClientesNuevo extends JPanel {
                 JOptionPane.showMessageDialog(null, "El CUIT debe tener 11 dígitos");
                 return;
             }
-            Clientes clientes = new Clientes(0, nombre1, cuit1, direccion1, email1, telefono1);
             try {
-                clientesDB.insertarCliente(clientes);
-                JOptionPane.showMessageDialog(null,"Cargado correctamente");
+                Clientes cliente = new Clientes(0,nombre1,cuit1,direccion1,email1,telefono1);
+                clientesDB.insertarCliente(cliente);
+
+
+                JOptionPane.showMessageDialog(null,"Se inserto nuevo cliente");
                 LimpiarTxt(txtNombre);
                 LimpiarTxt(txtCuit);
                 LimpiarTxt(txtDireccion);
                 LimpiarTxt(txtEmail);
                 LimpiarTxt(txtTelefono);
             } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null,"Error al cargar");
                 throw new RuntimeException(ex);
             }
-            try {
-                tablaClientes.ConstruirTabla();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
+
         });
 
         add(titulo);
@@ -114,9 +112,10 @@ public class ClientesNuevo extends JPanel {
         add(txtTelefono);
         add(btnGuardar);
         setLayout(null);
-        tablaClientes.setBounds(20,250,850,350);
-        add(tablaClientes);
     }
+
+
+
     public void LimpiarTxt(JTextField e) {
         e.setText("");
     }

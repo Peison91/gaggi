@@ -1,7 +1,7 @@
 package Clientes;
 import Utiles.Conexion;
-import com.gaggi.database.ClientesDB;
 import com.gaggi.database.DBConection;
+import database.ClientesDB;
 import model.Clientes;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -17,6 +17,8 @@ public class ClientesEditar extends JPanel {
     JTextField buscarCliente;
     JButton btnModificarCliente;
     JButton btnEliminarCliente;
+    JButton btnNuevoCliente;
+    static int idCliente;
 
     public ClientesEditar() throws Exception {
         Conexion.conectar();
@@ -41,32 +43,40 @@ public class ClientesEditar extends JPanel {
                 }
             }
         });
+        btnNuevoCliente = new JButton("Nuevo",new ImageIcon("src/imagenes/nuevo.png"));
+        btnNuevoCliente.setBounds(550,20,130,30);
+        btnNuevoCliente.addActionListener(e->{
+                    try {
+                        VentanaClienteNuevoFrame ventana = new VentanaClienteNuevoFrame();
+                        ventana.setVisible(true);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+
+        );
+
         btnModificarCliente = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarCliente.setBounds(550, 20, 130, 30);
+        btnModificarCliente.setBounds(738, 20, 130, 30);
         btnEliminarCliente = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarCliente.setBounds(738, 20, 130,30);
+        btnEliminarCliente.setBounds(926, 20, 130,30);
         btnModificarCliente.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente");
             } else {
-                Clientes clientes = new Clientes();
-                clientes.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
-                clientes.setNombre(tabla.getValueAt(fila, 1).toString());
-                clientes.setCuit(tabla.getValueAt(fila, 2).toString());
-                clientes.setDireccion(tabla.getValueAt(fila, 3).toString());
-                clientes.setEmail(tabla.getValueAt(fila, 4).toString());
-                clientes.setTelefono(tabla.getValueAt(fila, 5).toString());
-                UIManager.put("OptionPane.yesButtonText", "Si");
-                UIManager.put("OptionPane.noButtonText", "No");
-                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
-                if (i == 0) {
-                    try {
-                        ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
-                        clientesDB.actualizarCliente(clientes);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+                try {
+                    VentanaClienteEditarFrame ventana = new VentanaClienteEditarFrame();
+                    ventana.setVisible(true);
+                    idCliente = Integer.parseInt(tabla.getValueAt(fila,0).toString());
+                    VentanaClienteEditarPanel.txtNombre.setText(tabla.getValueAt(fila,1).toString());
+                    VentanaClienteEditarPanel.txtCuit.setText(tabla.getValueAt(fila,2).toString());
+                    VentanaClienteEditarPanel.txtDireccion.setText(tabla.getValueAt(fila,3).toString());
+                    VentanaClienteEditarPanel.txtEmail.setText(tabla.getValueAt(fila,4).toString());
+                    VentanaClienteEditarPanel.txtTelefono.setText(tabla.getValueAt(fila,5).toString());
+
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -100,6 +110,7 @@ public class ClientesEditar extends JPanel {
         add(filtro);
         add(btnModificarCliente);
         add(btnEliminarCliente);
+        add(btnNuevoCliente);
         scroll.setViewportView(tabla);
         add(scroll);
         setLayout(null);

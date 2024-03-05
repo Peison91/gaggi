@@ -1,4 +1,4 @@
-package com.gaggi.database;
+package database;
 import model.Clientes;
 
 import java.sql.*;
@@ -8,7 +8,7 @@ import java.util.List;
 public class ClientesDB {
     Connection conn;
 
-    public ClientesDB(DBConection conexion){
+    public ClientesDB(com.gaggi.database.DBConection conexion){
         this.conn = conexion.getConnection();
     }
 
