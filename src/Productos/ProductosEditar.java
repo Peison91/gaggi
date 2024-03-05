@@ -17,7 +17,9 @@ public class ProductosEditar extends JPanel{
     JTextField buscarProducto;
     JButton btnModificarProd;
     JButton btnEliminarProd;
+    JButton btnNuevoProduc;
     static int idProducto;
+
 
 
     public ProductosEditar() throws Exception {
@@ -43,10 +45,22 @@ public class ProductosEditar extends JPanel{
             }
         });
 
+        btnNuevoProduc = new JButton("Nuevo",new ImageIcon("src/imagenes/nuevo.png"));
+        btnNuevoProduc.setBounds(550,20,130,30);
+        btnNuevoProduc.addActionListener(e->{
+                    try {
+                        VentanaNuevoProductoFrame ventanaNuevo = new VentanaNuevoProductoFrame();
+                        ventanaNuevo.setVisible(true);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                );
+
         btnModificarProd = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarProd.setBounds(550, 20, 130, 30);
+        btnModificarProd.setBounds(738, 20, 130, 30);
         btnEliminarProd = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarProd.setBounds(738, 20, 130,30);
+        btnEliminarProd.setBounds(926, 20, 130,30);
         btnModificarProd.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
@@ -65,48 +79,6 @@ public class ProductosEditar extends JPanel{
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
-
-
-
-                /*Productos producto = new Productos();
-                producto.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
-                producto.setDescripcion(tabla.getValueAt(fila, 1).toString());
-                producto.setCodigo(tabla.getValueAt(fila, 2).toString());
-                producto.setAbreviatura(tabla.getValueAt(fila, 3).toString());
-                //producto.setPrecio(Double.parseDouble(tabla.getValueAt(fila, 4).toString()));
-                // validar carga de datos y mostrar aviso de error
-                if(Utiles.isNumeric(tabla.getValueAt(fila, 4).toString())){
-                    producto.setPrecio(Double.parseDouble(tabla.getValueAt(fila, 4).toString()));
-                }else{
-                    JOptionPane.showMessageDialog(null, "El precio no puede ser un texto", "Información", JOptionPane.INFORMATION_MESSAGE);
-                }
-                //producto.setStock_minimo(Integer.parseInt(tabla.getValueAt(fila, 5).toString()));
-                if(Utiles.isNumeric(tabla.getValueAt(fila, 5).toString())){
-                    producto.setStock_minimo(Integer.parseInt(tabla.getValueAt(fila, 5).toString()));
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "El stock debe ser un número entero", "Información", JOptionPane.INFORMATION_MESSAGE);
-                }
-                //producto.setStock(Integer.parseInt(tabla.getValueAt(fila, 6).toString()));
-                if(Utiles.isNumeric(tabla.getValueAt(fila, 6).toString())){
-                    producto.setStock(Integer.parseInt(tabla.getValueAt(fila, 6).toString()));
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "El stock debe ser un número entero", "Información", JOptionPane.INFORMATION_MESSAGE);
-                }
-                UIManager.put("OptionPane.yesButtonText", "Si");
-                UIManager.put("OptionPane.noButtonText", "No");
-                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
-                if (i == 0) {
-                    try {
-                        ProductosDB productosDB = new ProductosDB(Conexion.conectar());
-                        productosDB.actualizarProducto(producto);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }*/
-
-
             }
         });
 
@@ -141,6 +113,7 @@ public class ProductosEditar extends JPanel{
         add(filtro);
         add(btnModificarProd);
         add(btnEliminarProd);
+        add(btnNuevoProduc);
         scroll.setViewportView(tabla);
         add(scroll);
         setLayout(null);
