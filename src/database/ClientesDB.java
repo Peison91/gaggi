@@ -1,5 +1,6 @@
 package com.gaggi.database;
 import com.gaggi.model.*;
+import com.gaggi.model.Clientes;
 
 import java.sql.*;
 import java.util.ArrayList;

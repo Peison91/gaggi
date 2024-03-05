@@ -13,7 +13,7 @@ import java.util.List;
 public class ProductosDB {
     Connection conn;
 
-    public ProductosDB(DBConection conexion){
+    public ProductosDB(com.gaggi.database.DBConection conexion){
         this.conn = conexion.getConnection();
     }
 

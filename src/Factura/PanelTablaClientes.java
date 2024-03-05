@@ -16,6 +16,8 @@ public class PanelTablaClientes extends JPanel {
     DefaultTableModel modelo = new DefaultTableModel();
     JTextField buscarCliente;
     JButton seleccionarCliente;
+
+
     public PanelTablaClientes() throws Exception {
         JComboBox<String> filtro = new JComboBox<>();
         filtro.addItem("ID");
@@ -57,6 +59,10 @@ public class PanelTablaClientes extends JPanel {
                 }
             }
         });
+
+
+
+
         ConstruirTabla(0, null);
         scroll.setBounds(20, 100, 600, 200);
         add(buscarCliente);
@@ -65,6 +71,10 @@ public class PanelTablaClientes extends JPanel {
         add(scroll);
         add(seleccionarCliente);
         setLayout(null);
+
+
+
+
     }
 
     public void ConstruirTabla(int opBuscar, String valor) throws Exception {

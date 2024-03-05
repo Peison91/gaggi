@@ -1,6 +1,7 @@
 package Clientes;
 import Utiles.Conexion;
 import com.gaggi.database.ClientesDB;
+import com.gaggi.database.DBConection;
 import com.gaggi.model.Clientes;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -134,7 +135,11 @@ public class ClientesEditar extends JPanel {
     }
 
     private String[][] obtenerMatriz() throws Exception{
-        ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
+
+        DBConection conecc = new DBConection("localhost", "root", "root");
+        conecc.conectar();
+        ClientesDB clientesDB = new ClientesDB(conecc);
+
         List<Clientes> lstClientes = clientesDB.todosClientes();
         String[][] matrizInfo = new String[lstClientes.size()][6];
         for(int i=0; i < lstClientes.size(); i++){

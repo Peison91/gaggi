@@ -19,6 +19,7 @@ public class ProductosEditar extends JPanel{
     JTextField buscarProducto;
     JButton btnModificarProd;
     JButton btnEliminarProd;
+    static int idProducto;
 
 
     public ProductosEditar() throws Exception {
@@ -43,6 +44,7 @@ public class ProductosEditar extends JPanel{
                 }
             }
         });
+
         btnModificarProd = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
         btnModificarProd.setBounds(550, 20, 130, 30);
         btnEliminarProd = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
@@ -52,8 +54,23 @@ public class ProductosEditar extends JPanel{
             if (fila == -1) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un producto");
             } else {
-                Productos producto = new Productos();
+                try {
+                    VentanaEditarProductoFrame ventanaEditar = new VentanaEditarProductoFrame();
+                    ventanaEditar.setVisible(true);
+                    idProducto = Integer.parseInt(tabla.getValueAt(fila,0).toString());
+                    VentanaEditarProductoPanel.txtDescr.setText(tabla.getValueAt(fila, 1).toString())  ;
+                    VentanaEditarProductoPanel.txtCodProd.setText(tabla.getValueAt(fila, 2).toString());
+                    VentanaEditarProductoPanel.txtAbrevProd.setText(tabla.getValueAt(fila,3).toString());
+                    VentanaEditarProductoPanel.txtPreciounitProd.setText(tabla.getValueAt(fila,4).toString());
+                    VentanaEditarProductoPanel.txtStockMin.setText(tabla.getValueAt(fila,5).toString());
+                    VentanaEditarProductoPanel.txtStock.setText(tabla.getValueAt(fila,6).toString());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
 
+
+
+                /*Productos producto = new Productos();
                 producto.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
                 producto.setDescripcion(tabla.getValueAt(fila, 1).toString());
                 producto.setCodigo(tabla.getValueAt(fila, 2).toString());
@@ -89,10 +106,12 @@ public class ProductosEditar extends JPanel{
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-                }
+                }*/
+
 
             }
         });
+
         btnEliminarProd.addActionListener(e ->{
             int fila = tabla.getSelectedRow();
             if (fila == -1) {

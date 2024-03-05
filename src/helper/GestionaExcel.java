@@ -46,6 +46,7 @@ public class GestionaExcel {
                 while (columnas.hasNext()) {
                     columnaActual = columnas.next();
                     int indiceColumna = columnaActual.getColumnIndex();
+                    //Se convierte a entero para ignorar cabeceras y filas vacias.
                     if (indiceColumna == 0 && convertirEntero(columnaActual)) {
                         codigoProducto = Integer.parseInt(columnaActual.toString());
                         auxiliar = true;
@@ -85,7 +86,7 @@ public class GestionaExcel {
             if(produc == null){
                 com.gaggi.model.Productos productoInsertar = new com.gaggi.model.Productos(0, producto.getDescProducto()
                         , codigoProduc
-                        , null,
+                        , "s/d",
                         producto.getPrecioProducto(),
                         0,
                         0);

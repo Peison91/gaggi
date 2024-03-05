@@ -42,9 +42,6 @@ public class PanelFactura extends JPanel {
                 throw new RuntimeException(ex);
             }
         });
-        btnCliente.addActionListener(e -> {
-
-        });
         lblId = new JLabel("10");
         /*lblId.setBounds(150, 25, 100, 25);
         //lblId.setText("5");*/
