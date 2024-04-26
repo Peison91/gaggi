@@ -1,6 +1,6 @@
-package com.gaggi.database;
+package database;
 
-import com.gaggi.model.Facturas;
+import model.Facturas;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class FacturasDB {
                 Statement statement = conn.createStatement();
                 ResultSet result = statement.executeQuery(sql);
 
-                List<com.gaggi.model.Facturas> lstFacturas = new ArrayList<Facturas>();
+                List<model.Facturas> lstFacturas = new ArrayList<Facturas>();
 
                 while (result.next()) {
                     lstFacturas.add(new Facturas(result.getInt("id"), result.getInt("cliente_id"),

@@ -1,6 +1,6 @@
 package database;
 
-import com.gaggi.model.Productos;
+import model.Productos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.util.List;
 public class ProductosDB {
     Connection conn;
 
-    public ProductosDB(com.gaggi.database.DBConection conexion){
+    public ProductosDB(database.DBConection conexion){
         this.conn = conexion.getConnection();
     }
 

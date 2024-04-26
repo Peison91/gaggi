@@ -1,8 +1,8 @@
 package Factura;
 
 import Utiles.Conexion;
-import com.gaggi.database.FacturasDB;
-import com.gaggi.model.Facturas;
+import database.FacturasDB;
+import model.Facturas;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -111,7 +111,6 @@ public class PanelFactura extends JPanel {
                 limpiarTxt(txtArchivo);
                 lblId.setText("");
 
-
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -140,6 +139,7 @@ public class PanelFactura extends JPanel {
                         miFecha = formato.parse(dato);
                     } catch (ParseException ex) {
                         throw new RuntimeException(ex);
+
                     }
                     facturas.setFecha_hora(miFecha);
                     facturas.setMonto(Double.parseDouble(tabla.getValueAt(fila, 4).toString()));

@@ -1,7 +1,8 @@
 package Productos;
 import Utiles.Conexion;
+import database.DBConection;
 import database.ProductosDB;
-import com.gaggi.model.Productos;
+import model.Productos;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;

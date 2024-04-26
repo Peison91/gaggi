@@ -1,7 +1,7 @@
 package Proveedores;
 import Utiles.Conexion;
-import com.gaggi.database.ProveedoresDB;
-import com.gaggi.model.Proveedores;
+import database.ProveedoresDB;
+import model.Proveedores;
 import javax.swing.UIManager;
 import javax.swing.*;
 import javax.swing.table.*;

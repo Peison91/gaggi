@@ -8,7 +8,7 @@ import java.util.List;
 public class ClientesDB {
     Connection conn;
 
-    public ClientesDB(com.gaggi.database.DBConection conexion){
+    public ClientesDB(database.DBConection conexion){
         this.conn = conexion.getConnection();
     }
 

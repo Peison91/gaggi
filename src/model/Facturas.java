@@ -1,4 +1,4 @@
-package com.gaggi.model;
+package model;
 
 import java.util.*;
 

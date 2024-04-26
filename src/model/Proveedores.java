@@ -1,4 +1,4 @@
-package com.gaggi.model;
+package model;
 
 public class Proveedores {
     private int id;

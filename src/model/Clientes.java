@@ -12,7 +12,7 @@ public class Clientes {
 
     }
 
-    public Clientes (int id, String nombre, String cuit, String direccion, String telefono, String email ){
+    public Clientes (int id, String nombre, String cuit, String direccion, String email, String telefono ){
         this.id = id;
         this.nombre = nombre;
         this.cuit = cuit;

@@ -1,4 +1,4 @@
-package com.gaggi.model;
+package model;
 
 public class Productos {
     int id;

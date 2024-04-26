@@ -104,7 +104,7 @@ public class VentanaEditarProductoPanel extends JPanel {
                 return;
             }
             try {
-                com.gaggi.model.Productos productoEditar = productosDB.consultaProducto(ProductosEditar.idProducto);
+                model.Productos productoEditar = productosDB.consultaProducto(ProductosEditar.idProducto);
                 productoEditar.setDescripcion(descr);
                 productoEditar.setCodigo(cod);
                 productoEditar.setAbreviatura(abrev);

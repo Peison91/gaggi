@@ -1,11 +1,11 @@
-package com.gaggi.database;
+package database;
 
 import java.sql.*;
 
 public class DBConection   {
     String url = "jdbc:mysql://localhost/gaggidb";
     String user= "root";
-    String passwd= "1M83vZyJdl";
+    String passwd= "rootroot";
     Connection conn;
 
     public DBConection(String servidor, String usuario, String contrasenia) {

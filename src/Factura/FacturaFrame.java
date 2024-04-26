@@ -1,5 +1,4 @@
 package Factura;
-
 import javax.swing.*;
 import java.awt.*;
 

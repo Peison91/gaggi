@@ -1,4 +1,4 @@
-package com.gaggi.database;
+package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import com.gaggi.model.Proveedores;
+
+import database.DBConection;
+import model.Proveedores;
 
 public class ProveedoresDB {
     Connection conn;

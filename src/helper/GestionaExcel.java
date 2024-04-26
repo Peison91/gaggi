@@ -81,10 +81,10 @@ public class GestionaExcel {
             String codigoProduc = String.valueOf(producto.getCodigoProducto());
 
 
-            com.gaggi.model.Productos produc = productosDB.consultaProductoCodigo(codigoProduc);
+            model.Productos produc = productosDB.consultaProductoCodigo(codigoProduc);
 
             if(produc == null){
-                com.gaggi.model.Productos productoInsertar = new com.gaggi.model.Productos(0, producto.getDescProducto()
+                model.Productos productoInsertar = new model.Productos(0, producto.getDescProducto()
                         , codigoProduc
                         , "s/d",
                         producto.getPrecioProducto(),

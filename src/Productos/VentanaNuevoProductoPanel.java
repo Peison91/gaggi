@@ -105,7 +105,7 @@ import java.awt.event.KeyEvent;
                     JOptionPane.showMessageDialog(null, "Los campos de stock deben ser números enteros");
                     return;
                 }
-                com.gaggi.model.Productos productosNuevo = new com.gaggi.model.Productos(0, descr, cod, abrev, precioUnit, stockmin, stock);
+               model.Productos productosNuevo = new model.Productos(0, descr, cod, abrev, precioUnit, stockmin, stock);
                 try {
                     productosDB.insertarProducto(productosNuevo);
                     JOptionPane.showMessageDialog(null,"Cargado correctamente");
