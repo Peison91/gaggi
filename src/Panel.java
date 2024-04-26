@@ -1,4 +1,5 @@
 import Clientes.ClientesEditarFrame;
+import Cotizacion.CotizacionFrame;
 import Factura.FacturaFrame;
 import Productos.ProductosEditarFrame;
 import Productos.ProductosImportarFrame;
@@ -31,6 +32,21 @@ public class Panel extends JPanel {
         JMenu ventas = new JMenu("Ventas");
         ventas.setIcon(new ImageIcon("src/imagenes/pdf.png"));
         ventas.setPreferredSize(new Dimension(115,30));
+        JMenu cotizacion = new JMenu("Cotizacion");
+        cotizacion.setIcon(new ImageIcon("src/imagenes/money.png"));
+        cotizacion.setPreferredSize(new Dimension(115,30));
+
+        JMenuItem nuevaCotizacion = new JMenuItem("Nueva Cotizacion");
+        nuevaCotizacion.setPreferredSize(new Dimension(150,20));
+        nuevaCotizacion.addActionListener(actionEvent -> {
+            try{
+                CotizacionFrame cotizacionFrame = new CotizacionFrame();
+                cotizacionFrame.setVisible(true);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        });
         JMenuItem nuevaVenta = new JMenuItem("Nueva venta");
         nuevaVenta.setPreferredSize(new Dimension(150,20));
         nuevaVenta.addActionListener(e->{
@@ -106,12 +122,15 @@ public class Panel extends JPanel {
         barra.add(productos);
         barra.add(proveedor);
         barra.add(ventas);
+        barra.add(cotizacion);
         productos.add(editarProducto);
         productos.add(importarProductos);
         clientes.add(editarCliente);
         proveedor.add(nuevoProveedor);
         proveedor.add(editarProveedor);
         ventas.add(nuevaVenta);
+        cotizacion.add(nuevaCotizacion);
+
         add(barra);
     }
 }

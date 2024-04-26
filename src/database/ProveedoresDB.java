@@ -22,7 +22,7 @@ public class ProveedoresDB {
             if (this.conn == null){
                 throw new Exception("La conexion no esta establecida");
             }else{
-                String sql = "INSERT INTO proveedores (nombre, cuit, direccion, ciudad, cbu) VALUES (?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO proveedores (nombre, cuit, direccion, ciudad, Cbu_alias) VALUES (?, ?, ?, ?, ?)";
 
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setString(1, proveedores.getNombre());
@@ -49,7 +49,7 @@ public class ProveedoresDB {
             if (this.conn == null){
                 throw new Exception("La conexion no esta establecida");
             }else{
-                String sql = "UPDATE proveedores SET nombre=?, cuit=?, direccion=?, ciudad=?, cbu=? WHERE id=?";
+                String sql = "UPDATE proveedores SET nombre=?, cuit=?, direccion=?, ciudad=?, Cbu_alias=? WHERE id=?";
 
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setString(1, proveedores.getNombre());
@@ -88,7 +88,7 @@ public class ProveedoresDB {
                     lstProveedores.add(new Proveedores(result.getInt("id"), result.getString("nombre"),
                             result.getString("cuit"), result.getString("direccion"),
                             result.getString("ciudad"),
-                            result.getString("cbu")));
+                            result.getString("Cbu_alias")));
                 }
                 return lstProveedores;
             }
@@ -107,7 +107,7 @@ public class ProveedoresDB {
             ResultSet result = statement.executeQuery(sql);
             if(result.next()){
                 return new Proveedores(result.getInt("id"), result.getString("nombre"), result.getString("cuit"),
-                        result.getString("direccion"), result.getString("ciudad"), result.getString("cbu"));
+                        result.getString("direccion"), result.getString("ciudad"), result.getString("Cbu_alias"));
             }
             return null;
         }catch (Exception ex) {

@@ -23,7 +23,7 @@ public class Cotizacion {
     }
 
     //CONSTRUCTOR DE PRUEBA.
-    public Cotizacion(int id_cabecera,int cliente_id, Date fecha_cotizacion, int indice_ajuste, int estado) {
+    public Cotizacion(int id_cabecera, int cliente_id, Date fecha_cotizacion, int indice_ajuste, int estado) {
         this.cliente_id = cliente_id;
         this.fecha_cotizacion = fecha_cotizacion;
         this.indice_ajuste = indice_ajuste;

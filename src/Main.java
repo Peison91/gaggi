@@ -1,17 +1,10 @@
 import Utiles.Conexion;
-import database.Cotizacion_CabeceraDB;
-import database.Cotizacion_DetalleDB;
-import model.Cotizacion;
-import model.Cotizacion_detalle;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Cotizacion cotizacion = new Cotizacion(0,5,new Date(),0,1);
+        /*Cotizacion cotizacion = new Cotizacion(0,5,new Date(),0,1);
         Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
         cotizacionCabeceraDB.insertarCotizacion(cotizacion);
         int idCabecera = cotizacionCabeceraDB.obtenerIdCabecera();
@@ -24,9 +17,9 @@ public class Main {
         listCot.add(cotizacionDetalle);
         listCot.add(cotizacionDetall1);
         listCot.add(cotizacionDetall2);
-        
+
         cotizacionDetalleDB.insertarCotizacionDetalleLista(listCot);
-        //cotizacionDetalleDB.insertarCotizacionDetalle(cotizacionDetalle);
+        //cotizacionDetalleDB.insertarCotizacionDetalle(cotizacionDetalle);*/
 
 
         Frame ventanaInicial = new Frame();
