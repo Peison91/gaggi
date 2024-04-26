@@ -1,5 +1,4 @@
 import Utiles.Conexion;
-
 import javax.swing.*;
 
 public class Main {
@@ -20,13 +19,8 @@ public class Main {
 
         cotizacionDetalleDB.insertarCotizacionDetalleLista(listCot);
         //cotizacionDetalleDB.insertarCotizacionDetalle(cotizacionDetalle);*/
-
-
         Frame ventanaInicial = new Frame();
         ventanaInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Conexion.conectar();
-
-
-
-           }
+    }
 }

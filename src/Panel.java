@@ -32,11 +32,11 @@ public class Panel extends JPanel {
         JMenu ventas = new JMenu("Ventas");
         ventas.setIcon(new ImageIcon("src/imagenes/pdf.png"));
         ventas.setPreferredSize(new Dimension(115,30));
-        JMenu cotizacion = new JMenu("Cotizacion");
+        JMenu cotizacion = new JMenu("Cotizaciones");
         cotizacion.setIcon(new ImageIcon("src/imagenes/money.png"));
         cotizacion.setPreferredSize(new Dimension(115,30));
 
-        JMenuItem nuevaCotizacion = new JMenuItem("Nueva Cotizacion");
+        JMenuItem nuevaCotizacion = new JMenuItem("Nueva Cotización");
         nuevaCotizacion.setPreferredSize(new Dimension(150,20));
         nuevaCotizacion.addActionListener(actionEvent -> {
             try{

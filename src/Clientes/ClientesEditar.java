@@ -30,7 +30,7 @@ public class ClientesEditar extends JPanel {
         filtro.setBounds(20,20,100,30);
         setBackground(new Color(214,214,214));
         buscarCliente = new JTextField(15);
-        buscarCliente.setBounds(150,20,350,30);
+        buscarCliente.setBounds(150,20,200,30);
         buscarCliente.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -44,7 +44,7 @@ public class ClientesEditar extends JPanel {
             }
         });
         btnNuevoCliente = new JButton("Nuevo",new ImageIcon("src/imagenes/nuevo.png"));
-        btnNuevoCliente.setBounds(550,20,130,30);
+        btnNuevoCliente.setBounds(400,20,130,30);
         btnNuevoCliente.addActionListener(e->{
                     try {
                         VentanaClienteNuevoFrame ventana = new VentanaClienteNuevoFrame();
@@ -57,9 +57,9 @@ public class ClientesEditar extends JPanel {
         );
 
         btnModificarCliente = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarCliente.setBounds(738, 20, 130, 30);
+        btnModificarCliente.setBounds(570, 20, 130, 30);
         btnEliminarCliente = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarCliente.setBounds(926, 20, 130,30);
+        btnEliminarCliente.setBounds(740, 20, 130,30);
         btnModificarCliente.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
