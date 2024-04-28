@@ -1,5 +1,13 @@
 import Utiles.Conexion;
+import database.Cotizacion_CabeceraDB;
+import database.Cotizacion_DetalleDB;
+import model.Cotizacion;
+import model.Cotizacion_detalle;
+
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -18,7 +26,7 @@ public class Main {
         listCot.add(cotizacionDetall2);
 
         cotizacionDetalleDB.insertarCotizacionDetalleLista(listCot);
-        //cotizacionDetalleDB.insertarCotizacionDetalle(cotizacionDetalle);*/
+        cotizacionDetalleDB.insertarCotizacionDetalle(cotizacionDetalle);*/
         Frame ventanaInicial = new Frame();
         ventanaInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Conexion.conectar();
