@@ -6,16 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class ProveedoresNuevo extends JPanel {
+public class VentanaProveedoresNuevoPanel extends JPanel {
     JTextField txtNombre;
     JTextField txtCuit;
     JTextField txtDireccion;
     JTextField txtCiudad;
     JTextField txtCBU;
     JButton btnGuardar;
-    TablaProveedores tablaProveedores = new TablaProveedores();
+    //TablaProveedores tablaProveedores = new TablaProveedores();
 
-    public ProveedoresNuevo() throws Exception {
+    public VentanaProveedoresNuevoPanel() throws Exception {
         setBackground(new Color(214,214,214));
         JLabel titulo = new JLabel("Nuevo Proveedor");
         titulo.setBounds(100, 1, 200, 40);
@@ -62,7 +62,7 @@ public class ProveedoresNuevo extends JPanel {
         txtCBU = new JTextField(15);
         txtCBU.setBounds(100,193,600,30);
         btnGuardar = new JButton("Guardar", new ImageIcon("src/imagenes/GuardarTodo.png"));
-        btnGuardar.setBounds(750, 33, 120, 50);
+        btnGuardar.setBounds(350, 250, 120, 50);
         btnGuardar.addActionListener(e -> {
             ProveedoresDB proveedoresDB = new ProveedoresDB(Conexion.conectar());
             String nombre1 = txtNombre.getText();
@@ -90,11 +90,11 @@ public class ProveedoresNuevo extends JPanel {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            try {
+            /*try {
                 tablaProveedores.ConstruirTabla();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
-            }
+            }*/
         });
         add(titulo);
         add(nombre);
@@ -109,8 +109,8 @@ public class ProveedoresNuevo extends JPanel {
         add(txtCBU);
         add(btnGuardar);
         setLayout(null);
-        tablaProveedores.setBounds(20,250,850,350);
-        add(tablaProveedores);
+        /*tablaProveedores.setBounds(20,250,850,350);
+        add(tablaProveedores);*/
     }
     public void LimpiarTxt(JTextField e) {
         e.setText("");

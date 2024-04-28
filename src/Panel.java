@@ -4,7 +4,7 @@ import Factura.FacturaFrame;
 import Productos.ProductosEditarFrame;
 import Productos.ProductosImportarFrame;
 import Proveedores.ProveedoresEditarFrame;
-import Proveedores.ProveedoresNuevoFrame;
+import Proveedores.VentanaProveedoresNuevoFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class Panel extends JPanel {
     private ClientesEditarFrame clientesEditarFrame;
     private ProductosEditarFrame productosEditarFrame;
     private ProductosImportarFrame productosImportarFrame;
-    private ProveedoresNuevoFrame proveedoresNuevoFrame;
+    private VentanaProveedoresNuevoFrame ventanaProveedoresNuevoFrame;
     private ProveedoresEditarFrame proveedoresEditarFrame;
      Panel() {
         setLayout((new FlowLayout(FlowLayout.LEFT)));
@@ -93,20 +93,7 @@ public class Panel extends JPanel {
             }
             clientesEditarFrame.setVisible(true);
         });
-        JMenuItem nuevoProveedor = new JMenuItem("Nuevo");
-        nuevoProveedor.setPreferredSize(new Dimension(150,20));
-        nuevoProveedor.addActionListener(e->{
-            try{
-                if(proveedoresNuevoFrame == null) {
-                    proveedoresNuevoFrame = new ProveedoresNuevoFrame();
-                    proveedoresNuevoFrame.setVisible(true);
-                }
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-
-        });
-        JMenuItem editarProveedor = new JMenuItem("Editar");
+        JMenuItem editarProveedor = new JMenuItem("Mis proveedores");
         editarProveedor.setPreferredSize(new Dimension(150,20));
         editarProveedor.addActionListener(e->{
             try{
@@ -126,7 +113,6 @@ public class Panel extends JPanel {
         productos.add(editarProducto);
         productos.add(importarProductos);
         clientes.add(editarCliente);
-        proveedor.add(nuevoProveedor);
         proveedor.add(editarProveedor);
         ventas.add(nuevaVenta);
         cotizacion.add(nuevaCotizacion);

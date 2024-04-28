@@ -53,7 +53,6 @@ public class ClientesEditar extends JPanel {
                         throw new RuntimeException(ex);
                     }
                 }
-
         );
 
         btnModificarCliente = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));

@@ -15,8 +15,10 @@ public class ProveedoresEditar extends JPanel {
     JTable tabla = new JTable();
     DefaultTableModel modelo = new DefaultTableModel();
     JTextField buscarProveedor;
+    JButton btnNuevoProveedor;
     JButton btnModificarProveedor;
     JButton btnEliminarProveedor;
+    static int idCliente;
 
 
     public ProveedoresEditar() throws Exception{
@@ -27,7 +29,7 @@ public class ProveedoresEditar extends JPanel {
         filtro.setBounds(20,20,100,30);
         setBackground(new Color(214,214,214));
         buscarProveedor = new JTextField(15);
-        buscarProveedor.setBounds(150,20,350,30);
+        buscarProveedor.setBounds(150,20,200,30);
         buscarProveedor.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -40,33 +42,37 @@ public class ProveedoresEditar extends JPanel {
                 }
             }
         });
+        btnNuevoProveedor = new JButton("Nuevo" ,new ImageIcon("src/imagenes/nuevo.png"));
+        btnNuevoProveedor.setBounds(400,20,130,30);
+        btnNuevoProveedor.addActionListener(e->{
+                    try {
+                        VentanaProveedoresNuevoFrame ventana = new VentanaProveedoresNuevoFrame();
+                        ventana.setVisible(true);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+        );
         btnModificarProveedor = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarProveedor.setBounds(550, 20, 130, 30);
+        btnModificarProveedor.setBounds(570, 20, 130, 30);
         btnEliminarProveedor = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarProveedor.setBounds(738, 20, 130,30);
+        btnEliminarProveedor.setBounds(740, 20, 130,30);
         btnModificarProveedor.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor");
             } else {
-                Proveedores proveedores = new Proveedores();
-
-                proveedores.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
-                proveedores.setNombre(tabla.getValueAt(fila, 1).toString());
-                proveedores.setCuit(tabla.getValueAt(fila, 2).toString());
-                proveedores.setDireccion(tabla.getValueAt(fila, 3).toString());
-                proveedores.setCiudad(tabla.getValueAt(fila, 4).toString());
-
-                UIManager.put("OptionPane.yesButtonText", "Si");
-                UIManager.put("OptionPane.noButtonText", "No");
-                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
-                if (i == 0) {
-                    try {
-                        ProveedoresDB proveedoresDB = new ProveedoresDB(Conexion.conectar());
-                        proveedoresDB.actualizarProveedores(proveedores);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+                try{
+                    VentanaProveedoresEditarFrame ventana = new VentanaProveedoresEditarFrame();
+                    ventana.setVisible(true);
+                    idCliente = Integer.parseInt(tabla.getValueAt(fila,0).toString());
+                    VentanaProveedoresEditarPanel.txtNombre.setText(tabla.getValueAt(fila,1).toString());
+                    VentanaProveedoresEditarPanel.txtCuit.setText(tabla.getValueAt(fila,2).toString());
+                    VentanaProveedoresEditarPanel.txtDireccion.setText(tabla.getValueAt(fila,3).toString());
+                    VentanaProveedoresEditarPanel.txtCiudad.setText(tabla.getValueAt(fila,4).toString());
+                    VentanaProveedoresEditarPanel.txtCBU.setText(tabla.getValueAt(fila,5).toString());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -99,6 +105,7 @@ public class ProveedoresEditar extends JPanel {
         scroll.setBounds(20,80,850,350);
         add(buscarProveedor);
         add(filtro);
+        add(btnNuevoProveedor);
         add(btnModificarProveedor);
         add(btnEliminarProveedor);
         scroll.setViewportView(tabla);

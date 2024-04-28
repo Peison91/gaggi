@@ -1,7 +1,4 @@
 package Clientes;
-
-import Productos.VentanaNuevoProductoPanel;
-
 import javax.swing.*;
 import java.awt.*;
 
