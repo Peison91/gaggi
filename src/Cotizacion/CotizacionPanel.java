@@ -1,10 +1,25 @@
 package Cotizacion;
+import DTO.DtoCotizacionDetalle;
 import Factura.FrameTablaClientes;
+import Utiles.Conexion;
 import com.toedter.calendar.JDateChooser;
+import database.Cotizacion_CabeceraDB;
+import database.Cotizacion_DetalleDB;
+import database.ProductosDB;
+import model.Cotizacion;
+import model.Cotizacion_detalle;
+import model.Productos;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CotizacionPanel extends JPanel {
@@ -20,17 +35,20 @@ public class CotizacionPanel extends JPanel {
     int sumaPrecioArticulos;
     JButton btnCliente, btnGuardar, btnCargarArticulo;
     JDateChooser calendario;
-    JScrollPane scroll;
-    JTable tabla = new JTable();
-    DefaultTableModel modelo;
+    static JScrollPane scroll;
+    static JTable tabla = new JTable();
+    static DefaultTableModel modelo;
+    static int clienteID;
     JComboBox lista;
+    static List<DtoCotizacionDetalle> listDto;
 
     public CotizacionPanel()throws Exception{
+        listDto = new ArrayList<>();
         btnCliente = new JButton("Seleccione Cliente");
         btnCliente.setBounds(600, 20, 210, 30);
         btnCliente.addActionListener(e -> {
             try {
-                FrameTablaClientes tablaClientes = new FrameTablaClientes();
+                FrameTablaClientesCotizacion tablaClientes = new FrameTablaClientesCotizacion();
                 tablaClientes.setVisible(true);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
@@ -72,18 +90,65 @@ public class CotizacionPanel extends JPanel {
 
         btnGuardar = new JButton("Guardar");
         btnGuardar.setBounds(300, 160, 100, 30);
+        btnGuardar.addActionListener(e->{
+
+            Cotizacion cotizacion = new Cotizacion(0,clienteID,calendario.getDate(),0,1);
+            Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
+            Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
+            try {
+                cotizacionCabeceraDB.insertarCotizacion(cotizacion);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            int idCabecera = 0;
+            try {
+                idCabecera = cotizacionCabeceraDB.obtenerIdCabecera();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            List<Cotizacion_detalle> cotDetalle = new ArrayList<>();
+            for(int i = 0; i < listDto.size();i++){
+                int cantidad = cantProducto;
+                double precioUnit = precioUni;
+                double precioAjust = 0;
+                int producId = productoId;
+                try {
+                     idCabecera = cotizacionCabeceraDB.obtenerIdCabecera();
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+                Cotizacion_detalle cotizacionDetalle = new Cotizacion_detalle(0,cantidad,precioUnit,precioAjust,producId,idCabecera);
+                cotDetalle.add(cotizacionDetalle);
+
+            }
+
+            try {
+                cotizacionDetalleDB.insertarCotizacionDetalleLista(cotDetalle);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            JOptionPane.showMessageDialog(null,"Se creao exitosamente cotizacion");
+            listDto = null;
+            try {
+                ConstruirTablaCotizacion(0,null);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
 
         btnCargarArticulo = new JButton("Cargar articulo");
         btnCargarArticulo.setBounds(710, 220, 130, 40);
-        /*btnCargarArticulo.addActionListener(e ->{
+        btnCargarArticulo.addActionListener(e ->{
             try {
                 FrameTablaProductosCotizacion frameTablaProductosCotizacion = new FrameTablaProductosCotizacion();
                 frameTablaProductosCotizacion.setVisible(true);
+
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-        });*/
+        });
+
 
 
 
@@ -104,10 +169,42 @@ public class CotizacionPanel extends JPanel {
         setLayout(null);
     }
 
-    public double obtenerPrecioFinal(double precio,int cantidad){
-        double precioFianl = precio * cantidad;
-        return precioFianl;
+
+
+    public static void ConstruirTablaCotizacion(int i, Object o) throws Exception{
+        String[] titulo = {"Codigo producto", "Cantidad", "Descripcion", "Precio unit.", "Precio total"};
+        String[][] informacion = obtenerMatriz();
+        modelo = new DefaultTableModel(informacion, titulo);
+        tabla.setModel(modelo);
+        scroll.setViewportView(tabla);
+        JTableHeader titulo1 = tabla.getTableHeader();
+        titulo1.setBackground(new Color(236, 126, 29));
+        titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
+       // ajustarAnchoColumnas();
     }
+    private static String[][] obtenerMatriz() throws Exception{
+
+      String[][] matrizInfo = new String[listDto.size()][5];
+        for(int i=0; i < listDto.size(); i++){
+            matrizInfo[i][0] = listDto.get(i).getCodigo_producto() + "";
+            matrizInfo[i][1] = listDto.get(i).getCantidad_producto() + "";
+            matrizInfo[i][2] = listDto.get(i).getNombre_producto() + "";
+            matrizInfo[i][3] = listDto.get(i).getPrecio_unitario() + "";
+            matrizInfo[i][4] = listDto.get(i).getPrecio_total() + "";
+        }
+        return matrizInfo;
+    }
+
+    private void ajustarAnchoColumnas() {
+        TableColumnModel columnModel = tabla.getColumnModel();
+        int columnCount = columnModel.getColumnCount();
+        int[] columnWidths = {80, 300, 80, 200, 100, 100, 100};
+        for (int i = 0; i < columnCount; i++) {
+            TableColumn column = columnModel.getColumn(i);
+            column.setPreferredWidth(columnWidths[i]);
+        }
+    }
+
     }
 
 
