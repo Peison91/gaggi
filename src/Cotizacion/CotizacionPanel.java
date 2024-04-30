@@ -128,7 +128,12 @@ public class CotizacionPanel extends JPanel {
                 throw new RuntimeException(ex);
             }
             JOptionPane.showMessageDialog(null,"Se creao exitosamente cotizacion");
-            listDto = null;
+            listDto.clear();
+            try {
+                ConstruirTablaCotizacion(0,null);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
             try {
                 ConstruirTablaCotizacion(0,null);
             } catch (Exception ex) {

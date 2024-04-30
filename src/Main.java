@@ -1,13 +1,6 @@
 import Utiles.Conexion;
-import database.Cotizacion_CabeceraDB;
-import database.Cotizacion_DetalleDB;
-import model.Cotizacion;
-import model.Cotizacion_detalle;
-
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) throws Exception {
