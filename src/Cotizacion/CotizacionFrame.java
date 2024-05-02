@@ -8,7 +8,6 @@ import java.awt.*;
 public class CotizacionFrame extends JFrame {
 
     public CotizacionFrame() throws Exception {
-
         setTitle("Cotizacion");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();

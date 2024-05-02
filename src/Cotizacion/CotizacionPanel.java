@@ -1,45 +1,40 @@
 package Cotizacion;
 import DTO.DtoCotizacionDetalle;
-import Factura.FrameTablaClientes;
 import Utiles.Conexion;
 import com.toedter.calendar.JDateChooser;
 import database.Cotizacion_CabeceraDB;
 import database.Cotizacion_DetalleDB;
-import database.ProductosDB;
 import model.Cotizacion;
 import model.Cotizacion_detalle;
-import model.Productos;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CotizacionPanel extends JPanel {
 
-    JLabel lblId, lblNumero, lblFechaHora, lblEstado, buscarCliente;
-    JTextField txtNumero;
+    JLabel lblId, lblNumero, lblFechaHora, lblEstado, buscarCliente, lblValorFinal1;
+    static JLabel lblValorFinal2;
+    static JTextField txtIndiceAjuste;
     static JTextField txtCliente;
-
     static int productoId;
     static String descripcionProd;
     static double precioUni;
     static int cantProducto;
-    int sumaPrecioArticulos;
+    static double indiceAjuste;
     JButton btnCliente, btnGuardar, btnCargarArticulo;
+    static JButton btnEliminarTabla;
     JDateChooser calendario;
     static JScrollPane scroll;
     static JTable tabla = new JTable();
     static DefaultTableModel modelo;
     static int clienteID;
     JComboBox lista;
+
+
     static List<DtoCotizacionDetalle> listDto;
 
     public CotizacionPanel()throws Exception{
@@ -65,8 +60,8 @@ public class CotizacionPanel extends JPanel {
 
         lblNumero = new JLabel("Indice Ajuste:");
         lblNumero.setBounds(15, 55, 100, 30);
-        txtNumero = new JTextField();
-        txtNumero.setBounds(140, 55, 150, 30);
+        txtIndiceAjuste = new JTextField("0.0");
+        txtIndiceAjuste.setBounds(140, 55, 150, 30);
 
 
 
@@ -78,6 +73,14 @@ public class CotizacionPanel extends JPanel {
 
         lblEstado = new JLabel("Estado:");
         lblEstado.setBounds(15, 125, 100, 30);
+
+        lblValorFinal1 = new JLabel("Precio final: ");
+        lblValorFinal1.setBounds(680,700,100,30);
+
+        lblValorFinal2 = new JLabel();
+        lblValorFinal2.setBounds(770,700,100,30);
+
+
 
         lista = new JComboBox();
         lista.addItem("Aceptada");
@@ -127,7 +130,7 @@ public class CotizacionPanel extends JPanel {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            JOptionPane.showMessageDialog(null,"Se creao exitosamente cotizacion");
+            JOptionPane.showMessageDialog(null,"Se creo exitosamente cotizacion");
             listDto.clear();
             try {
                 ConstruirTablaCotizacion(0,null);
@@ -148,6 +151,8 @@ public class CotizacionPanel extends JPanel {
             try {
                 FrameTablaProductosCotizacion frameTablaProductosCotizacion = new FrameTablaProductosCotizacion();
                 frameTablaProductosCotizacion.setVisible(true);
+                String valorJX = txtIndiceAjuste.getText();
+                indiceAjuste = Double.parseDouble(valorJX);
 
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
@@ -155,14 +160,14 @@ public class CotizacionPanel extends JPanel {
         });
 
 
-
-
+        add(lblValorFinal2);
+        add(lblValorFinal1);
         add(btnCliente);
         add(txtCliente);
         add(buscarCliente);
         add(lblId);
         add(lblNumero);
-        add(txtNumero);
+        add(txtIndiceAjuste);
         add(calendario);
         add(lblFechaHora);
         add(lblEstado);
@@ -181,21 +186,26 @@ public class CotizacionPanel extends JPanel {
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
+
+
         scroll.setViewportView(tabla);
         JTableHeader titulo1 = tabla.getTableHeader();
         titulo1.setBackground(new Color(236, 126, 29));
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
        // ajustarAnchoColumnas();
     }
+
+
     private static String[][] obtenerMatriz() throws Exception{
 
-      String[][] matrizInfo = new String[listDto.size()][5];
+      String[][] matrizInfo = new String[listDto.size()][6];
         for(int i=0; i < listDto.size(); i++){
             matrizInfo[i][0] = listDto.get(i).getCodigo_producto() + "";
             matrizInfo[i][1] = listDto.get(i).getCantidad_producto() + "";
             matrizInfo[i][2] = listDto.get(i).getNombre_producto() + "";
             matrizInfo[i][3] = listDto.get(i).getPrecio_unitario() + "";
             matrizInfo[i][4] = listDto.get(i).getPrecio_total() + "";
+
         }
         return matrizInfo;
     }
@@ -209,6 +219,9 @@ public class CotizacionPanel extends JPanel {
             column.setPreferredWidth(columnWidths[i]);
         }
     }
+
+
+
 
     }
 

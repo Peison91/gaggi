@@ -6,7 +6,7 @@ public class Cotizacion {
     private int id_cabecera;
     private int cliente_id;
     private Date fecha_cotizacion;
-    private int indice_ajuste;
+    private double indice_ajuste;
     private int estado;
     private List<Cotizacion_detalle> listCotizacionDetalle = new ArrayList<>();
 
@@ -14,7 +14,6 @@ public class Cotizacion {
     }
 
     public Cotizacion(int id_cabecera, int cliente_id, Date fecha_cotizacion, int indice_ajuste, int estado, List<Cotizacion_detalle> listCotizacionDetalle) {
-        this.id_cabecera = id_cabecera;
         this.cliente_id = cliente_id;
         this.fecha_cotizacion = fecha_cotizacion;
         this.indice_ajuste = indice_ajuste;
@@ -24,6 +23,7 @@ public class Cotizacion {
 
     //CONSTRUCTOR DE PRUEBA.
     public Cotizacion(int id_cabecera, int cliente_id, Date fecha_cotizacion, int indice_ajuste, int estado) {
+        this.id_cabecera = id_cabecera;
         this.cliente_id = cliente_id;
         this.fecha_cotizacion = fecha_cotizacion;
         this.indice_ajuste = indice_ajuste;
@@ -60,11 +60,11 @@ public class Cotizacion {
         this.fecha_cotizacion = fecha_cotizacion;
     }
 
-    public int getIndice_ajuste() {
+    public double getIndice_ajuste() {
         return indice_ajuste;
     }
 
-    public void setIndice_ajuste(int indice_ajuste) {
+    public void setIndice_ajuste(double indice_ajuste) {
         this.indice_ajuste = indice_ajuste;
     }
 

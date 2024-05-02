@@ -1,9 +1,11 @@
 package database;
 import model.Cotizacion;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Stack;
 
 
 public class Cotizacion_CabeceraDB {
@@ -56,7 +58,7 @@ public class Cotizacion_CabeceraDB {
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setInt(1,cotizacion.getCliente_id());
                 statement.setTimestamp(2,timestamp);
-                statement.setInt(3,cotizacion.getIndice_ajuste());
+                statement.setDouble(3,cotizacion.getIndice_ajuste());
                 statement.setInt(4,cotizacion.getEstado());
 
                 int rowsUpdated = statement.executeUpdate();
@@ -118,6 +120,7 @@ public class Cotizacion_CabeceraDB {
         }
     }
 
+
     public int obtenerIdCabecera() throws Exception{
         int idCabecera;
         try{
@@ -140,6 +143,31 @@ public class Cotizacion_CabeceraDB {
             throw ex;
         }
     }
+
+    public List<Cotizacion> todasCotizacionesCab()throws Exception{
+        try{
+            if(this.conn == null){
+                throw new Exception("La conexion no esta establecida");
+            }else{
+                String sql = "SELECT * FROM cotizacion_cabecera;";
+
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+
+                List<Cotizacion> lstCotizacion = new ArrayList<>();
+
+                while(resultSet.next()){
+                    lstCotizacion.add(new Cotizacion(resultSet.getInt("id_cabecera"),resultSet.getInt("cliente_id"),
+                            resultSet.getTimestamp("fecha_cotizacion"),resultSet.getInt("indice_ajuste"), resultSet.getInt("estado_id")));
+                }
+                return  lstCotizacion;
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+
 
 
 

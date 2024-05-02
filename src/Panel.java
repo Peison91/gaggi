@@ -8,6 +8,8 @@ import Proveedores.VentanaProveedoresNuevoFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowStateListener;
 
 public class Panel extends JPanel {
     private FacturaFrame facturaFrame;
@@ -20,18 +22,23 @@ public class Panel extends JPanel {
         setLayout((new FlowLayout(FlowLayout.LEFT)));
         setBackground(new Color(214,214,214));
         JMenuBar barra = new JMenuBar();
+
         JMenu clientes = new JMenu("Clientes");
         clientes.setIcon(new ImageIcon("src/imagenes/Clientes.png"));
         clientes.setPreferredSize(new Dimension(115,30));
+
         JMenu productos = new JMenu("Productos");
         productos.setIcon(new ImageIcon("src/imagenes/producto.png"));
         productos.setPreferredSize(new Dimension(115,30));
+
         JMenu proveedor = new JMenu("Proveedores");
         proveedor.setIcon(new ImageIcon("src/imagenes/Carrito-de-compras.png"));
         proveedor.setPreferredSize(new Dimension(115,30));
+
         JMenu ventas = new JMenu("Ventas");
         ventas.setIcon(new ImageIcon("src/imagenes/pdf.png"));
         ventas.setPreferredSize(new Dimension(115,30));
+
         JMenu cotizacion = new JMenu("Cotizaciones");
         cotizacion.setIcon(new ImageIcon("src/imagenes/money.png"));
         cotizacion.setPreferredSize(new Dimension(115,30));
@@ -45,8 +52,10 @@ public class Panel extends JPanel {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
         });
+
+
+
         JMenuItem nuevaVenta = new JMenuItem("Nueva venta");
         nuevaVenta.setPreferredSize(new Dimension(150,20));
         nuevaVenta.addActionListener(e->{
