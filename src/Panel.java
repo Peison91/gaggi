@@ -1,4 +1,5 @@
 import Clientes.ClientesEditarFrame;
+import Cotizacion.CotizacionEditarFrame;
 import Cotizacion.CotizacionFrame;
 import Factura.FacturaFrame;
 import Productos.ProductosEditarFrame;
@@ -53,7 +54,16 @@ public class Panel extends JPanel {
                 throw new RuntimeException(e);
             }
         });
-
+        JMenuItem editarCotizacion = new JMenuItem("Editar cotizaciones");
+        editarCotizacion.setPreferredSize(new Dimension(150,20));
+        editarCotizacion.addActionListener(actionEvent ->{
+            try{
+                CotizacionEditarFrame cotizacionEditarFrame = new CotizacionEditarFrame();
+                cotizacionEditarFrame.setVisible(true);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
 
         JMenuItem nuevaVenta = new JMenuItem("Nueva venta");
@@ -125,7 +135,7 @@ public class Panel extends JPanel {
         proveedor.add(editarProveedor);
         ventas.add(nuevaVenta);
         cotizacion.add(nuevaCotizacion);
-
+        cotizacion.add(editarCotizacion);
         add(barra);
     }
 }
