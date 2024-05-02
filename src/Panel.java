@@ -5,19 +5,16 @@ import Factura.FacturaFrame;
 import Productos.ProductosEditarFrame;
 import Productos.ProductosImportarFrame;
 import Proveedores.ProveedoresEditarFrame;
-import Proveedores.VentanaProveedoresNuevoFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowStateListener;
+
 
 public class Panel extends JPanel {
     private FacturaFrame facturaFrame;
     private ClientesEditarFrame clientesEditarFrame;
     private ProductosEditarFrame productosEditarFrame;
     private ProductosImportarFrame productosImportarFrame;
-    private VentanaProveedoresNuevoFrame ventanaProveedoresNuevoFrame;
     private ProveedoresEditarFrame proveedoresEditarFrame;
      Panel() {
         setLayout((new FlowLayout(FlowLayout.LEFT)));
@@ -64,8 +61,6 @@ public class Panel extends JPanel {
                 throw new RuntimeException(e);
             }
         });
-
-
         JMenuItem nuevaVenta = new JMenuItem("Nueva venta");
         nuevaVenta.setPreferredSize(new Dimension(150,20));
         nuevaVenta.addActionListener(e->{
@@ -78,7 +73,6 @@ public class Panel extends JPanel {
             }
             facturaFrame.setVisible(true);
         });
-
         JMenuItem editarProducto = new JMenuItem("Mi Stock");
         editarProducto.setPreferredSize(new Dimension(150,20));
         editarProducto.addActionListener(e -> {
@@ -99,7 +93,6 @@ public class Panel extends JPanel {
             }
             productosImportarFrame.setVisible(true);
         });
-
         JMenuItem editarCliente = new JMenuItem("Mis Clientes");
         editarCliente.setPreferredSize(new Dimension(150,20));
         editarCliente.addActionListener(e ->{
@@ -137,31 +130,5 @@ public class Panel extends JPanel {
         cotizacion.add(nuevaCotizacion);
         cotizacion.add(editarCotizacion);
         add(barra);
-    }
-}
-class Panel2 extends JPanel {
-    public Panel2() {
-        setLayout((new FlowLayout(FlowLayout.RIGHT)));
-        setBackground(new Color(214,214,214));
-
-    }
-}
-class PanelFondo extends JPanel{
-    private Image fondo;
-    public PanelFondo(){
-        setLayout(new FlowLayout(FlowLayout.CENTER));
-    }
-    public void paintComponent(Graphics g) {
-        int width = this.getSize().width;
-        int height = this.getSize().height;
-        if (this.fondo != null) {
-            g.drawImage(this.fondo, 0, 0, width, height, null);
-        }
-        super.paintComponent(g);
-    }
-    public void setBackground(String imagePath) {
-        this.setOpaque(false);
-        this.fondo = new ImageIcon(imagePath).getImage();
-        repaint();
     }
 }

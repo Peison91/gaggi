@@ -19,7 +19,7 @@ public class Cotizacion_CabeceraDB {
     public boolean insertarCotizacion(Cotizacion cotizacion) throws Exception {
         try {
             if (this.conn == null) {
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             } else {
                 String sql = "INSERT INTO cotizacion_cabecera(cliente_id, fecha_cotizacion, indice_ajuste, estado_id) " +
                         "VALUES (?, ?, ?, ?)";
@@ -50,7 +50,7 @@ public class Cotizacion_CabeceraDB {
     public boolean actualizarCotizacion(Cotizacion cotizacion) throws Exception{
         try{
             if(this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "UPDATE cotizacion_cabecera SET cliente_id=?, fecha_cotizacion=?, indice_ajuste=?, estado_id=?, WHERE id_cabecera=?";
                 Timestamp timestamp = new Timestamp(cotizacion.getFecha_cotizacion().getTime());
@@ -77,7 +77,7 @@ public class Cotizacion_CabeceraDB {
     public boolean borrarCotizacion(int id)throws Exception{
         try{
             if(this.conn == null) {
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
 
             }else{
                 String sql = "DELETE FROM cotizacion_cabecera WHERE id_cabecera=?";
@@ -101,7 +101,7 @@ public class Cotizacion_CabeceraDB {
     public Cotizacion consultarCotizacion(int id) throws Exception{
         try{
             if(this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "SELECT * FROM cotizacion_cabecera WHERE id_cabecera= " + id;
 
@@ -125,7 +125,7 @@ public class Cotizacion_CabeceraDB {
         int idCabecera;
         try{
             if(this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "SELECT id_cabecera FROM cotizacion_cabecera ORDER BY fecha_cotizacion DESC LIMIT 1;";
 
@@ -147,7 +147,7 @@ public class Cotizacion_CabeceraDB {
     public List<Cotizacion> todasCotizacionesCab()throws Exception{
         try{
             if(this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "SELECT * FROM cotizacion_cabecera;";
 
@@ -167,12 +167,4 @@ public class Cotizacion_CabeceraDB {
             throw ex;
         }
     }
-
-
-
-
-
-
-
-
 }

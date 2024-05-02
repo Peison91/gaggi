@@ -1,7 +1,5 @@
 package Cotizacion;
 
-import Factura.PanelTablaClientes;
-
 import javax.swing.*;
 import java.awt.*;
 

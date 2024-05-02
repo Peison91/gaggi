@@ -19,7 +19,7 @@ public class ProductosDB {
     public boolean insertarProducto(Productos producto) throws Exception {
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "INSERT INTO productos (descripcion, codigo, abreviatura, precio, stock_minimo, stock) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -47,7 +47,7 @@ public class ProductosDB {
     public boolean actualizarProducto(Productos producto) throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "UPDATE productos SET descripcion=?, codigo=?, abreviatura=?, precio=?, stock_minimo=?, stock=? WHERE id=?";
 
@@ -76,7 +76,7 @@ public class ProductosDB {
     public List<Productos> todosProductos() throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else {
                 String sql = "SELECT * FROM productos";
 
@@ -140,7 +140,7 @@ public class ProductosDB {
     public boolean borrarProducto(int id) throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "DELETE FROM productos WHERE id=?";
 

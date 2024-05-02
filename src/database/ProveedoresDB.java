@@ -20,7 +20,7 @@ public class ProveedoresDB {
     public boolean insertarProveedores(Proveedores proveedores) throws Exception {
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "INSERT INTO proveedores (nombre, cuit, direccion, ciudad, Cbu_alias) VALUES (?, ?, ?, ?, ?)";
 
@@ -47,7 +47,7 @@ public class ProveedoresDB {
     public boolean actualizarProveedores(Proveedores proveedores) throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "UPDATE proveedores SET nombre=?, cuit=?, direccion=?, ciudad=?, Cbu_alias=? WHERE id=?";
 
@@ -75,7 +75,7 @@ public class ProveedoresDB {
     public List<Proveedores> todosProveedores() throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else {
                 String sql = "SELECT * FROM proveedores";
 
@@ -119,7 +119,7 @@ public class ProveedoresDB {
     public boolean borrarProveedor(int id) throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "DELETE FROM proveedores WHERE id=?";
 

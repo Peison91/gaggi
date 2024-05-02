@@ -1,6 +1,5 @@
 package Cotizacion;
 
-import Factura.PanelFactura;
 import Utiles.Conexion;
 import database.ClientesDB;
 import model.Clientes;

@@ -15,7 +15,7 @@ public class ClientesDB {
     public boolean insertarCliente(Clientes cliente) throws Exception {
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "INSERT INTO clientes (nombre, cuit, direccion, email, telefono) VALUES (?, ?, ?, ?, ?)";
 
@@ -42,7 +42,7 @@ public class ClientesDB {
     public boolean actualizarCliente(Clientes cliente) throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "UPDATE clientes SET nombre=?, cuit=?, direccion=?, email=?, telefono=? WHERE id=?";
 
@@ -70,7 +70,7 @@ public class ClientesDB {
     public List<Clientes> todosClientes() throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else {
                 String sql = "SELECT * FROM clientes";
 
@@ -114,7 +114,7 @@ public class ClientesDB {
     public boolean borrarCliente(int id) throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "DELETE FROM clientes WHERE id=?";
 

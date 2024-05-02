@@ -1,6 +1,5 @@
 package database;
 
-import DTO.DtoCotizacionDetalle;
 import model.Cotizacion_detalle;
 
 import java.sql.Connection;
@@ -20,7 +19,7 @@ public class Cotizacion_DetalleDB {
 
                 try {
                     if (this.conn == null) {
-                        throw new Exception("La conexion no esta establecida");
+                        throw new Exception("La conexión no esta establecida");
                     } else {
                         String sql = "INSERT INTO cotizacion_detalles (cantidad, precio_unitario, precio_ajustado, producto_id, cotizacion_cabecera_id) VALUES (?, ?, ?, ?, ?)";
 
@@ -49,7 +48,7 @@ public class Cotizacion_DetalleDB {
 
         try {
             if (this.conn == null) {
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             } else {
                 String sql = "INSERT INTO cotizacion_detalles (cantidad, precio_unitario, precio_ajustado, producto_id, cotizacion_cabecera_id) VALUES (?, ?, ?, ?, ?)";
 
@@ -84,7 +83,7 @@ public class Cotizacion_DetalleDB {
     public boolean actualizarCotizacionDetalle(Cotizacion_detalle cotizacionDetalle) throws Exception{
         try{
             if(this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "UPDATE cotizacion_detalles SET id_cot_detalle=?, cantidad=?, precio_unitario=?, precio_ajustado=?, producto_id=?, cotizacion_cabecera_id, WHERE id_cot_detalle=?";
 
@@ -112,7 +111,7 @@ public class Cotizacion_DetalleDB {
     public boolean borrarCotizacionDetalle(int id)throws Exception{
         try{
             if(this.conn == null) {
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
 
             }else{
                 String sql = "DELETE FROM cotizacion_detalles WHERE id_cot_detalle=?";
@@ -131,11 +130,28 @@ public class Cotizacion_DetalleDB {
             throw ex;
         }
     }
+    public boolean borrarCotDetalleCabecera(int id) throws Exception {
+        try {
+            if (this.conn == null) {
+                throw new Exception("La conexión no está establecida");
+            } else {
+                String sql = "DELETE FROM cotizacion_detalles WHERE cotizacion_cabecera_id=?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, id);
+                int rowsDeleted = statement.executeUpdate();
+
+                return rowsDeleted > 0;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
 
     public Cotizacion_detalle consultarCotizacionDetalle(int id) throws Exception{
         try{
             if(this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "SELECT * FROM cotizacion_detalles WHERE id_cot_detalle= " + id;
 

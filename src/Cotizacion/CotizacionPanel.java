@@ -39,7 +39,7 @@ public class CotizacionPanel extends JPanel {
 
     public CotizacionPanel()throws Exception{
         listDto = new ArrayList<>();
-        btnCliente = new JButton("Seleccione Cliente");
+        btnCliente = new JButton("Seleccione cliente");
         btnCliente.setBounds(600, 20, 210, 30);
         btnCliente.addActionListener(e -> {
             try {
@@ -130,7 +130,7 @@ public class CotizacionPanel extends JPanel {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            JOptionPane.showMessageDialog(null,"Se creo exitosamente cotizacion");
+            JOptionPane.showMessageDialog(null,"Se creó exitosamente la cotización");
             listDto.clear();
             try {
                 ConstruirTablaCotizacion(0,null);

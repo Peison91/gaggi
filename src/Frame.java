@@ -16,8 +16,32 @@ public class Frame extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         Panel panel = new Panel();
         add(panel, BorderLayout.NORTH);
+        class Panel2 extends JPanel {
+            public Panel2() {
+                setBackground(new Color(214,214,214));
+            }
+        }
         Panel2 panel2 = new Panel2();
         add(panel2, BorderLayout.SOUTH);
+        class PanelFondo extends JPanel{
+            private Image fondo;
+            public PanelFondo(){
+                setLayout(new FlowLayout(FlowLayout.CENTER));
+            }
+            public void paintComponent(Graphics g) {
+                int width = this.getSize().width;
+                int height = this.getSize().height;
+                if (this.fondo != null) {
+                    g.drawImage(this.fondo, 0, 0, width, height, null);
+                }
+                super.paintComponent(g);
+            }
+            public void setBackground(String imagePath) {
+                this.setOpaque(false);
+                this.fondo = new ImageIcon(imagePath).getImage();
+                repaint();
+            }
+        }
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         PanelFondo fondo = new PanelFondo();
         fondo.setBackground("src/imagenes/fondo.jpg");

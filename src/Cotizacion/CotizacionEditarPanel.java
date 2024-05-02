@@ -2,6 +2,7 @@ package Cotizacion;
 
 import Utiles.Conexion;
 import database.Cotizacion_CabeceraDB;
+import database.Cotizacion_DetalleDB;
 import model.Cotizacion;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class CotizacionEditarPanel extends JPanel {
     JTable tabla = new JTable();
     DefaultTableModel modelo = new DefaultTableModel();
     JTextField buscarCotizacion;
+    JButton btnModificar, btnEliminar;
 
     public CotizacionEditarPanel() throws Exception {
         JComboBox<String> filtro = new JComboBox<>();
@@ -41,9 +43,42 @@ public class CotizacionEditarPanel extends JPanel {
                 }
             }
         });
+        btnModificar = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
+        btnModificar.setBounds(570, 20, 130, 30);
+        btnEliminar = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
+        btnEliminar.setBounds(740, 20, 130,30);
+        btnEliminar.addActionListener(e ->{
+            int fila = tabla.getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una cotización", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                int id_cabecera = Integer.parseInt((String) tabla.getValueAt(fila, 0));
+                UIManager.put("OptionPane.yesButtonText", "Si");
+                UIManager.put("OptionPane.noButtonText", "No");
+                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Importante", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    try {
+                        Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
+                        cotizacionDetalleDB.borrarCotDetalleCabecera(id_cabecera);
+                        Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
+                        cotizacionCabeceraDB.borrarCotizacion(id_cabecera);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    JOptionPane.showMessageDialog(null, "Cotización eliminada");
+                }
+            }
+            try {
+                ConstruirTabla(0,null);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         ConstruirTabla(0,null);
         scroll.setBounds(20,80,850,350);
         add(buscarCotizacion);
+        add(btnModificar);
+        add(btnEliminar);
         add(filtro);
         scroll.setViewportView(tabla);
         add(scroll);
@@ -54,7 +89,7 @@ public class CotizacionEditarPanel extends JPanel {
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
-        ajustarAnchoColumnas();
+        //ajustarAnchoColumnas();
         TableRowSorter tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
         if (valor != null && !valor.isEmpty()) {

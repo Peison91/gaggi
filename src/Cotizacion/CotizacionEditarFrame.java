@@ -1,7 +1,5 @@
 package Cotizacion;
 
-import Productos.ProductosEditar;
-
 import javax.swing.*;
 import java.awt.*;
 
