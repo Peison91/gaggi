@@ -20,8 +20,6 @@ public class GestionaExcel {
         File archivo = new File(excel);
         ArrayList<Productos> lista = new ArrayList<>();
 
-
-
         try {
             InputStream input = new FileInputStream(archivo);
             XSSFWorkbook libro = new XSSFWorkbook(input);
@@ -32,7 +30,6 @@ public class GestionaExcel {
 
             Row filaActual;
             Cell columnaActual;
-
 
             while (filas.hasNext()) {
 
@@ -67,7 +64,6 @@ public class GestionaExcel {
                     lista.add(producto);
                 }
             }
-
             input.close();
             libro.close();
         } catch (Exception e) {
@@ -76,10 +72,8 @@ public class GestionaExcel {
 
         ProductosDB productosDB = new ProductosDB(Conexion.conectar());
 
-
         for (Productos producto : lista) {
             String codigoProduc = String.valueOf(producto.getCodigoProducto());
-
 
             model.Productos produc = productosDB.consultaProductoCodigo(codigoProduc);
 
@@ -100,9 +94,7 @@ public class GestionaExcel {
                 productosDB.actualizarProducto(produc);
                 cantidadProducModificados++;
             }
-
         }
-
     }
 
 
@@ -124,7 +116,7 @@ public class GestionaExcel {
         }
     }
 
-    private String formatoPrecio(String precio) {
+    static String formatoPrecio(String precio) {
         DecimalFormat formato = new DecimalFormat("#.##");
         return formato.format(precio);
     }
@@ -155,7 +147,6 @@ public class GestionaExcel {
                 System.err.println("Error al convertir precio: " + e.getMessage());
             }
         }
-
         return 0.0;
     }
 

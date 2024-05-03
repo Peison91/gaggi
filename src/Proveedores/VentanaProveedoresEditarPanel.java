@@ -17,7 +17,7 @@ public class VentanaProveedoresEditarPanel extends JPanel{
 
     public VentanaProveedoresEditarPanel() throws Exception{
         setBackground(new Color(214,214,214));
-        JLabel titulo = new JLabel("Nuevo Proveedor");
+        JLabel titulo = new JLabel("Nuevo proveedor");
         titulo.setBounds(100, 1, 200, 40);
 
         JLabel nombre = new JLabel("Nombre:");
@@ -88,7 +88,7 @@ public class VentanaProveedoresEditarPanel extends JPanel{
                 proveedores.setCbu(cbu1);
 
                 proveedoresDB.actualizarProveedores(proveedores);
-                JOptionPane.showMessageDialog(null,"Se actualizo el cliente");
+                JOptionPane.showMessageDialog(null,"Se actualizó el proveedor");
                 LimpiarTxt(txtNombre);
                 LimpiarTxt(txtCuit);
                 LimpiarTxt(txtDireccion);

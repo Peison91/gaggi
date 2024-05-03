@@ -55,21 +55,18 @@ public class CotizacionPanel extends JPanel {
         buscarCliente = new JLabel("Seleccione cliente:");
         buscarCliente.setBounds(15, 20, 250, 30);
         txtCliente = new JTextField(15);
-        txtCliente.setBounds(140, 20, 350, 30);
-
+        txtCliente.setBounds(140, 20, 250, 30);
+        txtCliente.setEditable(false);
 
         lblNumero = new JLabel("Indice Ajuste:");
         lblNumero.setBounds(15, 55, 100, 30);
         txtIndiceAjuste = new JTextField("0.0");
         txtIndiceAjuste.setBounds(140, 55, 150, 30);
 
-
-
         lblFechaHora = new JLabel("Fecha-Hora:");
         lblFechaHora.setBounds(15, 90, 100, 30);
         calendario = new JDateChooser();
         calendario.setBounds(140, 90, 150, 30);
-
 
         lblEstado = new JLabel("Estado:");
         lblEstado.setBounds(15, 125, 100, 30);
@@ -80,8 +77,6 @@ public class CotizacionPanel extends JPanel {
         lblValorFinal2 = new JLabel();
         lblValorFinal2.setBounds(770,700,100,30);
 
-
-
         lista = new JComboBox();
         lista.addItem("Aceptada");
         lista.addItem("Pendiente");
@@ -89,12 +84,11 @@ public class CotizacionPanel extends JPanel {
         lista.setBounds(140, 125, 120, 30);
 
         scroll = new JScrollPane();
-        scroll.setBounds(15, 270, 800, 400);
+        scroll.setBounds(15, 270, 800, 200);
 
         btnGuardar = new JButton("Guardar");
         btnGuardar.setBounds(300, 160, 100, 30);
         btnGuardar.addActionListener(e->{
-
             Cotizacion cotizacion = new Cotizacion(0,clienteID,calendario.getDate(),0,1);
             Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
             Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
@@ -122,15 +116,13 @@ public class CotizacionPanel extends JPanel {
                 }
                 Cotizacion_detalle cotizacionDetalle = new Cotizacion_detalle(0,cantidad,precioUnit,precioAjust,producId,idCabecera);
                 cotDetalle.add(cotizacionDetalle);
-
             }
-
             try {
                 cotizacionDetalleDB.insertarCotizacionDetalleLista(cotDetalle);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            JOptionPane.showMessageDialog(null,"Se creó exitosamente la cotización");
+            JOptionPane.showMessageDialog(null,"Cotización creada");
             listDto.clear();
             try {
                 ConstruirTablaCotizacion(0,null);
@@ -144,8 +136,7 @@ public class CotizacionPanel extends JPanel {
             }
         });
 
-
-        btnCargarArticulo = new JButton("Cargar articulo");
+        btnCargarArticulo = new JButton("Cargar productos");
         btnCargarArticulo.setBounds(710, 220, 130, 40);
         btnCargarArticulo.addActionListener(e ->{
             try {
@@ -158,7 +149,6 @@ public class CotizacionPanel extends JPanel {
                 throw new RuntimeException(ex);
             }
         });
-
 
         add(lblValorFinal2);
         add(lblValorFinal1);
@@ -179,10 +169,8 @@ public class CotizacionPanel extends JPanel {
         setLayout(null);
     }
 
-
-
     public static void ConstruirTablaCotizacion(int i, Object o) throws Exception{
-        String[] titulo = {"Codigo producto", "Cantidad", "Descripcion", "Precio unit.", "Precio total"};
+        String[] titulo = {"Código producto", "Cantidad", "Descripción", "Precio unit.", "Precio total"};
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);

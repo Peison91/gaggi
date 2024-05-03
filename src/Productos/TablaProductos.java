@@ -1,6 +1,5 @@
 package Productos;
 import Utiles.Conexion;
-import database.DBConection;
 import database.ProductosDB;
 import model.Productos;
 import javax.swing.*;

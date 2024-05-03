@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class ProductosEditarFrame extends JFrame{
     public ProductosEditarFrame() throws Exception {
-        setTitle("Gaggi Distribuidora - Editar Productos");
+        setTitle("Gaggi Distribuidora - Editar productos");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
         Dimension tamanoPantalla = miPantalla.getScreenSize();
@@ -15,15 +15,6 @@ public class ProductosEditarFrame extends JFrame{
         Image icono = miPantalla.getImage("src/imagenes/gaggiicon.png");
         setIconImage(icono);
         ProductosEditar productos = new ProductosEditar();
-        /*JButton btnCerrar = new JButton("Cerrar", new ImageIcon("src/imagenes/eliminar.png"));
-        btnCerrar.setBounds(740, 73, 130, 50);
-        add(btnCerrar);
-        btnCerrar.addActionListener(new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                dispose();
-            }
-        });*/
         add(productos);
         setVisible(true);
     }

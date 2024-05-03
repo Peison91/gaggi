@@ -41,7 +41,7 @@ public class Panel extends JPanel {
         cotizacion.setIcon(new ImageIcon("src/imagenes/money.png"));
         cotizacion.setPreferredSize(new Dimension(115,30));
 
-        JMenuItem nuevaCotizacion = new JMenuItem("Nueva Cotización");
+        JMenuItem nuevaCotizacion = new JMenuItem("Crear");
         nuevaCotizacion.setPreferredSize(new Dimension(150,20));
         nuevaCotizacion.addActionListener(actionEvent -> {
             try{
@@ -51,7 +51,7 @@ public class Panel extends JPanel {
                 throw new RuntimeException(e);
             }
         });
-        JMenuItem editarCotizacion = new JMenuItem("Editar cotizaciones");
+        JMenuItem editarCotizacion = new JMenuItem("Actualizar");
         editarCotizacion.setPreferredSize(new Dimension(150,20));
         editarCotizacion.addActionListener(actionEvent ->{
             try{
@@ -61,7 +61,7 @@ public class Panel extends JPanel {
                 throw new RuntimeException(e);
             }
         });
-        JMenuItem nuevaVenta = new JMenuItem("Nueva venta");
+        JMenuItem nuevaVenta = new JMenuItem("Registrar venta");
         nuevaVenta.setPreferredSize(new Dimension(150,20));
         nuevaVenta.addActionListener(e->{
             try {
@@ -73,7 +73,7 @@ public class Panel extends JPanel {
             }
             facturaFrame.setVisible(true);
         });
-        JMenuItem editarProducto = new JMenuItem("Mi Stock");
+        JMenuItem editarProducto = new JMenuItem("Mi stock");
         editarProducto.setPreferredSize(new Dimension(150,20));
         editarProducto.addActionListener(e -> {
             try {
@@ -93,7 +93,7 @@ public class Panel extends JPanel {
             }
             productosImportarFrame.setVisible(true);
         });
-        JMenuItem editarCliente = new JMenuItem("Mis Clientes");
+        JMenuItem editarCliente = new JMenuItem("Mis clientes");
         editarCliente.setPreferredSize(new Dimension(150,20));
         editarCliente.addActionListener(e ->{
             try {

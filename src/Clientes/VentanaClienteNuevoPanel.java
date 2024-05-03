@@ -17,7 +17,7 @@ public class VentanaClienteNuevoPanel extends JPanel {
     private JButton btnGuardar;
     public VentanaClienteNuevoPanel(){
         setBackground(new Color(214,214,214));
-        JLabel titulo = new JLabel("Nuevo Cliente");
+        JLabel titulo = new JLabel("Nuevo cliente");
         titulo.setBounds(100, 1, 200, 40);
 
         JLabel nombre = new JLabel("Nombre:");
@@ -86,7 +86,7 @@ public class VentanaClienteNuevoPanel extends JPanel {
                 clientesDB.insertarCliente(cliente);
 
 
-                JOptionPane.showMessageDialog(null,"Se inserto nuevo cliente");
+                JOptionPane.showMessageDialog(null,"Se agregó nuevo cliente");
                 LimpiarTxt(txtNombre);
                 LimpiarTxt(txtCuit);
                 LimpiarTxt(txtDireccion);

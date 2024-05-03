@@ -45,6 +45,9 @@ public class CotizacionEditarPanel extends JPanel {
         });
         btnModificar = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
         btnModificar.setBounds(570, 20, 130, 30);
+        btnModificar.addActionListener(e->{
+
+        });
         btnEliminar = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
         btnEliminar.setBounds(740, 20, 130,30);
         btnEliminar.addActionListener(e ->{

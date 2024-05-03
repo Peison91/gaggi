@@ -20,7 +20,7 @@ import java.awt.event.KeyEvent;
         public VentanaNuevoProductoPanel() throws Exception {
 
             setBackground(new Color(214, 214, 214));
-            JLabel nuevoProducto = new JLabel("Nuevo Producto");
+            JLabel nuevoProducto = new JLabel("Nuevo producto");
             nuevoProducto.setBounds(100, 1, 200, 40);
 
             JLabel descrProd = new JLabel("Descripción:");
@@ -118,11 +118,6 @@ import java.awt.event.KeyEvent;
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
-               /* try {
-                    tablaProductos.ConstruirTabla();
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }*/
             });
             add(nuevoProducto);
             add(descrProd);
@@ -137,7 +132,6 @@ import java.awt.event.KeyEvent;
             add(txtStockMin);
             add(stockProd);
             add(txtStock);
-
         }
 
         public void LimpiarTxt(JTextField e) {

@@ -3,10 +3,7 @@ import model.Cotizacion;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Stack;
-
 
 public class Cotizacion_CabeceraDB {
 
@@ -24,7 +21,6 @@ public class Cotizacion_CabeceraDB {
                 String sql = "INSERT INTO cotizacion_cabecera(cliente_id, fecha_cotizacion, indice_ajuste, estado_id) " +
                         "VALUES (?, ?, ?, ?)";
 
-
                 Timestamp timestamp = new Timestamp(cotizacion.getFecha_cotizacion().getTime());
 
                 PreparedStatement statement = conn.prepareStatement(sql);
@@ -34,8 +30,6 @@ public class Cotizacion_CabeceraDB {
                 statement.setInt(4, cotizacion.getEstado());
 
                 int rowsInserted = statement.executeUpdate();
-
-
                 if (rowsInserted > 0) {
                    return true;
                 }
@@ -62,7 +56,6 @@ public class Cotizacion_CabeceraDB {
                 statement.setInt(4,cotizacion.getEstado());
 
                 int rowsUpdated = statement.executeUpdate();
-
                 if(rowsUpdated > 0){
                     return true;
                 }
@@ -90,14 +83,11 @@ public class Cotizacion_CabeceraDB {
                     }
                     return false;
                 }
-
         }catch (Exception ex){
             ex.printStackTrace();
             throw ex;
         }
-
     }
-
     public Cotizacion consultarCotizacion(int id) throws Exception{
         try{
             if(this.conn == null){
@@ -119,8 +109,6 @@ public class Cotizacion_CabeceraDB {
             throw ex;
         }
     }
-
-
     public int obtenerIdCabecera() throws Exception{
         int idCabecera;
         try{

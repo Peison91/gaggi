@@ -13,11 +13,10 @@ public class VentanaProveedoresNuevoPanel extends JPanel {
     JTextField txtCiudad;
     JTextField txtCBU;
     JButton btnGuardar;
-    //TablaProveedores tablaProveedores = new TablaProveedores();
 
     public VentanaProveedoresNuevoPanel() throws Exception {
         setBackground(new Color(214,214,214));
-        JLabel titulo = new JLabel("Nuevo Proveedor");
+        JLabel titulo = new JLabel("Nuevo proveedor");
         titulo.setBounds(100, 1, 200, 40);
 
         JLabel nombre = new JLabel("Nombre:");
@@ -90,11 +89,6 @@ public class VentanaProveedoresNuevoPanel extends JPanel {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            /*try {
-                tablaProveedores.ConstruirTabla();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }*/
         });
         add(titulo);
         add(nombre);
@@ -109,8 +103,6 @@ public class VentanaProveedoresNuevoPanel extends JPanel {
         add(txtCBU);
         add(btnGuardar);
         setLayout(null);
-        /*tablaProveedores.setBounds(20,250,850,350);
-        add(tablaProveedores);*/
     }
     public void LimpiarTxt(JTextField e) {
         e.setText("");

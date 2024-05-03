@@ -1,7 +1,6 @@
 package database;
 
 import model.Cotizacion_detalle;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,14 +44,11 @@ public class Cotizacion_DetalleDB {
             }
 
     public boolean insertarCotizacionDetalleLista(List<Cotizacion_detalle> listaCotizacionDetalle)throws Exception{
-
         try {
             if (this.conn == null) {
                 throw new Exception("La conexión no esta establecida");
             } else {
                 String sql = "INSERT INTO cotizacion_detalles (cantidad, precio_unitario, precio_ajustado, producto_id, cotizacion_cabecera_id) VALUES (?, ?, ?, ?, ?)";
-
-
 
                 for(Cotizacion_detalle cotizacionDetalle : listaCotizacionDetalle){
 
@@ -70,9 +66,7 @@ public class Cotizacion_DetalleDB {
                         return true;
                     }
                 }
-
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
             throw ex;
@@ -156,7 +150,6 @@ public class Cotizacion_DetalleDB {
                 String sql = "SELECT * FROM cotizacion_detalles WHERE id_cot_detalle= " + id;
 
                 PreparedStatement statement = conn.prepareStatement(sql);
-
                 ResultSet result = statement.executeQuery(sql);
                 if(result.next()){
                     return new Cotizacion_detalle(result.getInt("id_cot_detalle"), result.getInt("cantidad"), result.getDouble("precio_unitario")

@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Frame extends JFrame {
     public Frame() throws HeadlessException {
-        setTitle("Gaggi Distribuidora - Menú Principal");
+        setTitle("Gaggi Distribuidora - Menú principal");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
         Dimension tamanoPantalla = miPantalla.getScreenSize();

@@ -4,14 +4,12 @@ import DTO.DtoCotizacionDetalle;
 import Utiles.Conexion;
 import database.ProductosDB;
 import model.Productos;
-
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
-
 import static Cotizacion.CotizacionPanel.indiceAjuste;
 import static Cotizacion.CotizacionPanel.listDto;
 
@@ -24,8 +22,6 @@ public class PanelTablaProductosCotizacion extends JPanel {
     JButton seleccionarCliente;
     double valorAjusteArt;
     double valorAjusteTotal;
-
-
 
     public PanelTablaProductosCotizacion() throws Exception {
 
@@ -93,7 +89,7 @@ public class PanelTablaProductosCotizacion extends JPanel {
 
 
             } else {
-                JOptionPane.showMessageDialog(null, "Selecciona un articulo de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Selecciona un producto de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         filtro.setBounds(20, 20, 100, 30);
@@ -111,10 +107,6 @@ public class PanelTablaProductosCotizacion extends JPanel {
                 }
             }
         });
-
-
-
-
         ConstruirTabla(0, null);
         scroll.setBounds(20, 100, 600, 200);
         add(buscarCliente);
@@ -123,7 +115,6 @@ public class PanelTablaProductosCotizacion extends JPanel {
         add(scroll);
         add(seleccionarCliente);
         setLayout(null);
-
     }
     public double obtenerPrecioFinalArticulos(double precio, int cantidad){
         double precioFianl = precio * cantidad;
@@ -140,7 +131,6 @@ public class PanelTablaProductosCotizacion extends JPanel {
 
     public double PrecioArticuloConAjuste(double valor,double ajuste){
         double precArtAjustado = valor * ajuste / 100;
-
         return precArtAjustado;
     }
 

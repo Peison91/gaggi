@@ -17,7 +17,7 @@ public class VentanaClienteEditarPanel extends JPanel {
     static JButton btnGuardar;
     public VentanaClienteEditarPanel(){
         setBackground(new Color(214,214,214));
-        JLabel titulo = new JLabel("Editar Cliente");
+        JLabel titulo = new JLabel("Editar clientes");
         titulo.setBounds(100, 1, 200, 40);
 
         JLabel nombre = new JLabel("Nombre:");
@@ -91,7 +91,7 @@ public class VentanaClienteEditarPanel extends JPanel {
 
 
                 clientesDB.actualizarCliente(clientes);
-                JOptionPane.showMessageDialog(null,"Se actualizo el cliente");
+                JOptionPane.showMessageDialog(null,"Se actualizó el cliente");
                 LimpiarTxt(txtNombre);
                 LimpiarTxt(txtCuit);
                 LimpiarTxt(txtDireccion);
@@ -118,9 +118,6 @@ public class VentanaClienteEditarPanel extends JPanel {
         add(btnGuardar);
         setLayout(null);
     }
-
-
-
     public void LimpiarTxt(JTextField e) {
         e.setText("");
     }
