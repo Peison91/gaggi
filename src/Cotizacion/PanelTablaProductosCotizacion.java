@@ -117,8 +117,8 @@ public class PanelTablaProductosCotizacion extends JPanel {
         setLayout(null);
     }
     public double obtenerPrecioFinalArticulos(double precio, int cantidad){
-        double precioFianl = precio * cantidad;
-        return precioFianl;
+        double precioFinal = precio * cantidad;
+        return precioFinal;
     }
 
     public double PrecioFinalCotizacion(){

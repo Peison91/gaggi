@@ -52,7 +52,7 @@ public class CotizacionPanel extends JPanel {
         lblId = new JLabel("10");
         /*lblId.setBounds(150, 25, 100, 25);
         //lblId.setText("5");*/
-        buscarCliente = new JLabel("Seleccione cliente:");
+        buscarCliente = new JLabel("Cliente seleccionado:");
         buscarCliente.setBounds(15, 20, 250, 30);
         txtCliente = new JTextField(15);
         txtCliente.setBounds(140, 20, 250, 30);
@@ -72,10 +72,10 @@ public class CotizacionPanel extends JPanel {
         lblEstado.setBounds(15, 125, 100, 30);
 
         lblValorFinal1 = new JLabel("Precio final: ");
-        lblValorFinal1.setBounds(680,700,100,30);
+        lblValorFinal1.setBounds(660,520,100,30);
 
         lblValorFinal2 = new JLabel();
-        lblValorFinal2.setBounds(770,700,100,30);
+        lblValorFinal2.setBounds(770,520,100,30);
 
         lista = new JComboBox();
         lista.addItem("Aceptada");
@@ -84,10 +84,10 @@ public class CotizacionPanel extends JPanel {
         lista.setBounds(140, 125, 120, 30);
 
         scroll = new JScrollPane();
-        scroll.setBounds(15, 270, 800, 200);
+        scroll.setBounds(15, 200, 800, 300);
 
-        btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(300, 160, 100, 30);
+        btnGuardar = new JButton("Guardar",  new ImageIcon("src/imagenes/GuardarTodo.png"));
+        btnGuardar.setBounds(355, 520, 150, 40);
         btnGuardar.addActionListener(e->{
             Cotizacion cotizacion = new Cotizacion(0,clienteID,calendario.getDate(),0,1);
             Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
@@ -136,8 +136,8 @@ public class CotizacionPanel extends JPanel {
             }
         });
 
-        btnCargarArticulo = new JButton("Cargar productos");
-        btnCargarArticulo.setBounds(710, 220, 130, 40);
+        btnCargarArticulo = new JButton("Cargar productos", new ImageIcon("src/imagenes/nuevo.png"));
+        btnCargarArticulo.setBounds(325, 160, 200, 30);
         btnCargarArticulo.addActionListener(e ->{
             try {
                 FrameTablaProductosCotizacion frameTablaProductosCotizacion = new FrameTablaProductosCotizacion();
@@ -170,7 +170,7 @@ public class CotizacionPanel extends JPanel {
     }
 
     public static void ConstruirTablaCotizacion(int i, Object o) throws Exception{
-        String[] titulo = {"Código producto", "Cantidad", "Descripción", "Precio unit.", "Precio total"};
+        String[] titulo = {"Código producto", "Descripción", "Cantidad", "Precio unit.", "Precio total"};
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
@@ -189,15 +189,14 @@ public class CotizacionPanel extends JPanel {
       String[][] matrizInfo = new String[listDto.size()][6];
         for(int i=0; i < listDto.size(); i++){
             matrizInfo[i][0] = listDto.get(i).getCodigo_producto() + "";
-            matrizInfo[i][1] = listDto.get(i).getCantidad_producto() + "";
-            matrizInfo[i][2] = listDto.get(i).getNombre_producto() + "";
+            matrizInfo[i][1] = listDto.get(i).getNombre_producto() + "";
+            matrizInfo[i][2] = listDto.get(i).getCantidad_producto() + "";
             matrizInfo[i][3] = listDto.get(i).getPrecio_unitario() + "";
             matrizInfo[i][4] = listDto.get(i).getPrecio_total() + "";
 
         }
         return matrizInfo;
     }
-
     private void ajustarAnchoColumnas() {
         TableColumnModel columnModel = tabla.getColumnModel();
         int columnCount = columnModel.getColumnCount();

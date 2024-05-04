@@ -14,7 +14,7 @@ public class Cotizacion_DetalleDB {
         this.conn = conexion.getConnection();
     }
 
-        public boolean insertarCotizacionDetalle(Cotizacion_detalle cotizacionDetalle)throws Exception{
+    public boolean insertarCotizacionDetalle(Cotizacion_detalle cotizacionDetalle)throws Exception{
 
                 try {
                     if (this.conn == null) {
@@ -162,9 +162,4 @@ public class Cotizacion_DetalleDB {
             throw ex;
         }
     }
-
-
-
-
-
 }
