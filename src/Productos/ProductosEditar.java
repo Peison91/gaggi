@@ -108,7 +108,7 @@ public class ProductosEditar extends JPanel{
             }
         });
         ConstruirTabla(0,null);
-        scroll.setBounds(20,80,850,350);
+        scroll.setBounds(20,80,1050,350);
         add(buscarProducto);
         add(filtro);
         add(btnModificarProd);
@@ -132,8 +132,8 @@ public class ProductosEditar extends JPanel{
             tr.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(valorBuscar), opBuscar));
         }
         JTableHeader titulo1 = tabla.getTableHeader();
-        tabla.getTableHeader().setReorderingAllowed(false);
-        tabla.getTableHeader().setResizingAllowed(false);
+        //tabla.getTableHeader().setReorderingAllowed(false);
+        //tabla.getTableHeader().setResizingAllowed(false);
         titulo1.setBackground(new Color(236, 126, 29));
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
     }
@@ -155,7 +155,7 @@ public class ProductosEditar extends JPanel{
     private void ajustarAnchoColumnas() {
         TableColumnModel columnModel = tabla.getColumnModel();
         int columnCount = columnModel.getColumnCount();
-        int[] columnWidths = {80, 300, 80, 200, 100, 100, 100};
+        int[] columnWidths = {80, 400, 80, 200, 100, 100, 100};
         for (int i = 0; i < columnCount; i++) {
             TableColumn column = columnModel.getColumn(i);
             column.setPreferredWidth(columnWidths[i]);
