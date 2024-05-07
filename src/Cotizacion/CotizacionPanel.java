@@ -4,6 +4,7 @@ import Utiles.Conexion;
 import com.toedter.calendar.JDateChooser;
 import database.Cotizacion_CabeceraDB;
 import database.Cotizacion_DetalleDB;
+import database.ProductosDB;
 import model.Cotizacion;
 import model.Cotizacion_detalle;
 
@@ -26,7 +27,7 @@ public class CotizacionPanel extends JPanel {
     static int cantProducto;
     static double indiceAjuste;
     JButton btnCliente, btnGuardar, btnCargarArticulo;
-    static JButton btnEliminarTabla;
+    JButton btnEliminarArtTabla;
     JDateChooser calendario;
     static JScrollPane scroll;
     static JTable tabla = new JTable();
@@ -146,7 +147,7 @@ public class CotizacionPanel extends JPanel {
 
 
         btnCargarArticulo = new JButton("Cargar articulo");
-        btnCargarArticulo.setBounds(710, 220, 130, 40);
+        btnCargarArticulo.setBounds(550, 220, 130, 30);
         btnCargarArticulo.addActionListener(e ->{
             try {
                 FrameTablaProductosCotizacion frameTablaProductosCotizacion = new FrameTablaProductosCotizacion();
@@ -154,6 +155,39 @@ public class CotizacionPanel extends JPanel {
                 String valorJX = txtIndiceAjuste.getText();
                 indiceAjuste = Double.parseDouble(valorJX);
 
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        btnEliminarArtTabla = new JButton("Eliminar");
+        btnEliminarArtTabla.setBounds(700,220,130,30);
+        btnEliminarArtTabla.addActionListener(e ->{
+            int fila = tabla.getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un producto", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                int id = Integer.parseInt((String) tabla.getValueAt(fila, 0));
+                UIManager.put("OptionPane.yesButtonText", "Si");
+                UIManager.put("OptionPane.noButtonText", "No");
+                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Importante", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    try {
+                            for(DtoCotizacionDetalle cotizDto : listDto){
+                                if(cotizDto.getCodigo_producto() == id){
+                                    listDto.remove(cotizDto);
+                                    break;
+                                }
+                            }
+
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }
+            }
+            try {
+                ConstruirTablaCotizacion(0,null);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -174,6 +208,7 @@ public class CotizacionPanel extends JPanel {
         add(lista);
         add(scroll);
         add(btnGuardar);
+        add(btnEliminarArtTabla);
         add(btnCargarArticulo);
         scroll.setViewportView(tabla);
         setLayout(null);

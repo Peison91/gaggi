@@ -113,8 +113,6 @@ public class PanelTablaProductosCotizacion extends JPanel {
         });
 
 
-
-
         ConstruirTabla(0, null);
         scroll.setBounds(20, 100, 600, 200);
         add(buscarCliente);
@@ -147,7 +145,7 @@ public class PanelTablaProductosCotizacion extends JPanel {
     //1000 * 10 / 100;
 
     public void ConstruirTabla(int i, Object o) throws Exception{
-        String[] titulo = {"ID","Descripción", "Código", "Abreviatura", "Precio unit.", "Stock mín.", "Stock"};
+        String[] titulo = {"ID","Descripción", "Código", "Abreviatura", "Precio unit.", "Stock mín.", "Stock",};
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
