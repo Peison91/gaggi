@@ -13,8 +13,6 @@ public class VentanaEditarProductoPanel extends JPanel {
     static JTextField txtStockMin;
     static JTextField txtStock;
 
-
-
     public VentanaEditarProductoPanel() throws Exception {
 
         setBackground(new Color(214, 214, 214));
@@ -113,12 +111,11 @@ public class VentanaEditarProductoPanel extends JPanel {
                 productoEditar.setStock(stock);
 
                 productosDB.actualizarProducto(productoEditar);
-                JOptionPane.showMessageDialog(null,"Se actualizo el articulo");
+                JOptionPane.showMessageDialog(null,"Se actualizó el producto");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null,"Error al actualizar articulo");
+                JOptionPane.showMessageDialog(null,"Error al actualizar el producto");
                 throw new RuntimeException(ex);
             }
-
 
         });
         add(nuevoProducto);
@@ -134,6 +131,5 @@ public class VentanaEditarProductoPanel extends JPanel {
         add(txtStockMin);
         add(stockProd);
         add(txtStock);
-
     }
 }

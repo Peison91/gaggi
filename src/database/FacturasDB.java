@@ -16,7 +16,7 @@ public class FacturasDB {
     public boolean insertarFacturas(Facturas factura) throws Exception {
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
 
                 String sql = "INSERT INTO facturas (cliente_id, numero, fecha_hora, monto, archivo) VALUES (?, ?, ?, ?, ?)";
@@ -47,7 +47,7 @@ public class FacturasDB {
     public boolean actualizarFacturas(Facturas factura) throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "UPDATE facturas SET cliente_id=?, numero=?, fecha_hora=?, monto=?, archivo=? WHERE id=?";
 
@@ -77,7 +77,7 @@ public class FacturasDB {
     public List<Facturas> todasFacturas() throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else {
                 String sql = "SELECT * FROM facturas";
 
@@ -121,7 +121,7 @@ public class FacturasDB {
     public boolean borrarFactura(int id) throws Exception{
         try{
             if (this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "DELETE FROM facturas WHERE id=?";
 

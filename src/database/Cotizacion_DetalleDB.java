@@ -1,8 +1,6 @@
 package database;
 
-import DTO.DtoCotizacionDetalle;
 import model.Cotizacion_detalle;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,11 +14,11 @@ public class Cotizacion_DetalleDB {
         this.conn = conexion.getConnection();
     }
 
-        public boolean insertarCotizacionDetalle(Cotizacion_detalle cotizacionDetalle)throws Exception{
+    public boolean insertarCotizacionDetalle(Cotizacion_detalle cotizacionDetalle)throws Exception{
 
                 try {
                     if (this.conn == null) {
-                        throw new Exception("La conexion no esta establecida");
+                        throw new Exception("La conexión no esta establecida");
                     } else {
                         String sql = "INSERT INTO cotizacion_detalles (cantidad, precio_unitario, precio_ajustado, producto_id, cotizacion_cabecera_id) VALUES (?, ?, ?, ?, ?)";
 
@@ -46,14 +44,11 @@ public class Cotizacion_DetalleDB {
             }
 
     public boolean insertarCotizacionDetalleLista(List<Cotizacion_detalle> listaCotizacionDetalle)throws Exception{
-
         try {
             if (this.conn == null) {
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             } else {
                 String sql = "INSERT INTO cotizacion_detalles (cantidad, precio_unitario, precio_ajustado, producto_id, cotizacion_cabecera_id) VALUES (?, ?, ?, ?, ?)";
-
-
 
                 for(Cotizacion_detalle cotizacionDetalle : listaCotizacionDetalle){
 
@@ -71,9 +66,7 @@ public class Cotizacion_DetalleDB {
                         return true;
                     }
                 }
-
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
             throw ex;
@@ -84,7 +77,7 @@ public class Cotizacion_DetalleDB {
     public boolean actualizarCotizacionDetalle(Cotizacion_detalle cotizacionDetalle) throws Exception{
         try{
             if(this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "UPDATE cotizacion_detalles SET id_cot_detalle=?, cantidad=?, precio_unitario=?, precio_ajustado=?, producto_id=?, cotizacion_cabecera_id, WHERE id_cot_detalle=?";
 
@@ -112,7 +105,7 @@ public class Cotizacion_DetalleDB {
     public boolean borrarCotizacionDetalle(int id)throws Exception{
         try{
             if(this.conn == null) {
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
 
             }else{
                 String sql = "DELETE FROM cotizacion_detalles WHERE id_cot_detalle=?";
@@ -131,16 +124,32 @@ public class Cotizacion_DetalleDB {
             throw ex;
         }
     }
+    public boolean borrarCotDetalleCabecera(int id) throws Exception {
+        try {
+            if (this.conn == null) {
+                throw new Exception("La conexión no está establecida");
+            } else {
+                String sql = "DELETE FROM cotizacion_detalles WHERE cotizacion_cabecera_id=?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, id);
+                int rowsDeleted = statement.executeUpdate();
+
+                return rowsDeleted > 0;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
 
     public Cotizacion_detalle consultarCotizacionDetalle(int id) throws Exception{
         try{
             if(this.conn == null){
-                throw new Exception("La conexion no esta establecida");
+                throw new Exception("La conexión no esta establecida");
             }else{
                 String sql = "SELECT * FROM cotizacion_detalles WHERE id_cot_detalle= " + id;
 
                 PreparedStatement statement = conn.prepareStatement(sql);
-
                 ResultSet result = statement.executeQuery(sql);
                 if(result.next()){
                     return new Cotizacion_detalle(result.getInt("id_cot_detalle"), result.getInt("cantidad"), result.getDouble("precio_unitario")
@@ -153,9 +162,4 @@ public class Cotizacion_DetalleDB {
             throw ex;
         }
     }
-
-
-
-
-
 }

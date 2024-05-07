@@ -1,6 +1,5 @@
 package Cotizacion;
 
-import Factura.PanelFactura;
 import Utiles.Conexion;
 import database.ClientesDB;
 import model.Clientes;
@@ -36,7 +35,7 @@ public class PanelTablaClientesCotizacion extends JPanel {
                 String mensaje = "Cliente seleccionado:\nID: " + idClienteSeleccionado +
                         "\nNombre: " + nombreClienteSeleccionado +
                         "\nCUIT: " + cuitClienteSeleccionado;
-                JOptionPane.showMessageDialog(null, mensaje, "Cliente Seleccionado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, mensaje, "Cliente seleccionado", JOptionPane.INFORMATION_MESSAGE);
                 String datoId = tabla.getValueAt(filaSeleccionada,0).toString();
                 String datoNombre = tabla.getValueAt(filaSeleccionada,1).toString();
                 String datoCUIT = tabla.getValueAt(filaSeleccionada,2).toString();
@@ -63,22 +62,14 @@ public class PanelTablaClientesCotizacion extends JPanel {
                 }
             }
         });
-
-
-
-
         ConstruirTabla(0, null);
-        scroll.setBounds(20, 100, 600, 200);
+        scroll.setBounds(20, 80, 650, 200);
         add(buscarCliente);
         add(filtro);
         scroll.setViewportView(tabla);
         add(scroll);
         add(seleccionarCliente);
         setLayout(null);
-
-
-
-
     }
 
     public void ConstruirTabla(int opBuscar, String valor) throws Exception {

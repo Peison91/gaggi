@@ -40,13 +40,11 @@ public class PanelFactura extends JPanel {
             }
         });
         lblId = new JLabel("10");
-        /*lblId.setBounds(150, 25, 100, 25);
-        //lblId.setText("5");*/
-        buscarCliente = new JLabel("Seleccione cliente:");
+        buscarCliente = new JLabel("Cliente seleccionado:");
         buscarCliente.setBounds(15, 20, 250, 30);
         txtCliente = new JTextField(15);
-        txtCliente.setBounds(140, 20, 350, 30);
-
+        txtCliente.setBounds(140, 20, 250, 30);
+        txtCliente.setEditable(false);
 
         lblNumero = new JLabel("Nro. Factura:");
         lblNumero.setBounds(15, 55, 100, 30);

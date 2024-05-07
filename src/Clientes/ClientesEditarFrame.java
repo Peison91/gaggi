@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class ClientesEditarFrame extends JFrame {
     public ClientesEditarFrame() throws Exception {
-        setTitle("Gaggi Distribuidora - Editar Clientes");
+        setTitle("Gaggi Distribuidora - Editar clientes");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
         Dimension tamanoPantalla = miPantalla.getScreenSize();

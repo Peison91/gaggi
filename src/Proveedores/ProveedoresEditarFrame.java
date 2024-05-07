@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class ProveedoresEditarFrame extends JFrame {
     public ProveedoresEditarFrame() throws Exception {
-        setTitle("Gaggi Distribuidora - Editar Proveedores");
+        setTitle("Gaggi Distribuidora - Editar proveedores");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
         Dimension tamanoPantalla = miPantalla.getScreenSize();

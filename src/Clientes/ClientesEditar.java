@@ -1,6 +1,5 @@
 package Clientes;
 import Utiles.Conexion;
-import database.DBConection;
 import database.ClientesDB;
 import model.Clientes;
 import javax.swing.*;
