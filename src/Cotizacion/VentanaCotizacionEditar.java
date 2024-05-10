@@ -38,7 +38,7 @@ public class VentanaCotizacionEditar extends JFrame {
         static JLabel lblValorFinal2;
         static JTextField txtIndiceAjuste;
         static JTextField txtCliente;
-        static int productoId;
+        static int productId;
         static String descripcionProd;
         static double precioUni;
         static int cantProducto;
@@ -124,7 +124,7 @@ public class VentanaCotizacionEditar extends JFrame {
                     int cantidad = cantProducto;
                     double precioUnit = precioUni;
                     double precioAjust = 0;
-                    int producId = productoId;
+                    int producId = productId;
                     try {
                         idCabecera = cotizacionCabeceraDB.obtenerIdCabecera();
                     } catch (Exception ex) {

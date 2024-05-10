@@ -100,7 +100,7 @@ public class Cotizacion_CabeceraDB {
                 ResultSet result = statement.executeQuery(sql);
                 if(result.next()){
                     return new Cotizacion(result.getInt("id_cabecera"),result.getInt("cliente_id"),result.getTimestamp("fecha_cotizacion")
-                            ,result.getInt("indice_ajuste"),result.getInt("estado"));
+                            ,result.getDouble("indice_ajuste"),result.getInt("estado"));
                 }
                 return  null;
             }
@@ -146,7 +146,7 @@ public class Cotizacion_CabeceraDB {
 
                 while(resultSet.next()){
                     lstCotizacion.add(new Cotizacion(resultSet.getInt("id_cabecera"),resultSet.getInt("cliente_id"),
-                            resultSet.getTimestamp("fecha_cotizacion"),resultSet.getInt("indice_ajuste"), resultSet.getInt("estado_id")));
+                            resultSet.getTimestamp("fecha_cotizacion"),resultSet.getDouble("indice_ajuste"), resultSet.getInt("estado_id")));
                 }
                 return  lstCotizacion;
             }

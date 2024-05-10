@@ -13,7 +13,7 @@ public class Cotizacion {
     public Cotizacion() {
     }
 
-    public Cotizacion(int id_cabecera, int cliente_id, Date fecha_cotizacion, int indice_ajuste, int estado, List<Cotizacion_detalle> listCotizacionDetalle) {
+    public Cotizacion(int id_cabecera, int cliente_id, Date fecha_cotizacion, double indice_ajuste, int estado, List<Cotizacion_detalle> listCotizacionDetalle) {
         this.cliente_id = cliente_id;
         this.fecha_cotizacion = fecha_cotizacion;
         this.indice_ajuste = indice_ajuste;
@@ -22,7 +22,7 @@ public class Cotizacion {
     }
 
     //CONSTRUCTOR DE PRUEBA.
-    public Cotizacion(int id_cabecera, int cliente_id, Date fecha_cotizacion, int indice_ajuste, int estado) {
+    public Cotizacion(int id_cabecera, int cliente_id, Date fecha_cotizacion, double indice_ajuste, int estado) {
         this.id_cabecera = id_cabecera;
         this.cliente_id = cliente_id;
         this.fecha_cotizacion = fecha_cotizacion;

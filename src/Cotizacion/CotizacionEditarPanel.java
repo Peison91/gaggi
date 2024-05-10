@@ -58,13 +58,10 @@ public class CotizacionEditarPanel extends JPanel {
                     try {
                         VentanaCotizacionEditar ventanaCotizacionEditar = new VentanaCotizacionEditar();
                         Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
-                        //cotizacionDetalleDB.borrarCotDetalleCabecera(id_cabecera);
                         Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
-                        //cotizacionCabeceraDB.borrarCotizacion(id_cabecera);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-                    //JOptionPane.showMessageDialog(null, "Cotización modificada");
                 }
             }
             try {
