@@ -31,7 +31,7 @@ public class Cotizacion {
     }
 
 
-        public void ingresarDetalle(Cotizacion_detalle cotizacionDetalle){
+    public void ingresarDetalle(Cotizacion_detalle cotizacionDetalle){
           listCotizacionDetalle.add(cotizacionDetalle);
 
     }

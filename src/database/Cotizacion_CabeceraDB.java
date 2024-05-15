@@ -1,5 +1,6 @@
 package database;
 import model.Cotizacion;
+import model.Cotizacion_detalle;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -100,7 +101,28 @@ public class Cotizacion_CabeceraDB {
                 ResultSet result = statement.executeQuery(sql);
                 if(result.next()){
                     return new Cotizacion(result.getInt("id_cabecera"),result.getInt("cliente_id"),result.getTimestamp("fecha_cotizacion")
-                            ,result.getDouble("indice_ajuste"),result.getInt("estado"));
+                            ,result.getDouble("indice_ajuste"),result.getInt("estado_id"));
+                }
+                return  null;
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+    public Cotizacion consultarCotizacionDetalle(int id) throws Exception{
+        try{
+            if(this.conn == null){
+                throw new Exception("La conexión no esta establecida");
+            }else{
+                String sql = "SELECT * FROM cotizacion_detalles WHERE id_cabecera= " + id;
+
+                PreparedStatement statement = conn.prepareStatement(sql);
+
+                ResultSet result = statement.executeQuery(sql);
+                if(result.next()){
+                    return new Cotizacion_detalle(result.getInt("id_cot_detalle"),result.getInt("cantidad"),result.getDouble("precio_unitario")
+                            ,result.getDouble("precio_ajustado"),result.getInt("producto_id"));
                 }
                 return  null;
             }

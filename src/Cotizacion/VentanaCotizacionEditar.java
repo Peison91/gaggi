@@ -18,7 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VentanaCotizacionEditar extends JFrame {
-    public VentanaCotizacionEditar() throws Exception {
+    private Cotizacion cotizacion;
+    private int id_seleccionado;
+    public VentanaCotizacionEditar(int id_seleccionado) throws Exception {
+        this.id_seleccionado = id_seleccionado;
+        obtenerCotizacionCabecera();
         setTitle("Editar cotización");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
@@ -53,9 +57,12 @@ public class VentanaCotizacionEditar extends JFrame {
         JComboBox lista;
 
 
-        static java.util.List<DtoCotizacionDetalle> listDto;
+        static List<DtoCotizacionDetalle> listDto;
 
         public PanelEditarCotizacion()throws Exception{
+
+            
+
             listDto = new ArrayList<>();
             btnCliente = new JButton("Seleccione cliente");
             btnCliente.setBounds(600, 20, 210, 30);
@@ -72,7 +79,8 @@ public class VentanaCotizacionEditar extends JFrame {
             buscarCliente.setBounds(15, 20, 250, 30);
             txtCliente = new JTextField(15);
             txtCliente.setBounds(140, 20, 250, 30);
-            txtCliente.setEditable(false);
+            txtCliente.setEditable(true);
+            txtCliente.setText(String.valueOf(cotizacion.getCliente_id()));
 
             lblNumero = new JLabel("Indice Ajuste:");
             lblNumero.setBounds(15, 55, 100, 30);
@@ -222,5 +230,12 @@ public class VentanaCotizacionEditar extends JFrame {
                 column.setPreferredWidth(columnWidths[i]);
             }
         }
+    }
+    private void obtenerCotizacionCabecera() throws Exception {
+        Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
+        cotizacion = cotizacionCabeceraDB.consultarCotizacion(id_seleccionado);
+    }
+    private void obtenerCotizacionDetalle() throws Exception {
+        Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
     }
 }

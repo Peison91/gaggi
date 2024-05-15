@@ -20,7 +20,13 @@ public class Cotizacion_detalle {
         this.cotizacion_cabecera_id = cotizacion_cabecera_id;
     }
 
-
+    public Cotizacion_detalle(int id_cot_detalle, int cantidad, double precio_unitario, double precio_ajustado,int producto_id) {
+        this.id_cot_detalle = id_cot_detalle;
+        this.cantidad = cantidad;
+        this.precio_unitario = precio_unitario;
+        this.precio_ajustado = precio_ajustado;
+        this.producto_id = producto_id;
+    }
 
     public int getId_cot_detalle() {
         return id_cot_detalle;

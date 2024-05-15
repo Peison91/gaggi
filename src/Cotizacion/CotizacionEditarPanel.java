@@ -56,7 +56,7 @@ public class CotizacionEditarPanel extends JPanel {
                 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Importante", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
-                        VentanaCotizacionEditar ventanaCotizacionEditar = new VentanaCotizacionEditar();
+                        VentanaCotizacionEditar ventanaCotizacionEditar = new VentanaCotizacionEditar(id_cabecera);
                         Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
                         Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
                     } catch (Exception ex) {
