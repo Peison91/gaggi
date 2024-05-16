@@ -19,10 +19,12 @@ import java.util.List;
 
 public class VentanaCotizacionEditar extends JFrame {
     private Cotizacion cotizacion;
+    private Cotizacion_detalle cotizacionDetalle;
     private int id_seleccionado;
     public VentanaCotizacionEditar(int id_seleccionado) throws Exception {
         this.id_seleccionado = id_seleccionado;
         obtenerCotizacionCabecera();
+        obtenerCotizacionDetalle();
         setTitle("Editar cotización");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
@@ -198,13 +200,10 @@ public class VentanaCotizacionEditar extends JFrame {
             String[][] informacion = obtenerMatriz();
             modelo = new DefaultTableModel(informacion, titulo);
             tabla.setModel(modelo);
-
-
             scroll.setViewportView(tabla);
             JTableHeader titulo1 = tabla.getTableHeader();
             titulo1.setBackground(new Color(236, 126, 29));
             titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
-            // ajustarAnchoColumnas();
         }
 
 
@@ -236,6 +235,11 @@ public class VentanaCotizacionEditar extends JFrame {
         cotizacion = cotizacionCabeceraDB.consultarCotizacion(id_seleccionado);
     }
     private void obtenerCotizacionDetalle() throws Exception {
-        Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
+        Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
+        cotizacionDetalle = cotizacionCabeceraDB.consultarCotizacionDetalle(id_seleccionado);
+
+        //query join tablas
+        /*SELECT * FROM gaggidb.cotizacion_cabecera co
+        join clientes cli on co.cliente_id = cli.id;*/
     }
 }

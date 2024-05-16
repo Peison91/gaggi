@@ -110,12 +110,12 @@ public class Cotizacion_CabeceraDB {
             throw ex;
         }
     }
-    public Cotizacion consultarCotizacionDetalle(int id) throws Exception{
+    public Cotizacion_detalle consultarCotizacionDetalle(int id) throws Exception{
         try{
             if(this.conn == null){
                 throw new Exception("La conexión no esta establecida");
             }else{
-                String sql = "SELECT * FROM cotizacion_detalles WHERE id_cabecera= " + id;
+                String sql = "SELECT * FROM cotizacion_detalles WHERE cotizacion_cabecera_id= " + id;
 
                 PreparedStatement statement = conn.prepareStatement(sql);
 
