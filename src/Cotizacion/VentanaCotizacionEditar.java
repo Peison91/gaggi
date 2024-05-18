@@ -23,8 +23,6 @@ public class VentanaCotizacionEditar extends JFrame {
     private int id_seleccionado;
     public VentanaCotizacionEditar(int id_seleccionado) throws Exception {
         this.id_seleccionado = id_seleccionado;
-        obtenerCotizacionCabecera();
-        obtenerCotizacionDetalle();
         setTitle("Editar cotización");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
@@ -62,9 +60,8 @@ public class VentanaCotizacionEditar extends JFrame {
         static List<DtoCotizacionDetalle> listDto;
 
         public PanelEditarCotizacion()throws Exception{
-
-            
-
+            obtenerCotizacionCabecera();
+            obtenerCotizacionDetalle();
             listDto = new ArrayList<>();
             btnCliente = new JButton("Seleccione cliente");
             btnCliente.setBounds(600, 20, 210, 30);
@@ -88,11 +85,13 @@ public class VentanaCotizacionEditar extends JFrame {
             lblNumero.setBounds(15, 55, 100, 30);
             txtIndiceAjuste = new JTextField("0.0");
             txtIndiceAjuste.setBounds(140, 55, 150, 30);
+            txtIndiceAjuste.setText(String.valueOf(cotizacion.getIndice_ajuste()));
 
             lblFechaHora = new JLabel("Fecha-Hora:");
             lblFechaHora.setBounds(15, 90, 100, 30);
             calendario = new JDateChooser();
             calendario.setBounds(140, 90, 150, 30);
+            calendario.setDate(cotizacion.getFecha_cotizacion());
 
             lblEstado = new JLabel("Estado:");
             lblEstado.setBounds(15, 125, 100, 30);
@@ -115,7 +114,7 @@ public class VentanaCotizacionEditar extends JFrame {
             btnGuardar = new JButton("Guardar",  new ImageIcon("src/imagenes/GuardarTodo.png"));
             btnGuardar.setBounds(355, 520, 150, 40);
             btnGuardar.addActionListener(e->{
-                Cotizacion cotizacion = new Cotizacion(0,clienteID,calendario.getDate(),0,1);
+                Cotizacion cotizacion = new Cotizacion(0,clienteID,calendario.getDate(),0, lista.getSelectedIndex());
                 Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
                 Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
                 try {
@@ -148,7 +147,7 @@ public class VentanaCotizacionEditar extends JFrame {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
-                JOptionPane.showMessageDialog(null,"Cotización creada");
+                JOptionPane.showMessageDialog(null,"Cotización actualizada");
                 listDto.clear();
                 try {
                     ConstruirTablaCotizacion(0,null);
@@ -216,7 +215,6 @@ public class VentanaCotizacionEditar extends JFrame {
                 matrizInfo[i][2] = listDto.get(i).getCantidad_producto() + "";
                 matrizInfo[i][3] = listDto.get(i).getPrecio_unitario() + "";
                 matrizInfo[i][4] = listDto.get(i).getPrecio_total() + "";
-
             }
             return matrizInfo;
         }
