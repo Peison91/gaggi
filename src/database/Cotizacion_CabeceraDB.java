@@ -110,7 +110,7 @@ public class Cotizacion_CabeceraDB {
             throw ex;
         }
     }
-    public Cotizacion_detalle consultarCotizacionDetalle(int id) throws Exception{
+    public List<Cotizacion_detalle> consultarCotizacionDetalle(int id) throws Exception{
         try{
             if(this.conn == null){
                 throw new Exception("La conexión no esta establecida");
@@ -120,12 +120,15 @@ public class Cotizacion_CabeceraDB {
                 PreparedStatement statement = conn.prepareStatement(sql);
 
                 ResultSet result = statement.executeQuery(sql);
-                if(result.next()){
-                    return new Cotizacion_detalle(result.getInt("id_cot_detalle"),result.getInt("cantidad"),result.getDouble("precio_unitario")
-                            ,result.getDouble("precio_ajustado"),result.getInt("producto_id"));
+                List<Cotizacion_detalle> lstCoti = new ArrayList<>();
+                while (result.next()){
+                    lstCoti.add(new Cotizacion_detalle (result.getInt("id_cot_detalle"), result.getInt("cantidad"), result.getDouble("precio_unitario")
+                            , result.getDouble("precio_ajustado"), result.getInt("producto_id")));
+                    }
+                return  lstCoti;
                 }
-                return  null;
-            }
+
+
         }catch (Exception ex){
             ex.printStackTrace();
             throw ex;
