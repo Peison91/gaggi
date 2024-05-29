@@ -1,8 +1,10 @@
 package Cotizacion;
 
 import Utiles.Conexion;
+import database.ClientesDB;
 import database.Cotizacion_CabeceraDB;
 import database.Cotizacion_DetalleDB;
+import model.Clientes;
 import model.Cotizacion;
 
 import javax.swing.*;
@@ -114,7 +116,7 @@ public class CotizacionEditarPanel extends JPanel {
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
-        //ajustarAnchoColumnas();
+        ajustarAnchoColumnas();
         TableRowSorter tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
         if (valor != null && !valor.isEmpty()) {
@@ -128,23 +130,28 @@ public class CotizacionEditarPanel extends JPanel {
         titulo1.setBackground(new Color(236, 126, 29));
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
     }
-    private String[][] obtenerMatriz() throws Exception{
+    private String[][] obtenerMatriz() throws Exception {
         Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
         List<Cotizacion> listCotizacionesCab = cotizacionCabeceraDB.todasCotizacionesCab();
+        ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
+
         String[][] matrizInfo = new String[listCotizacionesCab.size()][5];
-        for(int i=0; i < listCotizacionesCab.size(); i++){
-            matrizInfo[i][0] = listCotizacionesCab.get(i).getId_cabecera() + "";
-            matrizInfo[i][1] = listCotizacionesCab.get(i).getCliente_id() + "";
-            matrizInfo[i][2] = listCotizacionesCab.get(i).getFecha_cotizacion() + "";
-            matrizInfo[i][3] = listCotizacionesCab.get(i).getIndice_ajuste() + "";
-            matrizInfo[i][4] = listCotizacionesCab.get(i).getEstado() + "";
+        for (int i = 0; i < listCotizacionesCab.size(); i++) {
+            Cotizacion cotizacion = listCotizacionesCab.get(i);
+            Clientes cliente = clientesDB.consultaCliente(cotizacion.getCliente_id());
+
+            matrizInfo[i][0] = String.valueOf(cotizacion.getId_cabecera());
+            matrizInfo[i][1] = cliente.getNombre();
+            matrizInfo[i][2] = String.valueOf(cotizacion.getFecha_cotizacion());
+            matrizInfo[i][3] = String.valueOf(cotizacion.getIndice_ajuste());
+            matrizInfo[i][4] = String.valueOf(cotizacion.getEstado());
         }
         return matrizInfo;
     }
     private void ajustarAnchoColumnas() {
         TableColumnModel columnModel = tabla.getColumnModel();
         int columnCount = columnModel.getColumnCount();
-        int[] columnWidths = {100, 100, 100, 100, 100};
+        int[] columnWidths = {50, 200, 100, 100, 100};
         for (int i = 0; i < columnCount; i++) {
             TableColumn column = columnModel.getColumn(i);
             column.setPreferredWidth(columnWidths[i]);

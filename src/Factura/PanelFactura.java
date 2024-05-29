@@ -1,7 +1,9 @@
 package Factura;
 
 import Utiles.Conexion;
+import database.ClientesDB;
 import database.FacturasDB;
+import model.Clientes;
 import model.Facturas;
 import com.toedter.calendar.JDateChooser;
 
@@ -272,10 +274,14 @@ public class PanelFactura extends JPanel {
     public String[][] obtenerMatriz() throws Exception {
         FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
         List<Facturas> lstFacturas = facturasDB.todasFacturas();
+        ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
         String matrizIfno[][] = new String[lstFacturas.size()][6];
         for (int i = 0; i < lstFacturas.size(); i++) {
+            Facturas facturas = lstFacturas.get(i);
+            Clientes cliente = clientesDB.consultaCliente(facturas.getCliente_id());
+
             matrizIfno[i][0] = lstFacturas.get(i).getId() + "";
-            matrizIfno[i][1] = lstFacturas.get(i).getCliente_id() + "";
+            matrizIfno[i][1] = cliente.getNombre();
             matrizIfno[i][2] = lstFacturas.get(i).getNumero() + "";
             matrizIfno[i][3] = lstFacturas.get(i).getFecha_hora() + "";
             matrizIfno[i][4] = lstFacturas.get(i).getMonto() + "";

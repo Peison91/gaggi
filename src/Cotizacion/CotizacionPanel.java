@@ -10,7 +10,9 @@ import model.Cotizacion_detalle;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -65,6 +67,10 @@ public class CotizacionPanel extends JPanel {
         lblFechaHora.setBounds(15, 90, 100, 30);
         calendario = new JDateChooser();
         calendario.setBounds(140, 90, 150, 30);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date fecha = new Date();
+        formatter.format(fecha);
+        calendario.setDate(fecha);
 
         lblEstado = new JLabel("Estado:");
         lblEstado.setBounds(15, 125, 100, 30);
@@ -124,7 +130,7 @@ public class CotizacionPanel extends JPanel {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            JOptionPane.showMessageDialog(null,"Se creo exitosamente cotizacion");
+            JOptionPane.showMessageDialog(null,"Cotización creada");
             listDto.clear();
             try {
                 ConstruirTablaCotizacion(0,null);
@@ -184,8 +190,6 @@ public class CotizacionPanel extends JPanel {
                 throw new RuntimeException(ex);
             }
         });
-
-
         add(lblValorFinal2);
         add(lblValorFinal1);
         add(btnCliente);

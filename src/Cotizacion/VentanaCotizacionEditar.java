@@ -65,7 +65,6 @@ public class VentanaCotizacionEditar extends JFrame {
         public PanelEditarCotizacion()throws Exception{
             obtenerCotizacionCabecera();
             obtenerCotizacionDetalle();
-
             btnCliente = new JButton("Seleccione cliente");
             btnCliente.setBounds(600, 20, 210, 30);
             btnCliente.addActionListener(e -> {
@@ -177,14 +176,11 @@ public class VentanaCotizacionEditar extends JFrame {
                     throw new RuntimeException(ex);
                 }
             });
-
-
             try {
                 ConstruirTablaCotizacion(0,null);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-
             add(lblValorFinal2);
             add(lblValorFinal1);
             add(btnCliente);
@@ -202,6 +198,7 @@ public class VentanaCotizacionEditar extends JFrame {
             add(btnCargarArticulo);
             scroll.setViewportView(tabla);
             setLayout(null);
+
         }
 
         public static void ConstruirTablaCotizacion(int i, Object o) throws Exception{
@@ -214,8 +211,6 @@ public class VentanaCotizacionEditar extends JFrame {
             titulo1.setBackground(new Color(236, 126, 29));
             titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
         }
-
-
         private static String[][] obtenerMatriz() throws Exception{
 
             String[][] matrizInfo = new String[listaDtoEditar.size()][6];
@@ -236,11 +231,13 @@ public class VentanaCotizacionEditar extends JFrame {
                 TableColumn column = columnModel.getColumn(i);
                 column.setPreferredWidth(columnWidths[i]);
             }
-        } private void obtenerCotizacionCabecera() throws Exception {
+        }
+        private void obtenerCotizacionCabecera() throws Exception {
             Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
             cotizacion = cotizacionCabeceraDB.consultarCotizacion(id_seleccionado);
         }
         private List<DtoCotizacionDetalle> obtenerCotizacionDetalle() throws Exception {
+            System.out.println("entrada");
             Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
             ProductosDB productosDB = new ProductosDB(Conexion.conectar());
             List <Cotizacion_detalle> lstCotizacion = cotizacionCabeceraDB.consultarCotizacionDetalle(id_seleccionado);
@@ -254,19 +251,14 @@ public class VentanaCotizacionEditar extends JFrame {
                 double precUni = cotizacion.getPrecio_unitario();
                 double precioTotal = producto.getPrecio() * cant_prod;
 
-
                 dtoCotizacion = new DtoCotizacionDetalle(codProducto,cant_prod,nomb_prod,precUni,precioTotal);
                 listaDtoEditar.add(dtoCotizacion);
             }
-
             return listaDtoEditar;
 
-
-
             //query join tablas
-        /*SELECT * FROM gaggidb.cotizacion_cabecera co
-        join clientes cli on co.cliente_id = cli.id;*/
+            /*SELECT * FROM gaggidb.cotizacion_cabecera co
+            join clientes cli on co.cliente_id = cli.id;*/
         }
     }
-
 }
