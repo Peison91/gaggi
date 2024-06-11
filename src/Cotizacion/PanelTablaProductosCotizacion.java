@@ -125,7 +125,7 @@ public class PanelTablaProductosCotizacion extends JPanel {
     }
     public double obtenerPrecioFinalArticulos(double precio, int cantidad){
         double precioFianl = precio * cantidad;
-        return precioFianl;
+        return Math.round(precioFianl * 100.0) / 100.0;
     }
 
     public double PrecioFinalCotizacion(){
@@ -133,13 +133,13 @@ public class PanelTablaProductosCotizacion extends JPanel {
         for(DtoCotizacionDetalle producto : listDto){
             valorFinal += producto.getPrecio_total();
         }
-        return valorFinal;
+        return Math.round(valorFinal* 100.0) / 100.0;
     }
 
     public double PrecioArticuloConAjuste(double valor,double ajuste){
         double precArtAjustado = valor * ajuste / 100;
 
-        return precArtAjustado;
+        return Math.round(precArtAjustado* 100.0) / 100.0;
     }
 
     //1000 * 10 / 100;

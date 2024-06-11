@@ -76,10 +76,10 @@ public class CotizacionPanel extends JPanel {
         lblEstado.setBounds(15, 125, 100, 30);
 
         lblValorFinal1 = new JLabel("Precio final: ");
-        lblValorFinal1.setBounds(660,520,100,30);
+        lblValorFinal1.setBounds(600,520,100,30);
 
         lblValorFinal2 = new JLabel();
-        lblValorFinal2.setBounds(770,520,100,30);
+        lblValorFinal2.setBounds(700,520,100,30);
 
         lista = new JComboBox();
         lista.addItem("Aceptada");

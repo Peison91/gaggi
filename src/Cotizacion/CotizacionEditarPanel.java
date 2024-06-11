@@ -4,8 +4,10 @@ import Utiles.Conexion;
 import database.ClientesDB;
 import database.Cotizacion_CabeceraDB;
 import database.Cotizacion_DetalleDB;
+import database.EstadoDB;
 import model.Clientes;
 import model.Cotizacion;
+import model.Estado;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -134,17 +136,19 @@ public class CotizacionEditarPanel extends JPanel {
         Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
         List<Cotizacion> listCotizacionesCab = cotizacionCabeceraDB.todasCotizacionesCab();
         ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
+        EstadoDB estadoDB = new EstadoDB(Conexion.conectar());
 
         String[][] matrizInfo = new String[listCotizacionesCab.size()][5];
         for (int i = 0; i < listCotizacionesCab.size(); i++) {
             Cotizacion cotizacion = listCotizacionesCab.get(i);
             Clientes cliente = clientesDB.consultaCliente(cotizacion.getCliente_id());
+            Estado estado = estadoDB.consultaEstado(cotizacion.getEstado());
 
             matrizInfo[i][0] = String.valueOf(cotizacion.getId_cabecera());
             matrizInfo[i][1] = cliente.getNombre();
             matrizInfo[i][2] = String.valueOf(cotizacion.getFecha_cotizacion());
             matrizInfo[i][3] = String.valueOf(cotizacion.getIndice_ajuste());
-            matrizInfo[i][4] = String.valueOf(cotizacion.getEstado());
+            matrizInfo[i][4] = estado.getNombre();
         }
         return matrizInfo;
     }

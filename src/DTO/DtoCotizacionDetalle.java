@@ -1,5 +1,7 @@
 package DTO;
 
+import java.text.DecimalFormat;
+
 public class DtoCotizacionDetalle {
     private int codigo_producto;
     private int cantidad_producto;
@@ -51,7 +53,7 @@ public class DtoCotizacionDetalle {
     }
 
     public double getPrecio_total() {
-        return precio_total;
+        return Math.round(precio_total * 100.0) / 100.0;
     }
 
     public void setPrecio_total(double precio_total) {
