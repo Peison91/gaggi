@@ -118,6 +118,30 @@ public class ProductosDB {
         }
     }
 
+    public void descontarStock(int id, int stockDesc) throws Exception {
+        // Consulta SQL para restar stock
+        String sql = "UPDATE productos SET stock = stock - ? WHERE id = ?";
+
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            // Configura los parámetros de la consulta
+            statement.setInt(1, stockDesc);
+            statement.setInt(2, id);
+
+            // Ejecuta la actualización
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("Se actualizo el producto id: " + id);
+            } else {
+                System.out.println("No se encontro producto con el ID: " + id);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+
+
     public Productos consultaProductoCodigo(String codigo) throws Exception{
         try{
             String sql = "SELECT * FROM productos where codigo=" + codigo;

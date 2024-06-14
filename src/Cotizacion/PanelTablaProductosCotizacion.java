@@ -33,7 +33,7 @@ public class PanelTablaProductosCotizacion extends JPanel {
         filtro.addItem("ID");
         filtro.addItem("Nombre");
         filtro.addItem("Codigo");
-        seleccionarCliente = new JButton("Seleccionar");
+        seleccionarCliente = new JButton("Seleccionar PROD");
         seleccionarCliente.setBounds(520, 20, 120, 30);
         seleccionarCliente.addActionListener(e -> {
 
@@ -47,9 +47,9 @@ public class PanelTablaProductosCotizacion extends JPanel {
                 String descripcion =  tabla.getValueAt(filaSeleccionada,1).toString();
                 double precioU = Double.parseDouble(tabla.getValueAt(filaSeleccionada,4).toString());
 
-                CotizacionPanel.productoId = idProd;
-                CotizacionPanel.descripcionProd =descripcion;
-                CotizacionPanel.precioUni = precioU;
+                //CotizacionPanel.productoId = idProd;
+               //CotizacionPanel.descripcionProd =descripcion;
+                //CotizacionPanel.precioUni = precioU;
 
                 String cantidad = JOptionPane.showInputDialog(null,"Ingrese cantidad");
                 int cantidadArt = Integer.parseInt(cantidad);
