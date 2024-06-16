@@ -125,12 +125,6 @@ public class CotizacionPanel extends JPanel {
                 }
                 Cotizacion_detalle cotizacionDetalle = new Cotizacion_detalle(0,cantidad,precioUnit,precioAjust,producId,idCabecera);
                 cotDetalle.add(cotizacionDetalle);
-                try {
-                    productosDB.descontarStock(producId,cantidad);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-
 
             }
 

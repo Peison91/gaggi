@@ -16,6 +16,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,7 @@ public class VentanaCotizacionEditar extends JFrame {
         PanelEditarCotizacion panelEditarCotizacion = new PanelEditarCotizacion();
         add(panelEditarCotizacion);
         setVisible(true);
+
     }
     class PanelEditarCotizacion extends JPanel{
         JLabel lblId, lblNumero, lblFechaHora, lblEstado, buscarCliente, lblValorFinal1;
@@ -57,14 +60,16 @@ public class VentanaCotizacionEditar extends JFrame {
         static JTable tabla = new JTable();
         static DefaultTableModel modelo;
         static int clienteID;
-        JComboBox lista;
+        JComboBox comboBoxEstado;
         static List<DtoCotizacionDetalle> listaDtoEditar = new ArrayList<>();
 
         static List<DtoCotizacionDetalle> listDto;
 
         public PanelEditarCotizacion()throws Exception{
             obtenerCotizacionCabecera();
+            listaDtoEditar.clear();
             obtenerCotizacionDetalle();
+
 
             btnCliente = new JButton("Seleccione cliente");
             btnCliente.setBounds(600, 20, 210, 30);
@@ -105,11 +110,10 @@ public class VentanaCotizacionEditar extends JFrame {
             lblValorFinal2 = new JLabel();
             lblValorFinal2.setBounds(770,520,100,30);
 
-            lista = new JComboBox();
-            lista.addItem("Aceptada");
-            lista.addItem("Pendiente");
-            lista.addItem("Rechazado");
-            lista.setBounds(140, 125, 120, 30);
+            comboBoxEstado = new JComboBox();
+            comboBoxEstado.addItem("Aceptada");
+            comboBoxEstado.addItem("Rechazado");
+            comboBoxEstado.setBounds(140, 125, 120, 30);
 
             scroll = new JScrollPane();
             scroll.setBounds(15, 200, 800, 300);
@@ -117,51 +121,44 @@ public class VentanaCotizacionEditar extends JFrame {
             btnGuardar = new JButton("Guardar",  new ImageIcon("src/imagenes/GuardarTodo.png"));
             btnGuardar.setBounds(355, 520, 150, 40);
             btnGuardar.addActionListener(e->{
-                Cotizacion cotizacion = new Cotizacion(0,clienteID,calendario.getDate(),0, lista.getSelectedIndex());
+                //Cotizacion cotizacion = new Cotizacion(0,clienteID,calendario.getDate(),0, comboBoxEstado.getSelectedIndex());
                 Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
                 Cotizacion_DetalleDB cotizacionDetalleDB = new Cotizacion_DetalleDB(Conexion.conectar());
-                try {
-                    cotizacionCabeceraDB.insertarCotizacion(cotizacion);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-                int idCabecera = 0;
-                try {
-                    idCabecera = cotizacionCabeceraDB.obtenerIdCabecera();
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-                List<Cotizacion_detalle> cotDetalle = new ArrayList<>();
-                for(int i = 0; i < listDto.size();i++){
-                    int cantidad = cantProducto;
-                    double precioUnit = precioUni;
-                    double precioAjust = 0;
-                    int producId = productId;
+                ProductosDB productosDB = new ProductosDB(Conexion.conectar());
+                int cambioEstado = 1;
+
+                if(comboBoxEstado.getSelectedIndex() == 0){
+                    cambioEstado = 2;
                     try {
-                        idCabecera = cotizacionCabeceraDB.obtenerIdCabecera();
+                        cotizacionCabeceraDB.actualizarEstadoCotizacion(id_seleccionado,cambioEstado);
+                        List <Cotizacion_detalle> lstCotizacion = cotizacionCabeceraDB.consultarCotizacionDetalle(id_seleccionado);
+                        int cantProduc;
+                        int idProduc;
+                        for(Cotizacion_detalle cotizacion : lstCotizacion){
+                            cantProduc = cotizacion.getCantidad();
+                            idProduc = cotizacion.getProducto_id();
+                            productosDB.descontarStock(idProduc,cantProduc);
+                        }
+
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-                    Cotizacion_detalle cotizacionDetalle = new Cotizacion_detalle(0,cantidad,precioUnit,precioAjust,producId,idCabecera);
-                    cotDetalle.add(cotizacionDetalle);
                 }
-                try {
-                    cotizacionDetalleDB.insertarCotizacionDetalleLista(cotDetalle);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+
+                else{
+                    cambioEstado = 3;
+                    try {
+                        cotizacionCabeceraDB.actualizarEstadoCotizacion(id_seleccionado,cambioEstado);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
-                JOptionPane.showMessageDialog(null,"Cotización actualizada");
-                listDto.clear();
-                try {
-                    ConstruirTablaCotizacion(0,null);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-                try {
-                    ConstruirTablaCotizacion(0,null);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+
+
+                System.out.println(cambioEstado);
+
+
+
             });
 
             btnCargarArticulo = new JButton("Cargar productos", new ImageIcon("src/imagenes/nuevo.png"));
@@ -184,6 +181,8 @@ public class VentanaCotizacionEditar extends JFrame {
                 throw new RuntimeException(ex);
             }
 
+           // limpiarListaTabla();
+
             add(lblValorFinal2);
             add(lblValorFinal1);
             add(btnCliente);
@@ -195,7 +194,7 @@ public class VentanaCotizacionEditar extends JFrame {
             add(calendario);
             add(lblFechaHora);
             add(lblEstado);
-            add(lista);
+            add(comboBoxEstado);
             add(scroll);
             add(btnGuardar);
             add(btnCargarArticulo);
@@ -262,12 +261,48 @@ public class VentanaCotizacionEditar extends JFrame {
 
             return listaDtoEditar;
 
+        }
+        private void limpiarListaTabla(){
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(VentanaCotizacionEditar.this);
+            frame.addWindowListener(new WindowListener() {
+                @Override
+                public void windowOpened(WindowEvent windowEvent) {
 
+                }
 
-            //query join tablas
-        /*SELECT * FROM gaggidb.cotizacion_cabecera co
-        join clientes cli on co.cliente_id = cli.id;*/
+                @Override
+                public void windowClosing(WindowEvent windowEvent) {
+                    listaDtoEditar.clear();
+                }
+
+                @Override
+                public void windowClosed(WindowEvent windowEvent) {
+
+                }
+
+                @Override
+                public void windowIconified(WindowEvent windowEvent) {
+
+                }
+
+                @Override
+                public void windowDeiconified(WindowEvent windowEvent) {
+
+                }
+
+                @Override
+                public void windowActivated(WindowEvent windowEvent) {
+
+                }
+
+                @Override
+                public void windowDeactivated(WindowEvent windowEvent) {
+
+                }
+            });
+
+            }
         }
     }
 
-}
+

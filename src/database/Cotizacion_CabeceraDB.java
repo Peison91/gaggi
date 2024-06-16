@@ -67,6 +67,29 @@ public class Cotizacion_CabeceraDB {
             throw ex;
         }
     }
+    public boolean actualizarEstadoCotizacion(int id, int estado) throws Exception{
+        try{
+            if(this.conn == null){
+                throw new Exception("La conexión no esta establecida");
+            }else{
+                String sql = "UPDATE cotizacion_cabecera SET estado_id=? WHERE id_cabecera=?";
+
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1,estado);
+                statement.setInt(2,id);
+
+                int rowsUpdated = statement.executeUpdate();
+                if(rowsUpdated > 0){
+                    return true;
+                }
+                return false;
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+
 
     public boolean borrarCotizacion(int id)throws Exception{
         try{
