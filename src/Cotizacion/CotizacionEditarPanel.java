@@ -4,10 +4,12 @@ import Utiles.Conexion;
 import database.ClientesDB;
 import database.Cotizacion_CabeceraDB;
 import database.Cotizacion_DetalleDB;
+
 import database.EstadoDB;
 import model.Clientes;
 import model.Cotizacion;
 import model.Estado;
+
 
 import javax.swing.*;
 import javax.swing.table.*;
