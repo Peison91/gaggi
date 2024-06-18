@@ -16,6 +16,8 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -24,7 +26,7 @@ public class CotizacionEditarPanel extends JPanel {
     JTable tabla = new JTable();
     DefaultTableModel modelo = new DefaultTableModel();
     JTextField buscarCotizacion;
-    JButton btnModificar, btnEliminar;
+    JButton btnModificar, btnEliminar, btnPDF;
 
     public CotizacionEditarPanel() throws Exception {
         JComboBox<String> filtro = new JComboBox<>();
@@ -36,7 +38,7 @@ public class CotizacionEditarPanel extends JPanel {
         filtro.setBounds(20,20,100,30);
         setBackground(new Color(214,214,214));
         buscarCotizacion = new JTextField(15);
-        buscarCotizacion.setBounds(150,20,350,30);
+        buscarCotizacion.setBounds(150,20,200,30);
         buscarCotizacion.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -49,8 +51,31 @@ public class CotizacionEditarPanel extends JPanel {
                 }
             }
         });
+        btnPDF = new JButton("Abrir PDF", new ImageIcon("src/imagenes/pdf.png"));
+        btnPDF.setBounds(480, 20, 130, 30);
+        btnPDF.addActionListener(e -> {
+            int filaSeleccionada = tabla.getSelectedRow();
+            if (filaSeleccionada != -1) {
+                String nombreFactura = (String) tabla.getValueAt(filaSeleccionada, 0);
+                String rutaCarpeta = System.getProperty("user.home") + File.separator +"Desktop"+File.separator +"Cotización_" + nombreFactura + ".pdf";
+                File archivoPDF = new File(rutaCarpeta);
+                // Ver si el PDF existe
+                if (archivoPDF.exists()) {
+                    try {
+                        Desktop.getDesktop().open(archivoPDF);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "La factura seleccionada no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecciona un cliente de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         btnModificar = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificar.setBounds(570, 20, 130, 30);
+        btnModificar.setBounds(650, 20, 130, 30);
         btnModificar.addActionListener(e->{
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
@@ -79,7 +104,7 @@ public class CotizacionEditarPanel extends JPanel {
             }
         });
         btnEliminar = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminar.setBounds(740, 20, 130,30);
+        btnEliminar.setBounds(820, 20, 130,30);
         btnEliminar.addActionListener(e ->{
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
@@ -110,6 +135,7 @@ public class CotizacionEditarPanel extends JPanel {
         ConstruirTabla(0,null);
         scroll.setBounds(20,80,850,350);
         add(buscarCotizacion);
+        add(btnPDF);
         add(btnModificar);
         add(btnEliminar);
         add(filtro);

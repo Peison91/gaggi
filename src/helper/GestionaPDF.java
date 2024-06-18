@@ -13,6 +13,7 @@ import model.Productos;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,10 @@ public class GestionaPDF {
         try {
             // Especifica la ruta completa a la carpeta de descargas
             String homeDirectory = System.getProperty("user.home");
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("PDF_Cotización.pdf"));
+            String desktopDirectory = homeDirectory + File.separator + "Desktop";
+            String desktopFilePath = desktopDirectory + File.separator + "Cotización_" + id_cabecera + ".pdf";
+
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(desktopFilePath));
 
             Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
             ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
