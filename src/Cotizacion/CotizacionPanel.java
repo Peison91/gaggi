@@ -5,6 +5,7 @@ import com.toedter.calendar.JDateChooser;
 import database.Cotizacion_CabeceraDB;
 import database.Cotizacion_DetalleDB;
 import database.ProductosDB;
+import helper.GestionaPDF;
 import model.Cotizacion;
 import model.Cotizacion_detalle;
 
@@ -145,6 +146,8 @@ public class CotizacionPanel extends JPanel {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
+            GestionaPDF pdf = new GestionaPDF();
+            pdf.prueba(idCabecera);
         });
 
         btnCargarArticulo = new JButton("Cargar productos", new ImageIcon("src/imagenes/nuevo.png"));

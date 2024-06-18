@@ -163,7 +163,7 @@ public class Cotizacion_CabeceraDB {
             if(this.conn == null){
                 throw new Exception("La conexión no esta establecida");
             }else{
-                String sql = "SELECT id_cabecera FROM cotizacion_cabecera ORDER BY fecha_cotizacion DESC LIMIT 1;";
+                String sql = "SELECT id_cabecera FROM cotizacion_cabecera ORDER BY id_cabecera DESC LIMIT 1;";
 
                 PreparedStatement statement = conn.prepareStatement(sql);
 
