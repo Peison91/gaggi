@@ -219,7 +219,7 @@ public class CotizacionPanel extends JPanel {
 
 
     public static void ConstruirTablaCotizacion(int i, Object o) throws Exception{
-        String[] titulo = {"Codigo producto", "Cantidad", "Descripcion", "Precio unit.", "Precio total"};
+        String[] titulo = {"Código producto", "Descripción", "Cantidad", "Precio unit.", "Precio total"};
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
