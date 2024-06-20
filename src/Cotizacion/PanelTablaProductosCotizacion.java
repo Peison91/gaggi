@@ -33,7 +33,7 @@ public class PanelTablaProductosCotizacion extends JPanel {
         filtro.addItem("ID");
         filtro.addItem("Nombre");
         filtro.addItem("Codigo");
-        seleccionarCliente = new JButton("Seleccionar PROD");
+        seleccionarCliente = new JButton("Seleccionar");
         seleccionarCliente.setBounds(520, 20, 120, 30);
         seleccionarCliente.addActionListener(e -> {
 

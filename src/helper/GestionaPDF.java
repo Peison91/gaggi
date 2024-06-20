@@ -2,6 +2,7 @@ package helper;
 
 import Utiles.Conexion;
 import com.lowagie.text.*;
+import com.lowagie.text.Image;
 import com.lowagie.text.pdf.*;
 import database.ClientesDB;
 import database.Cotizacion_CabeceraDB;
@@ -23,6 +24,7 @@ import java.util.List;
 public class GestionaPDF {
     public void prueba(int id_cabecera) {
         Document document = new Document(PageSize.LETTER);
+        String rutaImg = "src/imagenes/logo_horizontal.jpg";
         try {
             // Especifica la ruta completa a la carpeta de descargas
             String homeDirectory = System.getProperty("user.home");
@@ -34,9 +36,15 @@ public class GestionaPDF {
             Cotizacion_CabeceraDB cotizacionCabeceraDB = new Cotizacion_CabeceraDB(Conexion.conectar());
             ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
             document.open();
+            
+            Image image = Image.getInstance(rutaImg);
+            Image img = Image.getInstance(rutaImg);
+            img.setAlignment(Image.ALIGN_CENTER);
+            img.scaleToFit(200, 100);
+            document.add(img);
 
             // Añadir título
-            com.lowagie.text.Font fontTitle = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 18, com.lowagie.text.Font.BOLD, new Color(0, 0, 255));
+            com.lowagie.text.Font fontTitle = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 18, com.lowagie.text.Font.BOLD,Color.black);
             com.lowagie.text.Paragraph title = new com.lowagie.text.Paragraph("Cotización de Productos", fontTitle);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
@@ -59,7 +67,7 @@ public class GestionaPDF {
 
 
 
-            com.lowagie.text.Paragraph numCotizacion = new com.lowagie.text.Paragraph("Nº Cotizacion: " + id_cabecera);
+            com.lowagie.text.Paragraph numCotizacion = new com.lowagie.text.Paragraph("Nº Cotización: " + id_cabecera);
             document.add(numCotizacion);
             document.add(new com.lowagie.text.Paragraph("\n"));
             com.lowagie.text.Paragraph fecha = new com.lowagie.text.Paragraph("Fecha: " + fechaFormateada);
@@ -125,6 +133,8 @@ public class GestionaPDF {
             document.add(table);
             lstCotizacion.clear();
 
+            document.add(new com.lowagie.text.Paragraph("\n"));
+
             PdfContentByte canvas = writer.getDirectContent();
             ColumnText.showTextAligned(canvas,Element.ALIGN_LEFT,new Phrase("Total : $" + sumaTotalProductos),470,300,0);
 
@@ -140,7 +150,7 @@ public class GestionaPDF {
         }
         document.close();
 
-        JOptionPane.showMessageDialog(null, "Se creó el pdf");
+
 
     }
     public static void main(String[] args) {

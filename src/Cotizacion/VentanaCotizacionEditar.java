@@ -181,6 +181,7 @@ public class VentanaCotizacionEditar extends JFrame {
                 throw new RuntimeException(ex);
             }
 
+
            // limpiarListaTabla();
 
             add(lblValorFinal2);
