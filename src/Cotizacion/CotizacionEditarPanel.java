@@ -52,7 +52,7 @@ public class CotizacionEditarPanel extends JPanel {
             }
         });
         btnPDF = new JButton("Abrir PDF", new ImageIcon("src/imagenes/pdf.png"));
-        btnPDF.setBounds(480, 20, 130, 30);
+        btnPDF.setBounds(390, 20, 130, 30);
         btnPDF.addActionListener(e -> {
             int filaSeleccionada = tabla.getSelectedRow();
             if (filaSeleccionada != -1) {
@@ -75,7 +75,7 @@ public class CotizacionEditarPanel extends JPanel {
         });
 
         btnModificar = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificar.setBounds(650, 20, 130, 30);
+        btnModificar.setBounds(560, 20, 130, 30);
         btnModificar.addActionListener(e->{
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
@@ -104,7 +104,7 @@ public class CotizacionEditarPanel extends JPanel {
             }
         });
         btnEliminar = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminar.setBounds(820, 20, 130,30);
+        btnEliminar.setBounds(730, 20, 130,30);
         btnEliminar.addActionListener(e ->{
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
