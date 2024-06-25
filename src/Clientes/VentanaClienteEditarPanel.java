@@ -1,5 +1,6 @@
 package Clientes;
 
+import Cotizacion.PanelTablaClientesCotizacion;
 import Utiles.Conexion;
 import database.ClientesDB;
 import model.Clientes;
@@ -97,6 +98,8 @@ public class VentanaClienteEditarPanel extends JPanel {
                 LimpiarTxt(txtDireccion);
                 LimpiarTxt(txtEmail);
                 LimpiarTxt(txtTelefono);
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(VentanaClienteEditarPanel.this);
+                frame.dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Error al actualizar");
                 throw new RuntimeException(ex);

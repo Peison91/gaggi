@@ -1,4 +1,5 @@
 package Productos;
+import Clientes.VentanaClienteEditarFrame;
 import Utiles.Conexion;
 import database.ProductosDB;
 import javax.swing.*;
@@ -112,6 +113,16 @@ public class VentanaEditarProductoPanel extends JPanel {
 
                 productosDB.actualizarProducto(productoEditar);
                 JOptionPane.showMessageDialog(null,"Se actualizó el producto");
+                limpiarTxt(txtDescr);
+                limpiarTxt(txtCodProd);
+                limpiarTxt(txtAbrevProd);
+                limpiarTxt(txtPreciounitProd);
+                limpiarTxt(txtStockMin);
+                limpiarTxt(txtStock);
+
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(VentanaEditarProductoPanel.this);
+                frame.dispose();
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Error al actualizar el producto");
                 throw new RuntimeException(ex);
@@ -131,5 +142,9 @@ public class VentanaEditarProductoPanel extends JPanel {
         add(txtStockMin);
         add(stockProd);
         add(txtStock);
+    }
+
+    public void limpiarTxt(JTextField txt){
+        txt.setText("");
     }
 }
