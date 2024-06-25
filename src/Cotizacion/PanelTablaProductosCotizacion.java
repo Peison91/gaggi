@@ -150,7 +150,6 @@ public class PanelTablaProductosCotizacion extends JPanel {
         return Math.round(precArtAjustado* 100.0) / 100.0;
     }
 
-    //1000 * 10 / 100;
 
     public void ConstruirTabla(int i, Object o) throws Exception{
         String[] titulo = {"ID","Descripción", "Código", "Abreviatura", "Precio unit.", "Stock mín.", "Stock",};

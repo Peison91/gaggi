@@ -8,6 +8,7 @@ import database.ProductosDB;
 import helper.GestionaPDF;
 import model.Cotizacion;
 import model.Cotizacion_detalle;
+import model.Productos;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -74,8 +75,6 @@ public class CotizacionPanel extends JPanel {
         formatter.format(fecha);
         calendario.setDate(fecha);
 
-        lblEstado = new JLabel("Estado:");
-        lblEstado.setBounds(15, 125, 100, 30);
 
         lblValorFinal1 = new JLabel("Precio final: ");
         lblValorFinal1.setBounds(600,520,100,30);
@@ -92,7 +91,7 @@ public class CotizacionPanel extends JPanel {
         scroll = new JScrollPane();
         scroll.setBounds(15, 200, 800, 300);
 
-        btnGuardar = new JButton("Guardar Coti",  new ImageIcon("src/imagenes/GuardarTodo.png"));
+        btnGuardar = new JButton("Guardar",  new ImageIcon("src/imagenes/GuardarTodo.png"));
         btnGuardar.setBounds(355, 520, 150, 40);
         btnGuardar.addActionListener(e->{
             String ajusteTextField = txtIndiceAjuste.getText();
@@ -116,9 +115,14 @@ public class CotizacionPanel extends JPanel {
             for(int i = 0; i < listDto.size();i++){
 
                 int cantidad = listDto.get(i).getCantidad_producto();
-                double precioUnit = listDto.get(i).getPrecio_unitario();
-                double precioAjust = 0;
+                double precioAjust = listDto.get(i).getPrecio_unitario();
                 int producId = listDto.get(i).getCodigo_producto();
+                double precioUnit = 0;
+                try {
+                    precioUnit = obtenerPrecio(producId);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
                 try {
                      idCabecera = cotizacionCabeceraDB.obtenerIdCabecera();
                 } catch (Exception ex) {
@@ -148,6 +152,10 @@ public class CotizacionPanel extends JPanel {
             }
             GestionaPDF pdf = new GestionaPDF();
             pdf.prueba(idCabecera);
+            txtCliente.setText("");
+            txtIndiceAjuste.setText("0.0");
+            lblValorFinal2.setText("");
+
         });
 
         btnCargarArticulo = new JButton("Cargar productos", new ImageIcon("src/imagenes/nuevo.png"));
@@ -254,6 +262,13 @@ public class CotizacionPanel extends JPanel {
             TableColumn column = columnModel.getColumn(i);
             column.setPreferredWidth(columnWidths[i]);
         }
+    }
+
+    public double obtenerPrecio(int producId) throws Exception {
+        ProductosDB productosDB = new ProductosDB(Conexion.conectar());
+        Productos producto = productosDB.consultaProducto(producId);
+        double precio = producto.getPrecio();
+        return precio;
     }
 }
 

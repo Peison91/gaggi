@@ -10,7 +10,6 @@ import model.Clientes;
 import model.Cotizacion;
 import model.Estado;
 
-
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;

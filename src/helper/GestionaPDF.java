@@ -120,8 +120,8 @@ public class GestionaPDF {
 
                 String cantidad = String.valueOf(cotizacion.getCantidad());
                 String descripcion = producto.getDescripcion();
-                String precioUnitario = String.valueOf(cotizacion.getPrecio_unitario());
-                double precioTotalDouble = producto.getPrecio() * cotizacion.getCantidad();
+                String precioUnitario = String.valueOf(cotizacion.getPrecio_ajustado());
+                double precioTotalDouble = cotizacion.getPrecio_ajustado() * cotizacion.getCantidad();
                 String precioTotalImprimir = String.valueOf(precioTotalDouble);
                 sumaTotalProductos += precioTotalDouble;
 
@@ -194,4 +194,5 @@ public class GestionaPDF {
             document.close();
         }
     }
+
 }
