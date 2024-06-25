@@ -1,5 +1,6 @@
 package Clientes;
 
+import Productos.VentanaEditarProductoPanel;
 import Utiles.Conexion;
 import database.ClientesDB;
 import model.Clientes;
@@ -92,6 +93,9 @@ public class VentanaClienteNuevoPanel extends JPanel {
                 LimpiarTxt(txtDireccion);
                 LimpiarTxt(txtEmail);
                 LimpiarTxt(txtTelefono);
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(VentanaClienteNuevoPanel.this);
+                frame.dispose();
+                ClientesEditar.ConstruirTabla(0,null);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Error al cargar");
                 throw new RuntimeException(ex);

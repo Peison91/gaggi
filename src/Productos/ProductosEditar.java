@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class ProductosEditar extends JPanel{
-    JScrollPane scroll = new JScrollPane();
-    JTable tabla = new JTable();
-    DefaultTableModel modelo = new DefaultTableModel();
+    static JScrollPane scroll = new JScrollPane();
+    static JTable tabla = new JTable();
+    static DefaultTableModel modelo = new DefaultTableModel();
     JTextField buscarProducto;
     JButton btnModificarProd;
     JButton btnEliminarProd;
@@ -118,7 +118,7 @@ public class ProductosEditar extends JPanel{
         add(scroll);
         setLayout(null);
     }
-    public void ConstruirTabla(int opBuscar, String valor) throws Exception{
+    public static void ConstruirTabla(int opBuscar, String valor) throws Exception{
         String[] titulo = {"ID","Descripción", "Código", "Abreviatura", "Precio unit.", "Stock mín.", "Stock"};
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
@@ -137,7 +137,7 @@ public class ProductosEditar extends JPanel{
         titulo1.setBackground(new Color(236, 126, 29));
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
     }
-    private String[][] obtenerMatriz() throws Exception{
+    private static String[][] obtenerMatriz() throws Exception{
         ProductosDB productosDB = new ProductosDB(Conexion.conectar());
         List<Productos> lstProductos = productosDB.todosProductos();
         String[][] matrizInfo = new String[lstProductos.size()][7];
@@ -152,7 +152,7 @@ public class ProductosEditar extends JPanel{
         }
         return matrizInfo;
     }
-    private void ajustarAnchoColumnas() {
+    private static void ajustarAnchoColumnas() {
         TableColumnModel columnModel = tabla.getColumnModel();
         int columnCount = columnModel.getColumnCount();
         int[] columnWidths = {80, 400, 80, 200, 100, 100, 100};

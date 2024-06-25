@@ -14,9 +14,6 @@ import java.awt.event.KeyEvent;
         private JTextField txtStockMin;
         private JTextField txtStock;
 
-
-
-
         public VentanaNuevoProductoPanel() throws Exception {
 
             setBackground(new Color(214, 214, 214));
@@ -115,6 +112,10 @@ import java.awt.event.KeyEvent;
                     LimpiarTxt(txtPreciounitProd);
                     LimpiarTxt(txtStockMin);
                     LimpiarTxt(txtStock);
+                    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(VentanaNuevoProductoPanel.this);
+                    frame.dispose();
+                    ProductosEditar.ConstruirTabla(0,null);
+
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

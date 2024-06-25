@@ -100,6 +100,7 @@ public class VentanaClienteEditarPanel extends JPanel {
                 LimpiarTxt(txtTelefono);
                 JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(VentanaClienteEditarPanel.this);
                 frame.dispose();
+                ClientesEditar.ConstruirTabla(0,null);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Error al actualizar");
                 throw new RuntimeException(ex);

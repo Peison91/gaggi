@@ -119,10 +119,10 @@ public class VentanaEditarProductoPanel extends JPanel {
                 limpiarTxt(txtPreciounitProd);
                 limpiarTxt(txtStockMin);
                 limpiarTxt(txtStock);
+                ProductosEditar.ConstruirTabla(0,null);
 
                 JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(VentanaEditarProductoPanel.this);
                 frame.dispose();
-
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Error al actualizar el producto");
                 throw new RuntimeException(ex);

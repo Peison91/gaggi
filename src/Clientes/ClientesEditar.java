@@ -10,10 +10,10 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class ClientesEditar extends JPanel {
-    JScrollPane scroll = new JScrollPane();
-    JTable tabla = new JTable();
-    DefaultTableModel modelo = new DefaultTableModel();
-    JTextField buscarCliente;
+    static JScrollPane scroll = new JScrollPane();
+    static JTable tabla = new JTable();
+    static DefaultTableModel modelo = new DefaultTableModel();
+    static JTextField buscarCliente;
     JButton btnModificarCliente;
     JButton btnEliminarCliente;
     JButton btnNuevoCliente;
@@ -113,7 +113,7 @@ public class ClientesEditar extends JPanel {
         add(scroll);
         setLayout(null);
     }
-    public void ConstruirTabla(int opBuscar, String valor) throws Exception{
+    public static void ConstruirTabla(int opBuscar, String valor) throws Exception{
         String[] titulo = {"ID","Nombre", "CUIT", "Dirección", "Email", "Teléfono"};
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
@@ -133,7 +133,7 @@ public class ClientesEditar extends JPanel {
         titulo1.setFont(new Font("Calibri", Font.BOLD, 14));
     }
 
-    private void ajustarAnchoColumnas() {
+    private static void ajustarAnchoColumnas() {
         TableColumnModel columnModel = tabla.getColumnModel();
         int columnCount = columnModel.getColumnCount();
         int[] columnWidths = {50, 200, 100, 250, 200, 100};
@@ -143,7 +143,7 @@ public class ClientesEditar extends JPanel {
         }
     }
 
-    private String[][] obtenerMatriz() throws Exception{
+    private static String[][] obtenerMatriz() throws Exception{
 
 
         ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
