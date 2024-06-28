@@ -7,6 +7,5 @@ public class Main {
         ventanaInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Conexion.conectar();
 
-        //git la concha de tu madre
     }
 }
