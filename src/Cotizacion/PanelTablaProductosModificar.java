@@ -6,15 +6,20 @@ import database.ProductosDB;
 import model.Productos;
 
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
 import static Cotizacion.CotizacionPanel.listDto;
+import static Cotizacion.VentanaCotizacionEditar.PanelEditarCotizacion.*;
 
-public class PanelTablaProductosCotizacion extends JPanel {
+
+public class PanelTablaProductosModificar extends JPanel {
 
     JScrollPane scroll = new JScrollPane();
     JTable tabla = new JTable();
@@ -26,7 +31,7 @@ public class PanelTablaProductosCotizacion extends JPanel {
 
     Productos producto;
 
-    public PanelTablaProductosCotizacion() throws Exception {
+    public PanelTablaProductosModificar() throws Exception {
 
         JComboBox<String> filtro = new JComboBox<>();
         filtro.addItem("ID");
@@ -46,7 +51,7 @@ public class PanelTablaProductosCotizacion extends JPanel {
                 String descripcion =  tabla.getValueAt(filaSeleccionada,1).toString();
                 double precioU = Double.parseDouble(tabla.getValueAt(filaSeleccionada,4).toString());
 
-               ProductosDB productosDB = new ProductosDB(Conexion.conectar());
+                ProductosDB productosDB = new ProductosDB(Conexion.conectar());
                 try {
                     producto = productosDB.consultaProducto(idProd);
                 } catch (Exception ex) {
@@ -60,42 +65,46 @@ public class PanelTablaProductosCotizacion extends JPanel {
                     JOptionPane.showMessageDialog(null, "Stock insuficiente", "Error", JOptionPane.ERROR_MESSAGE);
 
                 }else if(cantidadArt <= producto.getStock()){
-                    CotizacionPanel.cantProducto = cantidadArt;
+                    cantProductoEditar = cantidadArt;
                     double precioTotal = obtenerPrecioFinalArticulos(precioU,cantidadArt);
 
-                    if(CotizacionPanel.indiceAjuste < 0){
-                        ajustArt = PrecioArticuloConAjuste(precioU,CotizacionPanel.indiceAjuste);
-                        ajustPreTot = PrecioArticuloConAjuste(precioTotal,CotizacionPanel.indiceAjuste);
+                    if(indiceAjusteEditar< 0){
+                        ajustArt = PrecioArticuloConAjuste(precioU,indiceAjusteEditar);
+                        ajustPreTot = PrecioArticuloConAjuste(precioTotal,indiceAjusteEditar);
                         valorAjusteArt = ajustArt + precioU ;
                         valorAjusteTotal = ajustPreTot + precioTotal ;
                         DtoCotizacionDetalle dto = new DtoCotizacionDetalle(idProd,cantidadArt,descripcion,valorAjusteArt,valorAjusteTotal);
-                        List<DtoCotizacionDetalle> listaDtoCot = listDto;
+                        List<DtoCotizacionDetalle> listaDtoCot = listaDtoEditar;
                         listaDtoCot.add(dto);
-                        listDto = listaDtoCot;
-                    }else if(CotizacionPanel.indiceAjuste > 0){
-                        valorAjusteArt = precioU + PrecioArticuloConAjuste(precioU,CotizacionPanel.indiceAjuste);
-                        valorAjusteTotal = precioTotal + PrecioArticuloConAjuste(precioTotal,CotizacionPanel.indiceAjuste);
+                        listDtoEditarCarga.add(dto);
+                        listaDtoEditar = listaDtoCot;
+                    }else if(indiceAjusteEditar > 0){
+                        valorAjusteArt = precioU + PrecioArticuloConAjuste(precioU,indiceAjusteEditar);
+                        valorAjusteTotal = precioTotal + PrecioArticuloConAjuste(precioTotal,indiceAjusteEditar);
                         DtoCotizacionDetalle dto = new DtoCotizacionDetalle(idProd,cantidadArt,descripcion,valorAjusteArt,valorAjusteTotal);
-                        List<DtoCotizacionDetalle> listaDtoCot = listDto;
+                        List<DtoCotizacionDetalle> listaDtoCot = listaDtoEditar;
                         listaDtoCot.add(dto);
-                        listDto = listaDtoCot;
+                        listDtoEditarCarga.add(dto);
+                        listaDtoEditar = listaDtoCot;
                     }else{
                         DtoCotizacionDetalle dto = new DtoCotizacionDetalle(idProd,cantidadArt,descripcion,precioU,precioTotal);
-                        List<DtoCotizacionDetalle> listaDtoCot = listDto;
+                        List<DtoCotizacionDetalle> listaDtoCot = listaDtoEditar;
                         listaDtoCot.add(dto);
-                        listDto = listaDtoCot;
+                       listDtoEditarCarga.add(dto);
+                        listaDtoEditar = listaDtoCot;
                     }
 
                     try {
-                        CotizacionPanel.ConstruirTablaCotizacion(0,null);
+                        ConstruirTablaCotizacionEditar(0,null);
+
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-                    double sumaPrecios = PrecioFinalCotizacion();
+                   double sumaPrecios = PrecioFinalCotizacion();
                     String sumaPreciosString = String.valueOf(sumaPrecios);
-                    CotizacionPanel.lblValorFinal2.setText(sumaPreciosString);
+                    lblValorFinalEditar.setText(sumaPreciosString);
 
-                    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(PanelTablaProductosCotizacion.this);
+                    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(PanelTablaProductosModificar.this);
                     frame.dispose();
                 }
 
@@ -137,7 +146,7 @@ public class PanelTablaProductosCotizacion extends JPanel {
 
     public double PrecioFinalCotizacion(){
         double valorFinal = 0;
-        for(DtoCotizacionDetalle producto : listDto){
+        for(DtoCotizacionDetalle producto : listaDtoEditar){
             valorFinal += producto.getPrecio_total();
         }
         return Math.round(valorFinal* 100.0) / 100.0;
@@ -186,3 +195,5 @@ public class PanelTablaProductosCotizacion extends JPanel {
         }
     }
 }
+
+

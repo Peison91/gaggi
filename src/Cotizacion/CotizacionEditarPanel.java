@@ -66,10 +66,10 @@ public class CotizacionEditarPanel extends JPanel {
                         ex.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "La factura seleccionada no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "El archivo seleccionada no existe", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Selecciona un cliente de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Selecciona un archivo de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

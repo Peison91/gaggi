@@ -12,7 +12,6 @@ import model.Cotizacion;
 import model.Cotizacion_detalle;
 import model.Productos;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GestionaPDF {
-    public void prueba(int id_cabecera) {
+    public void generarPdf(int id_cabecera) {
         Document document = new Document(PageSize.LETTER);
         String rutaImg = "src/imagenes/logo_horizontal.jpg";
         try {

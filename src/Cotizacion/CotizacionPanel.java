@@ -38,8 +38,6 @@ public class CotizacionPanel extends JPanel {
     static DefaultTableModel modelo;
     static int clienteID;
     JComboBox lista;
-
-
     static List<DtoCotizacionDetalle> listDto;
 
     public CotizacionPanel()throws Exception{
@@ -82,11 +80,6 @@ public class CotizacionPanel extends JPanel {
         lblValorFinal2 = new JLabel();
         lblValorFinal2.setBounds(700,520,100,30);
 
-        lista = new JComboBox();
-        lista.addItem("Aceptada");
-        lista.addItem("Pendiente");
-        lista.addItem("Rechazado");
-        lista.setBounds(140, 125, 120, 30);
 
         scroll = new JScrollPane();
         scroll.setBounds(15, 200, 800, 300);
@@ -151,7 +144,7 @@ public class CotizacionPanel extends JPanel {
                 throw new RuntimeException(ex);
             }
             GestionaPDF pdf = new GestionaPDF();
-            pdf.prueba(idCabecera);
+            pdf.generarPdf(idCabecera);
             txtCliente.setText("");
             txtIndiceAjuste.setText("0.0");
             lblValorFinal2.setText("");
