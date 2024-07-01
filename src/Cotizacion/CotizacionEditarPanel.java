@@ -141,6 +141,7 @@ public class CotizacionEditarPanel extends JPanel {
         scroll.setViewportView(tabla);
         add(scroll);
         setLayout(null);
+        System.out.println();
     }
     public void ConstruirTabla(int opBuscar, String valor) throws Exception{
         String[] titulo = {"ID","Cliente", "Fecha", "Índice ajuste", "Estado"};

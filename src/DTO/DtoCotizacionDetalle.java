@@ -45,7 +45,8 @@ public class DtoCotizacionDetalle {
     }
 
     public double getPrecio_unitario() {
-        return precio_unitario;
+
+        return Math.round(precio_unitario * 100.0) / 100.0;
     }
 
     public void setPrecio_unitario(double precio_unitario) {

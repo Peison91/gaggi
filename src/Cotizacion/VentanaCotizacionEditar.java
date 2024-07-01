@@ -124,6 +124,7 @@ public class VentanaCotizacionEditar extends JFrame {
             lblValorFinalEditar.setText(sumaPreciosString);
 
             comboBoxEstado = new JComboBox();
+            comboBoxEstado.addItem("Pendiente");
             comboBoxEstado.addItem("Aceptada");
             comboBoxEstado.addItem("Rechazado");
             comboBoxEstado.setBounds(140, 125, 120, 30);
@@ -149,11 +150,56 @@ public class VentanaCotizacionEditar extends JFrame {
                         }
                     }
                 }
-                int cambioEstado = 1;
+                int cambioEstado;
 
-                if(comboBoxEstado.getSelectedIndex() == 0){
+                if (comboBoxEstado.getSelectedIndex() == 0){
+                     cambioEstado = 1;
+                    try {
+                        List <Cotizacion_detalle> lstCotizacion = cotizacionCabeceraDB.consultarCotizacionDetalle(id_seleccionado);
+                        int cantProduc;
+                        int idProduc;
+                        for(Cotizacion_detalle cotizacion : lstCotizacion){
+                            cantProduc = cotizacion.getCantidad();
+                            idProduc = cotizacion.getProducto_id();
+                            productosDB.descontarStock(idProduc,cantProduc);
+                        }
+                        double precioU = 0;
+
+                        System.out.println(listDtoEditarCarga.size());
+                        if(listDtoEditarCarga.size() > 0){
+                            for(DtoCotizacionDetalle dto : listDtoEditarCarga){
+                                Cotizacion_detalle cotizacion = new Cotizacion_detalle();
+                                System.out.println();
+
+                                precioU = obtenerPrecio(dto.getCodigo_producto());
+
+                                cotizacion.setCantidad(dto.getCantidad_producto());
+                                cotizacion.setPrecio_unitario(precioU);
+                                cotizacion.setPrecio_ajustado(dto.getPrecio_unitario());
+                                cotizacion.setProducto_id(dto.getCodigo_producto());
+                                cotizacion.setCotizacion_cabecera_id(id_seleccionado);
+
+                                cotizacionDetalleDB.insertarCotizacionDetalle(cotizacion);
+
+                            }
+                        }
+
+                        UIManager.put("OptionPane.yesButtonText", "Si");
+                        UIManager.put("OptionPane.noButtonText", "No");
+                        int i = JOptionPane.showConfirmDialog(null, "¿Crear y/o editar pdf?", "Importante", JOptionPane.YES_NO_OPTION);
+                        if (i == 0) {
+                            GestionaPDF gestionaPDF = new GestionaPDF();
+                            gestionaPDF.generarPdf(id_seleccionado);
+                        }
+
+
+                        listDtoEditarCarga.clear();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }else if(comboBoxEstado.getSelectedIndex() == 1){
                     cambioEstado = 2;
-
                     try {
                         cotizacionCabeceraDB.actualizarEstadoCotizacion(id_seleccionado,cambioEstado);
                         List <Cotizacion_detalle> lstCotizacion = cotizacionCabeceraDB.consultarCotizacionDetalle(id_seleccionado);
@@ -185,8 +231,15 @@ public class VentanaCotizacionEditar extends JFrame {
                             }
                         }
 
-                        GestionaPDF gestionaPDF = new GestionaPDF();
-                        gestionaPDF.generarPdf(id_seleccionado);
+                        UIManager.put("OptionPane.yesButtonText", "Si");
+                        UIManager.put("OptionPane.noButtonText", "No");
+                        int i = JOptionPane.showConfirmDialog(null, "¿Crear y/o editar pdf?", "Importante", JOptionPane.YES_NO_OPTION);
+                        if (i == 0) {
+                            GestionaPDF gestionaPDF = new GestionaPDF();
+                            gestionaPDF.generarPdf(id_seleccionado);
+                        }
+
+
                         listDtoEditarCarga.clear();
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);

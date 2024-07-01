@@ -143,8 +143,8 @@ public class CotizacionPanel extends JPanel {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            GestionaPDF pdf = new GestionaPDF();
-            pdf.generarPdf(idCabecera);
+            /*GestionaPDF pdf = new GestionaPDF();
+            pdf.generarPdf(idCabecera);*/
             txtCliente.setText("");
             txtIndiceAjuste.setText("0.0");
             lblValorFinal2.setText("");
