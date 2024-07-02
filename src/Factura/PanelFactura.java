@@ -58,7 +58,7 @@ public class PanelFactura extends JPanel {
         txtMonto = new JTextField();
         txtMonto.setBounds(140, 90, 150, 30);
 
-        lblFechaHora = new JLabel("Fecha-Hora:");
+        lblFechaHora = new JLabel("Fecha:");
         lblFechaHora.setBounds(15, 125, 100, 30);
         calendario = new JDateChooser();
         calendario.setBounds(140, 125, 150, 30);
@@ -109,6 +109,7 @@ public class PanelFactura extends JPanel {
                 limpiarTxt(txtNumero);
                 limpiarTxt(txtMonto);
                 limpiarTxt(txtArchivo);
+                limpiarTxt(txtCliente);
                 lblId.setText("");
 
             } catch (Exception ex) {
@@ -250,7 +251,7 @@ public class PanelFactura extends JPanel {
     }
 
     public void construirTabla(int opBuscar, String valor) throws Exception {
-        String[] titulo1 = {"Id", "Nombre", "Número", "Fecha-Hora", "Monto", "Archivo"};
+        String[] titulo1 = {"Id", "Nombre", "Número", "Fecha", "Monto", "Archivo"};
         String informacion[][] = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo1);
         tabla.setModel(modelo);
@@ -279,11 +280,13 @@ public class PanelFactura extends JPanel {
         for (int i = 0; i < lstFacturas.size(); i++) {
             Facturas facturas = lstFacturas.get(i);
             Clientes cliente = clientesDB.consultaCliente(facturas.getCliente_id());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha = dateFormat.format(facturas.getFecha_hora());
 
             matrizIfno[i][0] = lstFacturas.get(i).getId() + "";
             matrizIfno[i][1] = cliente.getNombre();
             matrizIfno[i][2] = lstFacturas.get(i).getNumero() + "";
-            matrizIfno[i][3] = lstFacturas.get(i).getFecha_hora() + "";
+            matrizIfno[i][3] = fecha;
             matrizIfno[i][4] = lstFacturas.get(i).getMonto() + "";
             matrizIfno[i][5] = lstFacturas.get(i).getArchivo() + "";
         }

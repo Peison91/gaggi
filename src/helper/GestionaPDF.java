@@ -6,11 +6,9 @@ import com.lowagie.text.Image;
 import com.lowagie.text.pdf.*;
 import database.ClientesDB;
 import database.Cotizacion_CabeceraDB;
+import database.EstadoDB;
 import database.ProductosDB;
-import model.Clientes;
-import model.Cotizacion;
-import model.Cotizacion_detalle;
-import model.Productos;
+import model.*;
 
 import java.awt.*;
 import java.io.File;
@@ -53,6 +51,10 @@ public class GestionaPDF {
 
             Cotizacion coti = cotizacionCabeceraDB.consultarCotizacion(id_cabecera);
 
+            EstadoDB estadoDB = new EstadoDB(Conexion.conectar());
+            Estado estado = estadoDB.consultaEstado(coti.getEstado());
+            String estadoTexto = estado.getNombre();
+
             Date fechaCoti = coti.getFecha_cotizacion();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -72,6 +74,9 @@ public class GestionaPDF {
             document.add(new com.lowagie.text.Paragraph("\n"));
             com.lowagie.text.Paragraph cliente = new com.lowagie.text.Paragraph("Cliente: " + nombreCliente);
             document.add(cliente);
+            document.add(new com.lowagie.text.Paragraph("\n"));
+            com.lowagie.text.Paragraph estadoPDF = new com.lowagie.text.Paragraph("Estado: " + estadoTexto);
+            document.add(estadoPDF);
             document.add(new com.lowagie.text.Paragraph("\n"));
 
             // Crear la tabla

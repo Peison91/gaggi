@@ -1,4 +1,5 @@
 package model;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +54,9 @@ public class Cotizacion {
     }
 
     public Date getFecha_cotizacion() {
-        return  fecha_cotizacion;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        formatter.format(fecha_cotizacion);
+        return fecha_cotizacion;
     }
 
     public void setFecha_cotizacion(Date fecha_cotizacion) {

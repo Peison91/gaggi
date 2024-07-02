@@ -17,6 +17,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -173,10 +175,12 @@ public class CotizacionEditarPanel extends JPanel {
             Cotizacion cotizacion = listCotizacionesCab.get(i);
             Clientes cliente = clientesDB.consultaCliente(cotizacion.getCliente_id());
             Estado estado = estadoDB.consultaEstado(cotizacion.getEstado());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha = dateFormat.format(cotizacion.getFecha_cotizacion());
 
             matrizInfo[i][0] = String.valueOf(cotizacion.getId_cabecera());
             matrizInfo[i][1] = cliente.getNombre();
-            matrizInfo[i][2] = String.valueOf(cotizacion.getFecha_cotizacion());
+            matrizInfo[i][2] = fecha;
             matrizInfo[i][3] = String.valueOf(cotizacion.getIndice_ajuste());
             matrizInfo[i][4] = estado.getNombre();
         }

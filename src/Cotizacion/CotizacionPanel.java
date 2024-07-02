@@ -68,7 +68,8 @@ public class CotizacionPanel extends JPanel {
         lblFechaHora.setBounds(15, 90, 100, 30);
         calendario = new JDateChooser();
         calendario.setBounds(140, 90, 150, 30);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha = new Date();
         formatter.format(fecha);
         calendario.setDate(fecha);
