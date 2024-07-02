@@ -6,6 +6,5 @@ public class Main {
         Frame ventanaInicial = new Frame();
         ventanaInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Conexion.conectar();
-
     }
 }
