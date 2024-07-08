@@ -1,6 +1,5 @@
 package Clientes;
 
-import Cotizacion.PanelTablaClientesCotizacion;
 import Utiles.Conexion;
 import database.ClientesDB;
 import model.Clientes;
@@ -108,19 +107,61 @@ public class VentanaClienteEditarPanel extends JPanel {
 
         });
 
-        add(titulo);
-        add(nombre);
-        add(txtNombre);
-        add(cuit);
-        add(txtCuit);
-        add(direccion);
-        add(txtDireccion);
-        add(email);
-        add(txtEmail);
-        add(telefono);
-        add(txtTelefono);
-        add(btnGuardar);
-        setLayout(null);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        // Primera columna
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(nombre, gbc);
+
+        gbc.gridy = 1;
+        add(cuit, gbc);
+
+        gbc.gridy = 2;
+        add(direccion, gbc);
+
+        gbc.gridy = 3;
+        add(email, gbc);
+
+        gbc.gridy = 4;
+        add(telefono, gbc);
+
+        // Segunda columna
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        txtNombre.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        add(txtNombre, gbc);
+
+        gbc.gridy = 1;
+        txtCuit.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        add(txtCuit, gbc);
+
+        gbc.gridy = 2;
+        txtDireccion.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        add(txtDireccion, gbc);
+
+        gbc.gridy = 3;
+        txtEmail.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        add(txtEmail, gbc);
+
+        gbc.gridy = 4;
+        txtTelefono.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        add(txtTelefono, gbc);
+
+        // Botón Guardar
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2; // Abarcar dos columnas
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        gbc.anchor = GridBagConstraints.CENTER; // Center the button in the panel
+        add(btnGuardar, gbc);
+
     }
     public void LimpiarTxt(JTextField e) {
         e.setText("");

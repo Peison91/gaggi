@@ -5,13 +5,13 @@ import java.awt.*;
 
 public class ClientesEditarFrame extends JFrame {
     public ClientesEditarFrame() throws Exception {
-        setTitle("Gaggi Distribuidora - Editar clientes");
+        setTitle("Gaggi Distribuidora - Mis clientes");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
         Dimension tamanoPantalla = miPantalla.getScreenSize();
         double alturaPantalla = tamanoPantalla.height;
         double anchoPantalla = tamanoPantalla.width;
-        setSize((int) (anchoPantalla/1.51), (int) (alturaPantalla/1.5));
+        setSize(1000,600);
         setLocationRelativeTo(null);
         Image icono = miPantalla.getImage("src/imagenes/gaggiicon.png");
         setIconImage(icono);

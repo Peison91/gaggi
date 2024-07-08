@@ -1,7 +1,9 @@
 package Clientes;
+
 import Utiles.Conexion;
 import database.ClientesDB;
 import model.Clientes;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -26,10 +28,11 @@ public class ClientesEditar extends JPanel {
         filtro.addItem("ID");
         filtro.addItem("Nombre");
         filtro.addItem("CUIT");
-        filtro.setBounds(20,20,100,30);
-        setBackground(new Color(214,214,214));
+
         buscarCliente = new JTextField(15);
-        buscarCliente.setBounds(150,20,200,30);
+        buscarCliente.setMinimumSize(new Dimension(500, 30));
+        buscarCliente.setPreferredSize(new Dimension(500, 30));
+        buscarCliente.setMaximumSize(new Dimension(500, 30));
         buscarCliente.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -42,22 +45,21 @@ public class ClientesEditar extends JPanel {
                 }
             }
         });
-        btnNuevoCliente = new JButton("Nuevo",new ImageIcon("src/imagenes/nuevo.png"));
-        btnNuevoCliente.setBounds(400,20,130,30);
-        btnNuevoCliente.addActionListener(e->{
-                    try {
-                        VentanaClienteNuevoFrame ventana = new VentanaClienteNuevoFrame();
-                        ventana.setVisible(true);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-        );
+
+        btnNuevoCliente = new JButton("Nuevo", new ImageIcon("src/imagenes/nuevo.png"));
+        btnNuevoCliente.setPreferredSize(new Dimension(130, 30));
+        btnNuevoCliente.addActionListener(e -> {
+            try {
+                VentanaClienteNuevoFrame ventana = new VentanaClienteNuevoFrame();
+                ventana.setResizable(false);
+                ventana.setVisible(true);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         btnModificarCliente = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarCliente.setBounds(570, 20, 130, 30);
-        btnEliminarCliente = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarCliente.setBounds(740, 20, 130,30);
+        btnModificarCliente.setPreferredSize(new Dimension(130, 30));
         btnModificarCliente.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
@@ -66,19 +68,23 @@ public class ClientesEditar extends JPanel {
                 try {
                     VentanaClienteEditarFrame ventana = new VentanaClienteEditarFrame();
                     ventana.setVisible(true);
-                    idCliente = Integer.parseInt(tabla.getValueAt(fila,0).toString());
-                    VentanaClienteEditarPanel.txtNombre.setText(tabla.getValueAt(fila,1).toString());
-                    VentanaClienteEditarPanel.txtCuit.setText(tabla.getValueAt(fila,2).toString());
-                    VentanaClienteEditarPanel.txtDireccion.setText(tabla.getValueAt(fila,3).toString());
-                    VentanaClienteEditarPanel.txtEmail.setText(tabla.getValueAt(fila,4).toString());
-                    VentanaClienteEditarPanel.txtTelefono.setText(tabla.getValueAt(fila,5).toString());
+                    ventana.setResizable(false);
+                    idCliente = Integer.parseInt(tabla.getValueAt(fila, 0).toString());
+                    VentanaClienteEditarPanel.txtNombre.setText(tabla.getValueAt(fila, 1).toString());
+                    VentanaClienteEditarPanel.txtCuit.setText(tabla.getValueAt(fila, 2).toString());
+                    VentanaClienteEditarPanel.txtDireccion.setText(tabla.getValueAt(fila, 3).toString());
+                    VentanaClienteEditarPanel.txtEmail.setText(tabla.getValueAt(fila, 4).toString());
+                    VentanaClienteEditarPanel.txtTelefono.setText(tabla.getValueAt(fila, 5).toString());
 
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
-        btnEliminarCliente.addActionListener(e ->{
+
+        btnEliminarCliente = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
+        btnEliminarCliente.setPreferredSize(new Dimension(130, 30));
+        btnEliminarCliente.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -93,37 +99,71 @@ public class ClientesEditar extends JPanel {
                         clientesDB.borrarCliente(id);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
-                    }                    JOptionPane.showMessageDialog(null, "Cliente eliminado");
+                    }
+                    JOptionPane.showMessageDialog(null, "Cliente eliminado");
                 }
             }
             try {
-                ConstruirTabla(0,null);
+                ConstruirTabla(0, null);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         });
-        ConstruirTabla(0,null);
-        scroll.setBounds(20,80,850,350);
-        add(buscarCliente);
-        add(filtro);
-        add(btnModificarCliente);
-        add(btnEliminarCliente);
-        add(btnNuevoCliente);
+
+        ConstruirTabla(0, null);
         scroll.setViewportView(tabla);
-        add(scroll);
-        setLayout(null);
+
+        // Configurar layout del panel
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        // Agregar filtro JComboBox y JTextField al lado izquierdo superior
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        add(filtro, gbc);
+
+        gbc.gridx = 1;
+        add(buscarCliente, gbc);
+
+        // Espacio de relleno entre JTextField y botones
+        gbc.gridx = 2;
+        gbc.weightx = 1.0;
+        add(Box.createHorizontalGlue(), gbc);
+
+        // Agregar botones al lado derecho superior
+        gbc.gridx = 3;
+        gbc.weightx = 0;
+        add(btnNuevoCliente, gbc);
+
+        gbc.gridx = 4;
+        add(btnModificarCliente, gbc);
+
+        gbc.gridx = 5;
+        add(btnEliminarCliente, gbc);
+
+        // Configurar JScrollPane para la tabla
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 6;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        add(scroll, gbc);
     }
-    public static void ConstruirTabla(int opBuscar, String valor) throws Exception{
-        String[] titulo = {"ID","Nombre", "CUIT", "Dirección", "Email", "Teléfono"};
+
+    public static void ConstruirTabla(int opBuscar, String valor) throws Exception {
+        String[] titulo = {"ID", "Nombre", "CUIT", "Dirección", "Email", "Teléfono"};
         String[][] informacion = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo);
         tabla.setModel(modelo);
         ajustarAnchoColumnas();
-        TableRowSorter tr = new TableRowSorter<>(modelo);
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
-        if(valor == null){
+        if (valor == null) {
             tr.setRowFilter(RowFilter.regexFilter(buscarCliente.getText(), 0));
-        }else{
+        } else {
             tr.setRowFilter(RowFilter.regexFilter(buscarCliente.getText(), opBuscar));
         }
         JTableHeader titulo1 = tabla.getTableHeader();
@@ -143,14 +183,11 @@ public class ClientesEditar extends JPanel {
         }
     }
 
-    private static String[][] obtenerMatriz() throws Exception{
-
-
+    private static String[][] obtenerMatriz() throws Exception {
         ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
-
         List<Clientes> lstClientes = clientesDB.todosClientes();
         String[][] matrizInfo = new String[lstClientes.size()][6];
-        for(int i=0; i < lstClientes.size(); i++){
+        for (int i = 0; i < lstClientes.size(); i++) {
             matrizInfo[i][0] = lstClientes.get(i).getId() + "";
             matrizInfo[i][1] = lstClientes.get(i).getNombre() + "";
             matrizInfo[i][2] = lstClientes.get(i).getCuit() + "";
