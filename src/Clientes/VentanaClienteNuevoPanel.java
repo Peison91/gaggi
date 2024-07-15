@@ -105,7 +105,7 @@ public class VentanaClienteNuevoPanel extends JPanel {
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(10, 10, 10, 20);
         gbc.anchor = GridBagConstraints.WEST;
 
         // Primera columna

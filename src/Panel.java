@@ -29,9 +29,9 @@ public class Panel extends JPanel {
         productos.setIcon(new ImageIcon("src/imagenes/producto.png"));
         productos.setPreferredSize(new Dimension(115,30));
 
-        JMenu proveedor = new JMenu("Proveedores");
-        proveedor.setIcon(new ImageIcon("src/imagenes/Carrito-de-compras.png"));
-        proveedor.setPreferredSize(new Dimension(115,30));
+        JMenu compras = new JMenu("Compras");
+        compras.setIcon(new ImageIcon("src/imagenes/Carrito-de-compras.png"));
+        compras.setPreferredSize(new Dimension(115,30));
 
         JMenu ventas = new JMenu("Ventas");
         ventas.setIcon(new ImageIcon("src/imagenes/pdf.png"));
@@ -77,8 +77,10 @@ public class Panel extends JPanel {
         editarProducto.setPreferredSize(new Dimension(150,20));
         editarProducto.addActionListener(e -> {
             try {
-                productosEditarFrame = new ProductosEditarFrame();
-                } catch (Exception ex) {
+                if (productosEditarFrame == null) {
+                    productosEditarFrame = new ProductosEditarFrame();
+                }
+            } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             productosEditarFrame.setVisible(true);
@@ -87,11 +89,14 @@ public class Panel extends JPanel {
         importarProductos.setPreferredSize(new Dimension(150,20));
         importarProductos.addActionListener(e ->{
             try {
-                productosImportarFrame = new ProductosImportarFrame();
+                if (productosImportarFrame == null) {
+                    productosImportarFrame = new ProductosImportarFrame();
+                }
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
             productosImportarFrame.setVisible(true);
+            productosImportarFrame.setResizable(false);
         });
         JMenuItem editarCliente = new JMenuItem("Mis clientes");
         editarCliente.setPreferredSize(new Dimension(150,20));
@@ -105,9 +110,9 @@ public class Panel extends JPanel {
             }
             clientesEditarFrame.setVisible(true);
         });
-        JMenuItem editarProveedor = new JMenuItem("Mis proveedores");
-        editarProveedor.setPreferredSize(new Dimension(150,20));
-        editarProveedor.addActionListener(e->{
+        JMenuItem misProveedores = new JMenuItem("Mis proveedores");
+        misProveedores.setPreferredSize(new Dimension(150,20));
+        misProveedores.addActionListener(e->{
             try{
                 if(proveedoresEditarFrame == null) {
                     proveedoresEditarFrame = new ProveedoresEditarFrame();
@@ -117,15 +122,18 @@ public class Panel extends JPanel {
             }
             proveedoresEditarFrame.setVisible(true);
         });
+        JMenuItem misCompras = new JMenuItem("Registro de compras");
+        misProveedores.setPreferredSize(new Dimension(150,20));
         barra.add(clientes);
         barra.add(productos);
-        barra.add(proveedor);
+        barra.add(compras);
         barra.add(ventas);
         barra.add(cotizacion);
         productos.add(editarProducto);
         productos.add(importarProductos);
         clientes.add(editarCliente);
-        proveedor.add(editarProveedor);
+        compras.add(misProveedores);
+        compras.add(misCompras);
         ventas.add(nuevaVenta);
         cotizacion.add(nuevaCotizacion);
         cotizacion.add(editarCotizacion);

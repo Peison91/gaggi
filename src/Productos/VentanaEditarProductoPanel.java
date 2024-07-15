@@ -17,8 +17,6 @@ public class VentanaEditarProductoPanel extends JPanel {
     public VentanaEditarProductoPanel() throws Exception {
 
         setBackground(new Color(214, 214, 214));
-        JLabel nuevoProducto = new JLabel("Editar Producto");
-        nuevoProducto.setBounds(100, 1, 200, 40);
 
         JLabel descrProd = new JLabel("Descripción:");
         descrProd.setBounds(20, 30, 200, 40);
@@ -72,7 +70,7 @@ public class VentanaEditarProductoPanel extends JPanel {
         JButton btnGuardar = new JButton("Guardar", new ImageIcon("src/imagenes/GuardarTodo.png"));
         btnGuardar.setBounds(350, 200, 120, 50);
         add(btnGuardar);
-        setLayout(null);
+
         btnGuardar.addActionListener(e -> {
             ProductosDB productosDB = new ProductosDB(Conexion.conectar());
             String descr = txtDescr.getText();
@@ -129,19 +127,68 @@ public class VentanaEditarProductoPanel extends JPanel {
             }
 
         });
-        add(nuevoProducto);
-        add(descrProd);
-        add(txtDescr);
-        add(codProd);
-        add(txtCodProd);
-        add(abrevProd);
-        add(txtAbrevProd);
-        add(precioUnitProd);
-        add(txtPreciounitProd);
-        add(stockMin);
-        add(txtStockMin);
-        add(stockProd);
-        add(txtStock);
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 20);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        // Primera columna
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(descrProd, gbc);
+
+        gbc.gridy = 1;
+        add(codProd, gbc);
+
+        gbc.gridy = 2;
+        add(abrevProd, gbc);
+
+        gbc.gridy = 3;
+        add(precioUnitProd, gbc);
+
+        gbc.gridy = 4;
+        add(stockMin, gbc);
+
+        gbc.gridy = 5;
+        add(stockProd, gbc);
+
+        // Segunda columna
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        txtDescr.setPreferredSize(new Dimension(300, 30));
+        add(txtDescr, gbc);
+
+        gbc.gridy = 1;
+        txtCodProd.setPreferredSize(new Dimension(300, 30));
+        add(txtCodProd, gbc);
+
+        gbc.gridy = 2;
+        txtAbrevProd.setPreferredSize(new Dimension(300, 30));
+        add(txtAbrevProd, gbc);
+
+        gbc.gridy = 3;
+        txtPreciounitProd.setPreferredSize(new Dimension(300, 30));
+        add(txtPreciounitProd, gbc);
+
+        gbc.gridy = 4;
+        txtStockMin.setPreferredSize(new Dimension(300, 30));
+        add(txtStockMin, gbc);
+
+        gbc.gridy = 5;
+        txtStock.setPreferredSize(new Dimension(300, 30));
+        add(txtStock, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2; // Abarcar dos columnas
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        gbc.anchor = GridBagConstraints.CENTER; // Center the button in the panel
+        add(btnGuardar, gbc);
+
     }
 
     public void limpiarTxt(JTextField txt){

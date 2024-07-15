@@ -17,8 +17,6 @@ public class VentanaProveedoresEditarPanel extends JPanel{
 
     public VentanaProveedoresEditarPanel() throws Exception{
         setBackground(new Color(214,214,214));
-        JLabel titulo = new JLabel("Nuevo proveedor");
-        titulo.setBounds(100, 1, 200, 40);
 
         JLabel nombre = new JLabel("Nombre:");
         nombre.setBounds(20, 30, 200, 40);
@@ -100,19 +98,60 @@ public class VentanaProveedoresEditarPanel extends JPanel{
                 throw new RuntimeException(ex);
             }
         });
-        add(titulo);
-        add(nombre);
-        add(txtNombre);
-        add(cuit);
-        add(txtCuit);
-        add(direccion);
-        add(txtDireccion);
-        add(ciudad);
-        add(txtCiudad);
-        add(cbu);
-        add(txtCBU);
-        add(btnGuardar);
-        setLayout(null);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 20);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        // Primera columna
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(nombre, gbc);
+
+        gbc.gridy = 1;
+        add(cuit, gbc);
+
+        gbc.gridy = 2;
+        add(direccion, gbc);
+
+        gbc.gridy = 3;
+        add(ciudad, gbc);
+
+        gbc.gridy = 4;
+        add(cbu, gbc);
+
+        // Segunda columna
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        txtNombre.setPreferredSize(new Dimension(300, 30));
+        add(txtNombre, gbc);
+
+        gbc.gridy = 1;
+        txtCuit.setPreferredSize(new Dimension(300, 30));
+        add(txtCuit, gbc);
+
+        gbc.gridy = 2;
+        txtDireccion.setPreferredSize(new Dimension(300, 30));
+        add(txtDireccion, gbc);
+
+        gbc.gridy = 3;
+        txtCiudad.setPreferredSize(new Dimension(300, 30));
+        add(txtCiudad, gbc);
+
+        gbc.gridy = 4;
+        txtCBU.setPreferredSize(new Dimension(300, 30));
+        add(txtCBU, gbc);
+
+        // Botón Guardar
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2; // Abarcar dos columnas
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        gbc.anchor = GridBagConstraints.CENTER; // Center the button in the panel
+        add(btnGuardar, gbc);
     }
     public void LimpiarTxt(JTextField e) {
         e.setText("");

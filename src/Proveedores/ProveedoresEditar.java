@@ -19,6 +19,8 @@ public class ProveedoresEditar extends JPanel {
     JButton btnModificarProveedor;
     JButton btnEliminarProveedor;
     static int idCliente;
+    private VentanaProveedoresNuevoFrame ventanaProveedoresNuevoFrame;
+    private VentanaProveedoresEditarFrame ventanaProveedoresEditarFrame;
 
 
     public ProveedoresEditar() throws Exception{
@@ -26,10 +28,12 @@ public class ProveedoresEditar extends JPanel {
         filtro.addItem("ID");
         filtro.addItem("Nombre");
         filtro.addItem("CUIT");
-        filtro.setBounds(20,20,100,30);
+
         setBackground(new Color(214,214,214));
         buscarProveedor = new JTextField(15);
-        buscarProveedor.setBounds(150,20,200,30);
+        buscarProveedor.setMinimumSize(new Dimension(500, 30));
+        buscarProveedor.setPreferredSize(new Dimension(500, 30));
+        buscarProveedor.setMaximumSize(new Dimension(500, 30));
         buscarProveedor.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -43,28 +47,34 @@ public class ProveedoresEditar extends JPanel {
             }
         });
         btnNuevoProveedor = new JButton("Nuevo" ,new ImageIcon("src/imagenes/nuevo.png"));
-        btnNuevoProveedor.setBounds(400,20,130,30);
+        btnNuevoProveedor.setPreferredSize(new Dimension(130, 30));
         btnNuevoProveedor.addActionListener(e->{
                     try {
-                        VentanaProveedoresNuevoFrame ventana = new VentanaProveedoresNuevoFrame();
-                        ventana.setVisible(true);
+                        if (ventanaProveedoresNuevoFrame == null) {
+                            ventanaProveedoresNuevoFrame = new VentanaProveedoresNuevoFrame();
+                        }
+                        ventanaProveedoresNuevoFrame.setVisible(true);
+                        ventanaProveedoresNuevoFrame.setResizable(false);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
                 }
         );
         btnModificarProveedor = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarProveedor.setBounds(570, 20, 130, 30);
+        btnModificarProveedor.setPreferredSize(new Dimension(130, 30));
         btnEliminarProveedor = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarProveedor.setBounds(740, 20, 130,30);
+        btnEliminarProveedor.setPreferredSize(new Dimension(130, 30));
         btnModificarProveedor.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor");
             } else {
                 try{
-                    VentanaProveedoresEditarFrame ventana = new VentanaProveedoresEditarFrame();
-                    ventana.setVisible(true);
+                    if (ventanaProveedoresEditarFrame == null) {
+                        ventanaProveedoresEditarFrame = new VentanaProveedoresEditarFrame();
+                    }
+                    ventanaProveedoresEditarFrame.setVisible(true);
+                    ventanaProveedoresEditarFrame.setResizable(false);
                     idCliente = Integer.parseInt(tabla.getValueAt(fila,0).toString());
                     VentanaProveedoresEditarPanel.txtNombre.setText(tabla.getValueAt(fila,1).toString());
                     VentanaProveedoresEditarPanel.txtCuit.setText(tabla.getValueAt(fila,2).toString());
@@ -102,15 +112,40 @@ public class ProveedoresEditar extends JPanel {
             }
         });
         ConstruirTabla(0,null);
-        scroll.setBounds(20,80,850,350);
-        add(buscarProveedor);
-        add(filtro);
-        add(btnNuevoProveedor);
-        add(btnModificarProveedor);
-        add(btnEliminarProveedor);
         scroll.setViewportView(tabla);
-        add(scroll);
-        setLayout(null);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        add(filtro, gbc);
+
+        gbc.gridx = 1;
+        add(buscarProveedor, gbc);
+
+        gbc.gridx = 2;
+        gbc.weightx = 1.0;
+        add(Box.createHorizontalGlue(), gbc);
+
+        gbc.gridx = 3;
+        gbc.weightx = 0;
+        add(btnNuevoProveedor, gbc);
+
+        gbc.gridx = 4;
+        add(btnModificarProveedor, gbc);
+
+        gbc.gridx = 5;
+        add(btnEliminarProveedor, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 6;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        add(scroll, gbc);
     }
     public void ConstruirTabla(int opBuscar, String valor) throws Exception{
         String[] titulo = {"ID","Nombre", "CUIT", "Dirección", "Ciudad", "CBU/Alias"};

@@ -10,7 +10,7 @@ public class VentanaEditarProductoFrame extends JFrame {
             Dimension tamanoPantalla = miPantalla.getScreenSize();
             double alturaPantalla = tamanoPantalla.height;
             double anchoPantalla = tamanoPantalla.width;
-            setSize(800,350);
+            setSize(400,400);
             setLocation(470,250);
             Image icono = miPantalla.getImage("src/imagenes/gaggiicon.png");
             setIconImage(icono);

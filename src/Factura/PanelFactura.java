@@ -31,8 +31,7 @@ public class PanelFactura extends JPanel {
 
 
     public PanelFactura() throws Exception {
-        btnCliente = new JButton("Seleccione Cliente");
-        btnCliente.setBounds(600, 20, 210, 30);
+        btnCliente = new JButton("Seleccione Cliente", new ImageIcon("src/imagenes/Clientes.png"));
         btnCliente.addActionListener(e -> {
             try {
                 FrameTablaClientes tablaClientes = new FrameTablaClientes();
@@ -43,41 +42,28 @@ public class PanelFactura extends JPanel {
         });
         lblId = new JLabel("10");
         buscarCliente = new JLabel("Cliente seleccionado:");
-        buscarCliente.setBounds(15, 20, 250, 30);
         txtCliente = new JTextField(15);
-        txtCliente.setBounds(140, 20, 250, 30);
         txtCliente.setEditable(false);
 
         lblNumero = new JLabel("Nro. Factura:");
-        lblNumero.setBounds(15, 55, 100, 30);
         txtNumero = new JTextField();
-        txtNumero.setBounds(140, 55, 150, 30);
 
         lblMonto = new JLabel("Monto:");
-        lblMonto.setBounds(15, 90, 100, 30);
         txtMonto = new JTextField();
-        txtMonto.setBounds(140, 90, 150, 30);
 
         lblFechaHora = new JLabel("Fecha:");
-        lblFechaHora.setBounds(15, 125, 100, 30);
         calendario = new JDateChooser();
-        calendario.setBounds(140, 125, 150, 30);
 
         lblArchivo = new JLabel("Nombre Archivo:");
-        lblArchivo.setBounds(15, 160, 100, 30);
         txtArchivo = new JTextField();
-        txtArchivo.setBounds(140, 160, 150, 30);
 
         lblFactura = new JLabel("Buscar Factura:");
-        lblFactura.setBounds(15, 190, 100, 30);
 
         lista = new JComboBox();
         lista.addItem("ID");
         lista.addItem("NOMBRE");
         lista.addItem("NUMERO");
-        lista.setBounds(15, 220, 100, 30);
         txtBuscar = new JTextField();
-        txtBuscar.setBounds(130, 220, 200, 30);
         txtBuscar.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -91,10 +77,8 @@ public class PanelFactura extends JPanel {
             }
         });
         scroll = new JScrollPane();
-        scroll.setBounds(15, 270, 800, 400);
         construirTabla(0, null);
-        btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(300, 160, 100, 30);
+        btnGuardar = new JButton("Guardar", new ImageIcon("src/imagenes/GuardarTodo.png"));
         btnGuardar.addActionListener(e -> {
             FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
             int idCliente = clienteID;
@@ -116,10 +100,8 @@ public class PanelFactura extends JPanel {
                 throw new RuntimeException(ex);
             }
         });
-        btnBorrar = new JButton("Eliminar");
-        btnBorrar.setBounds(600, 220, 100, 30);
-        btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(710, 220, 100, 30);
+        btnBorrar = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
+        btnActualizar = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
         btnActualizar.addActionListener(new ActionListener() {
             FacturasDB facturasDB = new FacturasDB(Conexion.conecc);
 
@@ -199,8 +181,7 @@ public class PanelFactura extends JPanel {
                 }
             }
         });
-        btnAbrirPdf = new JButton("Abrir PDF");
-        btnAbrirPdf.setBounds(600, 160, 210, 30);
+        btnAbrirPdf = new JButton("Abrir PDF", new ImageIcon("src/imagenes/pdf.png"));
         btnAbrirPdf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -225,29 +206,148 @@ public class PanelFactura extends JPanel {
                 }
             }
         });
-        add(btnCliente);
-        add(txtCliente);
-        add(buscarCliente);
-        add(lblId);
-        add(lblNumero);
-        add(txtNumero);
-        add(lblMonto);
-        add(txtMonto);
-        add(calendario);
-        add(lblFechaHora);
-        add(lblArchivo);
-        add(txtArchivo);
-        add(lblFactura);
-        add(txtBuscar);
-        add(lista);
-        add(scroll);
-        add(btnGuardar);
-        add(btnBorrar);
-        add(btnActualizar);
-        add(btnAbrirPdf);
+
         scroll.setViewportView(tabla);
-        ajustarAnchoColumnas();
-        setLayout(null);
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        //Primera columna. Hombre, odio esto...
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        add(buscarCliente, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(lblNumero, gbc);
+
+        //gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(lblMonto, gbc);
+
+        //gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(lblFechaHora, gbc);
+
+        //gbc.gridx = 0;
+        gbc.gridy = 4;
+        add(lblArchivo, gbc);
+
+        //gbc.gridx = 0;
+        gbc.gridy = 5;
+        lblFactura.setPreferredSize(new Dimension(130,10));
+        lblFactura.setMaximumSize(new Dimension(130,10));
+        lblFactura.setMinimumSize(new Dimension(130,10));
+        add(lblFactura, gbc);
+
+        //gbc.gridx = 0;
+        gbc.gridy = 6;
+        add(lista, gbc);
+
+        //Segunda columna, oh god
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = 2;
+        txtCliente.setPreferredSize(new Dimension(260,30));
+        txtCliente.setMaximumSize(new Dimension(260,30));
+        txtCliente.setMinimumSize(new Dimension(260,30));
+        add(txtCliente, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        txtNumero.setPreferredSize(new Dimension(170,30));
+        txtNumero.setMaximumSize(new Dimension(170,30));
+        txtNumero.setMinimumSize(new Dimension(170,30));
+        add(txtNumero, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        txtMonto.setPreferredSize(new Dimension(170,30));
+        txtMonto.setMaximumSize(new Dimension(170,30));
+        txtMonto.setMinimumSize(new Dimension(170,30));
+        add(txtMonto, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        calendario.setPreferredSize(new Dimension(170,30));
+        calendario.setMaximumSize(new Dimension(170,30));
+        calendario.setMinimumSize(new Dimension(170,30));
+        add(calendario, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        txtArchivo.setPreferredSize(new Dimension(170,30));
+        txtArchivo.setMaximumSize(new Dimension(170,30));
+        txtArchivo.setMinimumSize(new Dimension(170,30));
+        add(txtArchivo, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        txtBuscar.setPreferredSize(new Dimension(170,30));
+        txtBuscar.setMaximumSize(new Dimension(170,30));
+        txtBuscar.setMinimumSize(new Dimension(170,30));
+        add(txtBuscar, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 6;
+        gbc.weightx = 1.0;
+        add(Box.createHorizontalGlue(), gbc);
+
+        gbc.gridy = 6;
+        gbc.gridx = 3;
+        btnAbrirPdf.setPreferredSize(new Dimension(150,30));
+        btnAbrirPdf.setMaximumSize(new Dimension(150,30));
+        btnAbrirPdf.setMinimumSize(new Dimension(150,30));
+        add(btnAbrirPdf, gbc);
+
+        gbc.gridy = 6;
+        gbc.gridx = 4;
+        btnActualizar.setPreferredSize(new Dimension(150,30));
+        btnActualizar.setMaximumSize(new Dimension(150,30));
+        btnActualizar.setMinimumSize(new Dimension(150,30));
+        add(btnActualizar, gbc);
+
+        gbc.gridy = 6;
+        gbc.gridx = 5;
+        btnBorrar.setPreferredSize(new Dimension(150,30));
+        btnBorrar.setMaximumSize(new Dimension(150,30));
+        btnBorrar.setMinimumSize(new Dimension(150,30));
+        add(btnBorrar, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        btnCliente.setPreferredSize(new Dimension(250,30));
+        btnCliente.setMaximumSize(new Dimension(250,30));
+        btnCliente.setMinimumSize(new Dimension(250,30));
+        add(btnCliente, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        btnGuardar.setPreferredSize(new Dimension(150,30));
+        btnGuardar.setMaximumSize(new Dimension(150,30));
+        btnGuardar.setMinimumSize(new Dimension(150,30));
+        add(btnGuardar,gbc);
+
+        //La maldita tabla
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 7;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        add(scroll, gbc);
+
+
+
+
+
+
     }
 
     public void construirTabla(int opBuscar, String valor) throws Exception {

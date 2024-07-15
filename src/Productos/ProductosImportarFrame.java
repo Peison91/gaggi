@@ -11,7 +11,7 @@ public class ProductosImportarFrame extends JFrame {
         Dimension tamanoPantalla = miPantalla.getScreenSize();
         double alturaPantalla = tamanoPantalla.height;
         double anchoPantalla = tamanoPantalla.width;
-        setSize(420,226);
+        setSize(400,250);
         setLocation(470,250);
         Image icono = miPantalla.getImage("src/imagenes/gaggiicon.png");
         setIconImage(icono);

@@ -4,6 +4,7 @@ import helper.GestionaExcel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.io.*;
 
 public class ProductosImportar extends JPanel {
@@ -30,9 +31,18 @@ public class ProductosImportar extends JPanel {
                 throw new RuntimeException(ex);
             }
         });
-        add(importarArchivo);
-        add(procesarArchivo);
-        setLayout(null);
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(20, 20, 20, 20);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(importarArchivo, gbc);
+
+        gbc.gridy = 1;
+        add(procesarArchivo, gbc);
 
     }
     private void importarArchivo() {

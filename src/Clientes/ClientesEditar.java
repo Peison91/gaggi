@@ -20,6 +20,8 @@ public class ClientesEditar extends JPanel {
     JButton btnEliminarCliente;
     JButton btnNuevoCliente;
     static int idCliente;
+    private VentanaClienteEditarFrame ventanaClienteEditarFrame;
+    private VentanaClienteNuevoFrame ventanaClienteNuevoFrame;
 
     public ClientesEditar() throws Exception {
         Conexion.conectar();
@@ -28,7 +30,7 @@ public class ClientesEditar extends JPanel {
         filtro.addItem("ID");
         filtro.addItem("Nombre");
         filtro.addItem("CUIT");
-
+        setBackground(new Color(214,214,214));
         buscarCliente = new JTextField(15);
         buscarCliente.setMinimumSize(new Dimension(500, 30));
         buscarCliente.setPreferredSize(new Dimension(500, 30));
@@ -50,9 +52,11 @@ public class ClientesEditar extends JPanel {
         btnNuevoCliente.setPreferredSize(new Dimension(130, 30));
         btnNuevoCliente.addActionListener(e -> {
             try {
-                VentanaClienteNuevoFrame ventana = new VentanaClienteNuevoFrame();
-                ventana.setResizable(false);
-                ventana.setVisible(true);
+                if (ventanaClienteNuevoFrame == null) {
+                    ventanaClienteNuevoFrame = new VentanaClienteNuevoFrame();
+                }
+                ventanaClienteNuevoFrame.setResizable(false);
+                ventanaClienteNuevoFrame.setVisible(true);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -66,9 +70,11 @@ public class ClientesEditar extends JPanel {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente");
             } else {
                 try {
-                    VentanaClienteEditarFrame ventana = new VentanaClienteEditarFrame();
-                    ventana.setVisible(true);
-                    ventana.setResizable(false);
+                    if (ventanaClienteEditarFrame == null) {
+                        ventanaClienteEditarFrame = new VentanaClienteEditarFrame();
+                    }
+                    ventanaClienteEditarFrame.setVisible(true);
+                    ventanaClienteEditarFrame.setResizable(false);
                     idCliente = Integer.parseInt(tabla.getValueAt(fila, 0).toString());
                     VentanaClienteEditarPanel.txtNombre.setText(tabla.getValueAt(fila, 1).toString());
                     VentanaClienteEditarPanel.txtCuit.setText(tabla.getValueAt(fila, 2).toString());
@@ -92,7 +98,7 @@ public class ClientesEditar extends JPanel {
                 int id = Integer.parseInt((String) tabla.getValueAt(fila, 0));
                 UIManager.put("OptionPane.yesButtonText", "Si");
                 UIManager.put("OptionPane.noButtonText", "No");
-                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Importante", JOptionPane.YES_NO_OPTION);
+                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
                         ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
@@ -113,7 +119,6 @@ public class ClientesEditar extends JPanel {
         ConstruirTabla(0, null);
         scroll.setViewportView(tabla);
 
-        // Configurar layout del panel
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);

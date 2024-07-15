@@ -109,7 +109,7 @@ public class VentanaClienteEditarPanel extends JPanel {
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(10, 10, 10, 20);
         gbc.anchor = GridBagConstraints.WEST;
 
         // Primera columna
@@ -134,23 +134,23 @@ public class VentanaClienteEditarPanel extends JPanel {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
-        txtNombre.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        txtNombre.setPreferredSize(new Dimension(300, 30));
         add(txtNombre, gbc);
 
         gbc.gridy = 1;
-        txtCuit.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        txtCuit.setPreferredSize(new Dimension(300, 30));
         add(txtCuit, gbc);
 
         gbc.gridy = 2;
-        txtDireccion.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        txtDireccion.setPreferredSize(new Dimension(300, 30));
         add(txtDireccion, gbc);
 
         gbc.gridy = 3;
-        txtEmail.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        txtEmail.setPreferredSize(new Dimension(300, 30));
         add(txtEmail, gbc);
 
         gbc.gridy = 4;
-        txtTelefono.setPreferredSize(new Dimension(300, 30)); // Set preferred size
+        txtTelefono.setPreferredSize(new Dimension(300, 30));
         add(txtTelefono, gbc);
 
         // Botón Guardar

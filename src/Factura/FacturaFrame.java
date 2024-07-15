@@ -6,7 +6,7 @@ public class FacturaFrame extends JFrame {
 
     public FacturaFrame() throws Exception {
 
-        setTitle("Facturas");
+        setTitle("Distribuidora Gaggi - Registro de ventas");
         Toolkit miPantalla = Toolkit.getDefaultToolkit();
         miPantalla.getScreenSize();
         Dimension tamanoPantalla = miPantalla.getScreenSize();

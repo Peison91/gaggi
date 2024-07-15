@@ -19,8 +19,8 @@ public class ProductosEditar extends JPanel{
     JButton btnEliminarProd;
     JButton btnNuevoProduc;
     static int idProducto;
-
-
+    private VentanaNuevoProductoFrame ventanaNuevoProductoFrame;
+    private VentanaEditarProductoFrame ventanaEditarProductoFrame;
 
     public ProductosEditar() throws Exception {
         JComboBox<String> filtro = new JComboBox<>();
@@ -28,10 +28,11 @@ public class ProductosEditar extends JPanel{
         filtro.addItem("Descripción");
         filtro.addItem("Código");
         filtro.addItem("Abreviatura");
-        filtro.setBounds(20,20,100,30);
         setBackground(new Color(214,214,214));
         buscarProducto = new JTextField(15);
-        buscarProducto.setBounds(150,20,350,30);
+        buscarProducto.setMinimumSize(new Dimension(500, 30));
+        buscarProducto.setPreferredSize(new Dimension(500, 30));
+        buscarProducto.setMaximumSize(new Dimension(500, 30));
         buscarProducto.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -46,29 +47,34 @@ public class ProductosEditar extends JPanel{
         });
 
         btnNuevoProduc = new JButton("Nuevo",new ImageIcon("src/imagenes/nuevo.png"));
-        btnNuevoProduc.setBounds(550,20,130,30);
+        btnNuevoProduc.setPreferredSize(new Dimension(130, 30));
         btnNuevoProduc.addActionListener(e->{
-                    try {
-                        VentanaNuevoProductoFrame ventanaNuevo = new VentanaNuevoProductoFrame();
-                        ventanaNuevo.setVisible(true);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+            try {
+                if (ventanaNuevoProductoFrame == null) {
+                    ventanaNuevoProductoFrame = new VentanaNuevoProductoFrame();
                 }
-                );
+                ventanaNuevoProductoFrame.setVisible(true);
+                ventanaNuevoProductoFrame.setResizable(false);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         btnModificarProd = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
-        btnModificarProd.setBounds(738, 20, 130, 30);
+        btnModificarProd.setPreferredSize(new Dimension(130, 30));
         btnEliminarProd = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
-        btnEliminarProd.setBounds(926, 20, 130,30);
+        btnEliminarProd.setPreferredSize(new Dimension(130, 30));
         btnModificarProd.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila == -1) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un producto");
             } else {
                 try {
-                    VentanaEditarProductoFrame ventanaEditar = new VentanaEditarProductoFrame();
-                    ventanaEditar.setVisible(true);
+                    if (ventanaEditarProductoFrame == null) {
+                        ventanaEditarProductoFrame = new VentanaEditarProductoFrame();
+                    }
+                    ventanaEditarProductoFrame.setVisible(true);
+                    ventanaEditarProductoFrame.setResizable(false);
                     idProducto = Integer.parseInt(tabla.getValueAt(fila,0).toString());
                     VentanaEditarProductoPanel.txtDescr.setText(tabla.getValueAt(fila, 1).toString())  ;
                     VentanaEditarProductoPanel.txtCodProd.setText(tabla.getValueAt(fila, 2).toString());
@@ -90,7 +96,7 @@ public class ProductosEditar extends JPanel{
                 int id = Integer.parseInt((String) tabla.getValueAt(fila, 0));
                 UIManager.put("OptionPane.yesButtonText", "Si");
                 UIManager.put("OptionPane.noButtonText", "No");
-                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Importante", JOptionPane.YES_NO_OPTION);
+                int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     try {
                         ProductosDB productosDB = new ProductosDB(Conexion.conectar());
@@ -108,15 +114,42 @@ public class ProductosEditar extends JPanel{
             }
         });
         ConstruirTabla(0,null);
-        scroll.setBounds(20,80,1050,350);
-        add(buscarProducto);
-        add(filtro);
-        add(btnModificarProd);
-        add(btnEliminarProd);
-        add(btnNuevoProduc);
         scroll.setViewportView(tabla);
-        add(scroll);
-        setLayout(null);
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        add(filtro, gbc);
+
+        gbc.gridx = 1;
+        add(buscarProducto, gbc);
+
+        gbc.gridx = 2;
+        gbc.weightx = 1.0;
+        add(Box.createHorizontalGlue(), gbc);
+
+        gbc.gridx = 3;
+        gbc.weightx = 0;
+        add(btnNuevoProduc, gbc);
+
+        gbc.gridx = 4;
+        add(btnModificarProd, gbc);
+
+        gbc.gridx = 5;
+        add(btnEliminarProd, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 6;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        add(scroll, gbc);
+
     }
     public static void ConstruirTabla(int opBuscar, String valor) throws Exception{
         String[] titulo = {"ID","Descripción", "Código", "Abreviatura", "Precio unit.", "Stock mín.", "Stock"};
