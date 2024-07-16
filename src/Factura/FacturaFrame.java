@@ -12,7 +12,7 @@ public class FacturaFrame extends JFrame {
         Dimension tamanoPantalla = miPantalla.getScreenSize();
         double alturaPantalla = tamanoPantalla.height;
         double anchoPantalla = tamanoPantalla.width;
-        setSize((int) (anchoPantalla/1.62), (int) (alturaPantalla/1.16));
+        setSize(950, 600);
         setLocation(200, 40);
         Image icono = miPantalla.getImage("src/imagenes/gaggiicon.png");
         setIconImage(icono);

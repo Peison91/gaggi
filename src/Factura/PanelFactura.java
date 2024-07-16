@@ -31,7 +31,7 @@ public class PanelFactura extends JPanel {
 
 
     public PanelFactura() throws Exception {
-        btnCliente = new JButton("Seleccione Cliente", new ImageIcon("src/imagenes/Clientes.png"));
+        btnCliente = new JButton("Seleccionar cliente", new ImageIcon("src/imagenes/Clientes.png"));
         btnCliente.addActionListener(e -> {
             try {
                 FrameTablaClientes tablaClientes = new FrameTablaClientes();
@@ -53,6 +53,7 @@ public class PanelFactura extends JPanel {
 
         lblFechaHora = new JLabel("Fecha:");
         calendario = new JDateChooser();
+        calendario.setDateFormatString("dd/MM/yyyy");
 
         lblArchivo = new JLabel("Nombre Archivo:");
         txtArchivo = new JTextField();
@@ -249,89 +250,93 @@ public class PanelFactura extends JPanel {
         //Segunda columna, oh god
         gbc.gridx = 1;
         gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0;
         gbc.gridwidth = 2;
-        txtCliente.setPreferredSize(new Dimension(260,30));
-        txtCliente.setMaximumSize(new Dimension(260,30));
-        txtCliente.setMinimumSize(new Dimension(260,30));
+        txtCliente.setPreferredSize(new Dimension(240,30));
+        txtCliente.setMaximumSize(new Dimension(240,30));
+        txtCliente.setMinimumSize(new Dimension(240,30));
         add(txtCliente, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
-        txtNumero.setPreferredSize(new Dimension(170,30));
-        txtNumero.setMaximumSize(new Dimension(170,30));
-        txtNumero.setMinimumSize(new Dimension(170,30));
+        txtNumero.setPreferredSize(new Dimension(150,30));
+        txtNumero.setMaximumSize(new Dimension(150,30));
+        txtNumero.setMinimumSize(new Dimension(150,30));
         add(txtNumero, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        txtMonto.setPreferredSize(new Dimension(170,30));
-        txtMonto.setMaximumSize(new Dimension(170,30));
-        txtMonto.setMinimumSize(new Dimension(170,30));
+        txtMonto.setPreferredSize(new Dimension(150,30));
+        txtMonto.setMaximumSize(new Dimension(150,30));
+        txtMonto.setMinimumSize(new Dimension(150,30));
         add(txtMonto, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        calendario.setPreferredSize(new Dimension(170,30));
-        calendario.setMaximumSize(new Dimension(170,30));
-        calendario.setMinimumSize(new Dimension(170,30));
+        calendario.setPreferredSize(new Dimension(150,30));
+        calendario.setMaximumSize(new Dimension(150,30));
+        calendario.setMinimumSize(new Dimension(150,30));
         add(calendario, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        txtArchivo.setPreferredSize(new Dimension(170,30));
-        txtArchivo.setMaximumSize(new Dimension(170,30));
-        txtArchivo.setMinimumSize(new Dimension(170,30));
+        txtArchivo.setPreferredSize(new Dimension(150,30));
+        txtArchivo.setMaximumSize(new Dimension(150,30));
+        txtArchivo.setMinimumSize(new Dimension(150,30));
         add(txtArchivo, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 6;
-        txtBuscar.setPreferredSize(new Dimension(170,30));
-        txtBuscar.setMaximumSize(new Dimension(170,30));
-        txtBuscar.setMinimumSize(new Dimension(170,30));
+        gbc.gridwidth = 2;
+        txtBuscar.setPreferredSize(new Dimension(300,30));
+        txtBuscar.setMaximumSize(new Dimension(300,30));
+        txtBuscar.setMinimumSize(new Dimension(300,30));
         add(txtBuscar, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 6;
+        gbc.gridwidth = 1;
         gbc.weightx = 1.0;
         add(Box.createHorizontalGlue(), gbc);
 
         gbc.gridy = 6;
         gbc.gridx = 3;
-        btnAbrirPdf.setPreferredSize(new Dimension(150,30));
-        btnAbrirPdf.setMaximumSize(new Dimension(150,30));
-        btnAbrirPdf.setMinimumSize(new Dimension(150,30));
+        btnAbrirPdf.setPreferredSize(new Dimension(130,30));
+        btnAbrirPdf.setMaximumSize(new Dimension(130,30));
+        btnAbrirPdf.setMinimumSize(new Dimension(130,30));
         add(btnAbrirPdf, gbc);
 
         gbc.gridy = 6;
         gbc.gridx = 4;
-        btnActualizar.setPreferredSize(new Dimension(150,30));
-        btnActualizar.setMaximumSize(new Dimension(150,30));
-        btnActualizar.setMinimumSize(new Dimension(150,30));
+        btnActualizar.setPreferredSize(new Dimension(130,30));
+        btnActualizar.setMaximumSize(new Dimension(130,30));
+        btnActualizar.setMinimumSize(new Dimension(130,30));
         add(btnActualizar, gbc);
 
         gbc.gridy = 6;
         gbc.gridx = 5;
-        btnBorrar.setPreferredSize(new Dimension(150,30));
-        btnBorrar.setMaximumSize(new Dimension(150,30));
-        btnBorrar.setMinimumSize(new Dimension(150,30));
+        btnBorrar.setPreferredSize(new Dimension(130,30));
+        btnBorrar.setMaximumSize(new Dimension(130,30));
+        btnBorrar.setMinimumSize(new Dimension(130,30));
         add(btnBorrar, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        btnCliente.setPreferredSize(new Dimension(250,30));
-        btnCliente.setMaximumSize(new Dimension(250,30));
-        btnCliente.setMinimumSize(new Dimension(250,30));
+        btnCliente.setPreferredSize(new Dimension(200,30));
+        btnCliente.setMaximumSize(new Dimension(200,30));
+        btnCliente.setMinimumSize(new Dimension(200,30));
         add(btnCliente, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 4;
         gbc.gridwidth = 1;
-        btnGuardar.setPreferredSize(new Dimension(150,30));
-        btnGuardar.setMaximumSize(new Dimension(150,30));
-        btnGuardar.setMinimumSize(new Dimension(150,30));
+        btnGuardar.setPreferredSize(new Dimension(130,30));
+        btnGuardar.setMaximumSize(new Dimension(130,30));
+        btnGuardar.setMinimumSize(new Dimension(130,30));
         add(btnGuardar,gbc);
 
         //La maldita tabla
