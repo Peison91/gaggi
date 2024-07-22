@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -28,7 +27,6 @@ public class PanelFactura extends JPanel {
     JTable tabla = new JTable();
     DefaultTableModel modelo;
     JComboBox lista;
-
 
     public PanelFactura() throws Exception {
         btnCliente = new JButton("Seleccionar cliente", new ImageIcon("src/imagenes/Clientes.png"));
@@ -104,8 +102,7 @@ public class PanelFactura extends JPanel {
         btnBorrar = new JButton("Eliminar", new ImageIcon("src/imagenes/borrar.png"));
         btnActualizar = new JButton("Modificar", new ImageIcon("src/imagenes/modificar.png"));
         btnActualizar.addActionListener(new ActionListener() {
-            FacturasDB facturasDB = new FacturasDB(Conexion.conecc);
-
+            FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
             @Override
             public void actionPerformed(ActionEvent e) {
                 int fila = tabla.getSelectedRow();
@@ -113,26 +110,25 @@ public class PanelFactura extends JPanel {
                     JOptionPane.showMessageDialog(null, "Debe seleccionar un registro");
                 } else {
                     Facturas facturas = new Facturas();
+                    ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
+
+                    int clienteId = Integer.parseInt(tabla.getValueAt(fila, 1).toString());
                     facturas.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
-                    facturas.setCliente_id(Integer.parseInt(tabla.getValueAt(fila, 1).toString()));
+                    facturas.setCliente_id(clienteId); // Usar el ID del cliente
                     facturas.setNumero(tabla.getValueAt(fila, 2).toString());
                     java.util.Date miFecha = new java.util.Date();
                     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-                    String dato = tabla.getValueAt(fila, 3).toString().substring(0, 10);
-                    try {
-                        miFecha = formato.parse(dato);
-                    } catch (ParseException ex) {
-                        throw new RuntimeException(ex);
-
-                    }
+                    String dato = tabla.getValueAt(fila, 4).toString().substring(0, 10);
                     facturas.setFecha_hora(miFecha);
-                    facturas.setMonto(Double.parseDouble(tabla.getValueAt(fila, 4).toString()));
-                    facturas.setArchivo(tabla.getValueAt(fila, 5).toString());
+                    facturas.setMonto(Double.parseDouble(tabla.getValueAt(fila, 5).toString()));
+                    facturas.setArchivo(tabla.getValueAt(fila, 6).toString());
+
                     int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
                         try {
                             facturasDB.actualizarFacturas(facturas);
                             JOptionPane.showMessageDialog(null, "Modificado correctamente");
+                            construirTabla(0, null);
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -140,6 +136,7 @@ public class PanelFactura extends JPanel {
                 }
             }
         });
+
         btnBorrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -348,18 +345,19 @@ public class PanelFactura extends JPanel {
         gbc.weighty = 1.0;
         add(scroll, gbc);
 
-
-
-
-
-
+        ajustarAnchoColumnas();
     }
 
     public void construirTabla(int opBuscar, String valor) throws Exception {
-        String[] titulo1 = {"Id", "Nombre", "Número", "Fecha", "Monto", "Archivo"};
+        String[] titulo1 = {"Id Factura", "Id Cliente", "Nombre", "Número", "Fecha", "Monto", "Archivo"};
         String informacion[][] = obtenerMatriz();
         modelo = new DefaultTableModel(informacion, titulo1);
         tabla.setModel(modelo);
+        //ocultar columna auxiliar
+        tabla.getColumnModel().getColumn(1).setMinWidth(0);
+        tabla.getColumnModel().getColumn(1).setMaxWidth(0);
+        tabla.getColumnModel().getColumn(1).setWidth(0);
+        tabla.getColumnModel().getColumn(1).setPreferredWidth(0);
 
         TableRowSorter tr = new TableRowSorter<>(modelo);
         tabla.setRowSorter(tr);
@@ -372,16 +370,14 @@ public class PanelFactura extends JPanel {
         JTableHeader titulo = tabla.getTableHeader();
         titulo.setBackground(new Color(236, 126, 29));
         titulo.setFont(new Font("Calibri", Font.BOLD, 14));
-        //tabla.getTableHeader().setReorderingAllowed(false);
-        //tabla.getTableHeader().setResizingAllowed(false);
-
     }
 
     public String[][] obtenerMatriz() throws Exception {
         FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
         List<Facturas> lstFacturas = facturasDB.todasFacturas();
         ClientesDB clientesDB = new ClientesDB(Conexion.conectar());
-        String matrizIfno[][] = new String[lstFacturas.size()][6];
+        String matrizIfno[][] = new String[lstFacturas.size()][7];
+
         for (int i = 0; i < lstFacturas.size(); i++) {
             Facturas facturas = lstFacturas.get(i);
             Clientes cliente = clientesDB.consultaCliente(facturas.getCliente_id());
@@ -389,28 +385,29 @@ public class PanelFactura extends JPanel {
             String fecha = dateFormat.format(facturas.getFecha_hora());
 
             matrizIfno[i][0] = lstFacturas.get(i).getId() + "";
-            matrizIfno[i][1] = cliente.getNombre();
-            matrizIfno[i][2] = lstFacturas.get(i).getNumero() + "";
-            matrizIfno[i][3] = fecha;
-            matrizIfno[i][4] = lstFacturas.get(i).getMonto() + "";
-            matrizIfno[i][5] = lstFacturas.get(i).getArchivo() + "";
+            matrizIfno[i][1] = facturas.getCliente_id() + "";
+            matrizIfno[i][2] = cliente.getNombre();
+            matrizIfno[i][3] = lstFacturas.get(i).getNumero() + "";
+            matrizIfno[i][4] = fecha;
+            matrizIfno[i][5] = lstFacturas.get(i).getMonto() + "";
+            matrizIfno[i][6] = lstFacturas.get(i).getArchivo() + "";
         }
         return matrizIfno;
     }
+
     private void ajustarAnchoColumnas() {
         TableColumnModel columnModel = tabla.getColumnModel();
         int columnCount = columnModel.getColumnCount();
-        int[] columnWidths = {80, 280, 100, 190, 100, 100};
+        int[] columnWidths = {80, 0, 280, 100, 190, 100, 100};
         for (int i = 0; i < columnCount; i++) {
             TableColumn column = columnModel.getColumn(i);
             column.setPreferredWidth(columnWidths[i]);
         }
     }
+
     public void limpiarTxt(JTextField txt) {
         txt.setText(" ");
     }
-
-
 }
 
 
