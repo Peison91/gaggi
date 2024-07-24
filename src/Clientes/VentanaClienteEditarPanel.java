@@ -89,7 +89,6 @@ public class VentanaClienteEditarPanel extends JPanel {
                 clientes.setEmail(email1);
                 clientes.setTelefono(telefono1);
 
-
                 clientesDB.actualizarCliente(clientes);
                 JOptionPane.showMessageDialog(null,"Se actualizó el cliente");
                 LimpiarTxt(txtNombre);

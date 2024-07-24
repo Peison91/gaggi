@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class PanelFactura extends JPanel {
@@ -21,12 +22,14 @@ public class PanelFactura extends JPanel {
     JTextField txtNumero, txtMonto, txtArchivo, txtBuscar;
     static JTextField txtCliente;
     static int clienteID;
+    static int facturaID;
     JButton btnCliente, btnGuardar, btnBorrar, btnActualizar,btnAbrirPdf;
     JDateChooser calendario;
     JScrollPane scroll;
     JTable tabla = new JTable();
     DefaultTableModel modelo;
     JComboBox lista;
+    private EditarFacturaFrame editarFacturaFrame;
 
     public PanelFactura() throws Exception {
         btnCliente = new JButton("Seleccionar cliente", new ImageIcon("src/imagenes/Clientes.png"));
@@ -114,6 +117,7 @@ public class PanelFactura extends JPanel {
 
                     int clienteId = Integer.parseInt(tabla.getValueAt(fila, 1).toString());
                     facturas.setId(Integer.parseInt(tabla.getValueAt(fila, 0).toString()));
+                    facturaID = Integer.parseInt(tabla.getValueAt(fila, 0).toString());
                     facturas.setCliente_id(clienteId); // Usar el ID del cliente
                     facturas.setNumero(tabla.getValueAt(fila, 2).toString());
                     java.util.Date miFecha = new java.util.Date();
@@ -122,13 +126,24 @@ public class PanelFactura extends JPanel {
                     facturas.setFecha_hora(miFecha);
                     facturas.setMonto(Double.parseDouble(tabla.getValueAt(fila, 5).toString()));
                     facturas.setArchivo(tabla.getValueAt(fila, 6).toString());
-
+                    UIManager.put("OptionPane.yesButtonText", "Si");
+                    UIManager.put("OptionPane.noButtonText", "No");
                     int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar?", "Aviso", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
                         try {
-                            facturasDB.actualizarFacturas(facturas);
-                            JOptionPane.showMessageDialog(null, "Modificado correctamente");
-                            construirTabla(0, null);
+                            if (editarFacturaFrame == null) {
+                                editarFacturaFrame = new EditarFacturaFrame();
+                            }
+                            editarFacturaFrame.setVisible(true);
+                            editarFacturaFrame.setResizable(false);
+                            facturaID = Integer.parseInt(tabla.getValueAt(fila, 0).toString());
+                            PanelEditarFactura.cliente.setText(tabla.getValueAt(fila, 1).toString());
+                            PanelEditarFactura.txtNumero.setText(tabla.getValueAt(fila, 3).toString());
+                            PanelEditarFactura.txtMonto.setText(tabla.getValueAt(fila, 5).toString());
+                            PanelEditarFactura.calendario.setDate((Date) tabla.getValueAt(fila, 4));
+                            PanelEditarFactura.txtArchivo.setText(tabla.getValueAt(fila, 6).toString());
+
+
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -388,7 +403,7 @@ public class PanelFactura extends JPanel {
             matrizIfno[i][1] = facturas.getCliente_id() + "";
             matrizIfno[i][2] = cliente.getNombre();
             matrizIfno[i][3] = lstFacturas.get(i).getNumero() + "";
-            matrizIfno[i][4] = fecha;
+            matrizIfno[i][4] = String.valueOf(lstFacturas.get(i).getFecha_hora());
             matrizIfno[i][5] = lstFacturas.get(i).getMonto() + "";
             matrizIfno[i][6] = lstFacturas.get(i).getArchivo() + "";
         }
