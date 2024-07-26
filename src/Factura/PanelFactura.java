@@ -32,7 +32,7 @@ public class PanelFactura extends JPanel {
     private EditarFacturaFrame editarFacturaFrame;
 
     public PanelFactura() throws Exception {
-        btnCliente = new JButton("Seleccionar cliente", new ImageIcon("src/imagenes/Clientes.png"));
+        btnCliente = new JButton("Seleccionar", new ImageIcon("src/imagenes/Clientes.png"));
         btnCliente.addActionListener(e -> {
             try {
                 FrameTablaClientes tablaClientes = new FrameTablaClientes();
@@ -42,7 +42,7 @@ public class PanelFactura extends JPanel {
             }
         });
         lblId = new JLabel("10");
-        buscarCliente = new JLabel("Cliente seleccionado:");
+        buscarCliente = new JLabel("Cliente:");
         txtCliente = new JTextField(15);
         txtCliente.setEditable(false);
 
@@ -137,7 +137,7 @@ public class PanelFactura extends JPanel {
                             editarFacturaFrame.setVisible(true);
                             editarFacturaFrame.setResizable(false);
                             facturaID = Integer.parseInt(tabla.getValueAt(fila, 0).toString());
-                            PanelEditarFactura.cliente.setText(tabla.getValueAt(fila, 1).toString());
+                            PanelEditarFactura.cliente.setText("id: " + tabla.getValueAt( fila, 1).toString() + " - " + tabla.getValueAt(fila,2).toString());
                             PanelEditarFactura.txtNumero.setText(tabla.getValueAt(fila, 3).toString());
                             PanelEditarFactura.txtMonto.setText(tabla.getValueAt(fila, 5).toString());
                             PanelEditarFactura.calendario.setDate((Date) tabla.getValueAt(fila, 4));
@@ -250,9 +250,9 @@ public class PanelFactura extends JPanel {
 
         //gbc.gridx = 0;
         gbc.gridy = 5;
-        lblFactura.setPreferredSize(new Dimension(130,10));
-        lblFactura.setMaximumSize(new Dimension(130,10));
-        lblFactura.setMinimumSize(new Dimension(130,10));
+        lblFactura.setPreferredSize(new Dimension(110,10));
+        lblFactura.setMaximumSize(new Dimension(110,10));
+        lblFactura.setMinimumSize(new Dimension(110,10));
         add(lblFactura, gbc);
 
         //gbc.gridx = 0;
@@ -337,10 +337,10 @@ public class PanelFactura extends JPanel {
 
         gbc.gridx = 3;
         gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        btnCliente.setPreferredSize(new Dimension(200,30));
-        btnCliente.setMaximumSize(new Dimension(200,30));
-        btnCliente.setMinimumSize(new Dimension(200,30));
+        gbc.gridwidth = 1;
+        btnCliente.setPreferredSize(new Dimension(130,30));
+        btnCliente.setMaximumSize(new Dimension(130,30));
+        btnCliente.setMinimumSize(new Dimension(130,30));
         add(btnCliente, gbc);
 
         gbc.gridx = 2;
@@ -403,7 +403,7 @@ public class PanelFactura extends JPanel {
             matrizIfno[i][1] = facturas.getCliente_id() + "";
             matrizIfno[i][2] = cliente.getNombre();
             matrizIfno[i][3] = lstFacturas.get(i).getNumero() + "";
-            matrizIfno[i][4] = String.valueOf(lstFacturas.get(i).getFecha_hora());
+            matrizIfno[i][4] = lstFacturas.get(i).getFecha_hora()+"";
             matrizIfno[i][5] = lstFacturas.get(i).getMonto() + "";
             matrizIfno[i][6] = lstFacturas.get(i).getArchivo() + "";
         }

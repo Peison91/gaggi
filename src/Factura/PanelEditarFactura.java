@@ -22,7 +22,7 @@ public class PanelEditarFactura extends JPanel{
         setBackground(new Color(214,214,214));
         buscarCliente = new JLabel("Cliente seleccionado:");
         lblNumero = new JLabel("Nro. Factura:");
-        lblMonto = new JLabel("Monto");
+        lblMonto = new JLabel("Monto:");
         lblFecha = new JLabel("Fecha:");
         lblArchivo = new JLabel("Nombre Archivo:");
         cliente = new JTextField(15);
@@ -30,7 +30,7 @@ public class PanelEditarFactura extends JPanel{
         txtMonto = new JTextField(15);
         txtArchivo = new JTextField(15);
         calendario = new JDateChooser();
-        calendario.setDateFormatString("dd/MM/yyyy");
+        //calendario.setDateFormatString("dd/MM/yyyy");
         btnGuardar = new JButton("Guardar", new ImageIcon("src/imagenes/GuardarTodo.png"));
         btnGuardar.addActionListener(e->{
             FacturasDB facturaDB = new FacturasDB(Conexion.conectar());

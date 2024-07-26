@@ -31,7 +31,7 @@ public class Panel extends JPanel {
         compras.setIcon(new ImageIcon("src/imagenes/Carrito-de-compras.png"));
 
         JMenu ventas = new JMenu("Ventas");
-        ventas.setIcon(new ImageIcon("src/imagenes/pdf.png"));
+        ventas.setIcon(new ImageIcon("src/imagenes/factura.png"));
 
         JMenu cotizacion = new JMenu("Cotizaciones");
         cotizacion.setIcon(new ImageIcon("src/imagenes/money.png"));
