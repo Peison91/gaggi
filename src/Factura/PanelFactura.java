@@ -1,8 +1,10 @@
 package Factura;
 
 import Utiles.Conexion;
+import Utiles.Utiles;
 import database.ClientesDB;
 import database.FacturasDB;
+import jdk.jshell.execution.Util;
 import model.Clientes;
 import model.Facturas;
 import com.toedter.calendar.JDateChooser;
@@ -137,10 +139,10 @@ public class PanelFactura extends JPanel {
                             editarFacturaFrame.setVisible(true);
                             editarFacturaFrame.setResizable(false);
                             facturaID = Integer.parseInt(tabla.getValueAt(fila, 0).toString());
-                            PanelEditarFactura.cliente.setText("id: " + tabla.getValueAt( fila, 1).toString() + " - " + tabla.getValueAt(fila,2).toString());
+                            PanelEditarFactura.cliente.setText(tabla.getValueAt(fila, 1).toString());
                             PanelEditarFactura.txtNumero.setText(tabla.getValueAt(fila, 3).toString());
                             PanelEditarFactura.txtMonto.setText(tabla.getValueAt(fila, 5).toString());
-                            PanelEditarFactura.calendario.setDate((Date) tabla.getValueAt(fila, 4));
+                            PanelEditarFactura.calendario.setDate(Utiles.convertirFecha(tabla.getValueAt(fila, 4)));
                             PanelEditarFactura.txtArchivo.setText(tabla.getValueAt(fila, 6).toString());
 
 
