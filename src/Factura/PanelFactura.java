@@ -16,7 +16,6 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class PanelFactura extends JPanel {
@@ -84,6 +83,10 @@ public class PanelFactura extends JPanel {
         construirTabla(0, null);
         btnGuardar = new JButton("Guardar", new ImageIcon("src/imagenes/GuardarTodo.png"));
         btnGuardar.addActionListener(e -> {
+            if (txtCliente.getText().isEmpty() || txtNumero.getText().isEmpty() || txtMonto.getText().isEmpty() || calendario.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Debe completar todos los campos requeridos", "Advertencia", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             FacturasDB facturasDB = new FacturasDB(Conexion.conectar());
             int idCliente = clienteID;
             String numero = txtNumero.getText();
@@ -93,6 +96,7 @@ public class PanelFactura extends JPanel {
             try {
                 facturasDB.insertarFacturas(facturas);
                 JOptionPane.showMessageDialog(null, "Guardado correctamente");
+                ajustarAnchoColumnas();
                 construirTabla(0, null);
                 limpiarTxt(txtNumero);
                 limpiarTxt(txtMonto);
@@ -144,7 +148,7 @@ public class PanelFactura extends JPanel {
                             PanelEditarFactura.txtMonto.setText(tabla.getValueAt(fila, 5).toString());
                             PanelEditarFactura.calendario.setDate(Utiles.convertirFecha(tabla.getValueAt(fila, 4)));
                             PanelEditarFactura.txtArchivo.setText(tabla.getValueAt(fila, 6).toString());
-
+                            ajustarAnchoColumnas();
 
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
